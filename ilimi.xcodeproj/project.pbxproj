@@ -8,9 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		D44CAD4E28C757C30046E5B6 /* InputContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44CAD4D28C757C30046E5B6 /* InputContext.swift */; };
-		D44CAD5128C7584A0046E5B6 /* CandidatesWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44CAD5028C7584A0046E5B6 /* CandidatesWindow.swift */; };
-		D44CAD5328C7585B0046E5B6 /* CandidatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44CAD5228C7585B0046E5B6 /* CandidatesView.swift */; };
-		D44CAD5528C759030046E5B6 /* UISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44CAD5428C759030046E5B6 /* UISettings.swift */; };
 		D4B2B76A28C7A9A4006F3967 /* InputEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B2B76928C7A9A4006F3967 /* InputEngine.swift */; };
 		D4FC14D228C649F80081BCC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4FC14D128C649F80081BCC0 /* Assets.xcassets */; };
 		D4FC14D528C649F80081BCC0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4FC14D428C649F80081BCC0 /* Preview Assets.xcassets */; };
@@ -24,9 +21,6 @@
 
 /* Begin PBXFileReference section */
 		D44CAD4D28C757C30046E5B6 /* InputContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputContext.swift; sourceTree = "<group>"; };
-		D44CAD5028C7584A0046E5B6 /* CandidatesWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidatesWindow.swift; sourceTree = "<group>"; };
-		D44CAD5228C7585B0046E5B6 /* CandidatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidatesView.swift; sourceTree = "<group>"; };
-		D44CAD5428C759030046E5B6 /* UISettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISettings.swift; sourceTree = "<group>"; };
 		D4B2B76928C7A9A4006F3967 /* InputEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputEngine.swift; sourceTree = "<group>"; };
 		D4FC14CA28C649F70081BCC0 /* ilimi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ilimi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4FC14D128C649F80081BCC0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -52,16 +46,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D44CAD4F28C7583D0046E5B6 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				D44CAD5028C7584A0046E5B6 /* CandidatesWindow.swift */,
-				D44CAD5228C7585B0046E5B6 /* CandidatesView.swift */,
-				D44CAD5428C759030046E5B6 /* UISettings.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		D4FC14C128C649F70081BCC0 = {
 			isa = PBXGroup;
 			children = (
@@ -82,7 +66,6 @@
 			isa = PBXGroup;
 			children = (
 				D4FC4DA428CB0B3C00A1AF39 /* Model */,
-				D44CAD4F28C7583D0046E5B6 /* View */,
 				D4FC14E128C666DE0081BCC0 /* Utils */,
 				D4FC14E028C64F400081BCC0 /* Info.plist */,
 				D4FC14D128C649F80081BCC0 /* Assets.xcassets */,
@@ -195,15 +178,12 @@
 			files = (
 				D4FC14DD28C64A520081BCC0 /* AppDelegate.swift in Sources */,
 				D4FC14DF28C64A730081BCC0 /* IlimiInputController.swift in Sources */,
-				D44CAD5328C7585B0046E5B6 /* CandidatesView.swift in Sources */,
-				D44CAD5128C7584A0046E5B6 /* CandidatesWindow.swift in Sources */,
 				D44CAD4E28C757C30046E5B6 /* InputContext.swift in Sources */,
 				D4FC4DA728CB0B6800A1AF39 /* IlimiCandidates.swift in Sources */,
 				D4FC14E328C667200081BCC0 /* PhraseInitilizer.swift in Sources */,
 				D4FC14E628C668A90081BCC0 /* Model.xcdatamodeld in Sources */,
 				D4FC14E828C66A180081BCC0 /* PersistenceController.swift in Sources */,
 				D4B2B76A28C7A9A4006F3967 /* InputEngine.swift in Sources */,
-				D44CAD5528C759030046E5B6 /* UISettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
