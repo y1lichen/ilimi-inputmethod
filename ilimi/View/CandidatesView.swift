@@ -42,8 +42,8 @@ class CandidatesView: NSView {
 		let textBounds = NSMakeRect(
 			bounds.origin.x + UISettings.WindowPaddingX,
 			bounds.origin.y + UISettings.WindowPaddingY,
-			bounds.width - UISettings.WindowPaddingX * 2,
-			bounds.height - UISettings.WindowPaddingY * 2)
+			bounds.width - UISettings.WindowPaddingX * 3,
+			bounds.height - UISettings.WindowPaddingY * 3)
 		textToPaint.draw(in: textBounds)
 	}
 }

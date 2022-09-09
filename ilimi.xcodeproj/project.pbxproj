@@ -7,19 +7,38 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D4FC14CE28C649F70081BCC0 /* ilimiApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC14CD28C649F70081BCC0 /* ilimiApp.swift */; };
-		D4FC14D028C649F70081BCC0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC14CF28C649F70081BCC0 /* ContentView.swift */; };
+		D44CAD4E28C757C30046E5B6 /* InputContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44CAD4D28C757C30046E5B6 /* InputContext.swift */; };
+		D44CAD5128C7584A0046E5B6 /* CandidatesWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44CAD5028C7584A0046E5B6 /* CandidatesWindow.swift */; };
+		D44CAD5328C7585B0046E5B6 /* CandidatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44CAD5228C7585B0046E5B6 /* CandidatesView.swift */; };
+		D44CAD5528C759030046E5B6 /* UISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44CAD5428C759030046E5B6 /* UISettings.swift */; };
+		D4B2B76A28C7A9A4006F3967 /* InputEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B2B76928C7A9A4006F3967 /* InputEngine.swift */; };
 		D4FC14D228C649F80081BCC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4FC14D128C649F80081BCC0 /* Assets.xcassets */; };
 		D4FC14D528C649F80081BCC0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4FC14D428C649F80081BCC0 /* Preview Assets.xcassets */; };
+		D4FC14DD28C64A520081BCC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC14DC28C64A520081BCC0 /* AppDelegate.swift */; };
+		D4FC14DF28C64A730081BCC0 /* IlimiInputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC14DE28C64A730081BCC0 /* IlimiInputController.swift */; };
+		D4FC14E328C667200081BCC0 /* PhraseInitilizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC14E228C667200081BCC0 /* PhraseInitilizer.swift */; };
+		D4FC14E628C668A90081BCC0 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D4FC14E428C668A90081BCC0 /* Model.xcdatamodeld */; };
+		D4FC14E828C66A180081BCC0 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC14E728C66A180081BCC0 /* PersistenceController.swift */; };
+		D4FC4DA728CB0B6800A1AF39 /* IlimiCandidates.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC4DA628CB0B6800A1AF39 /* IlimiCandidates.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D44CAD4D28C757C30046E5B6 /* InputContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputContext.swift; sourceTree = "<group>"; };
+		D44CAD5028C7584A0046E5B6 /* CandidatesWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidatesWindow.swift; sourceTree = "<group>"; };
+		D44CAD5228C7585B0046E5B6 /* CandidatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandidatesView.swift; sourceTree = "<group>"; };
+		D44CAD5428C759030046E5B6 /* UISettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISettings.swift; sourceTree = "<group>"; };
+		D4B2B76928C7A9A4006F3967 /* InputEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputEngine.swift; sourceTree = "<group>"; };
 		D4FC14CA28C649F70081BCC0 /* ilimi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ilimi.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D4FC14CD28C649F70081BCC0 /* ilimiApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ilimiApp.swift; sourceTree = "<group>"; };
-		D4FC14CF28C649F70081BCC0 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		D4FC14D128C649F80081BCC0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D4FC14D428C649F80081BCC0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D4FC14D628C649F80081BCC0 /* ilimi.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ilimi.entitlements; sourceTree = "<group>"; };
+		D4FC14DC28C64A520081BCC0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D4FC14DE28C64A730081BCC0 /* IlimiInputController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IlimiInputController.swift; sourceTree = "<group>"; };
+		D4FC14E028C64F400081BCC0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		D4FC14E228C667200081BCC0 /* PhraseInitilizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseInitilizer.swift; sourceTree = "<group>"; };
+		D4FC14E528C668A90081BCC0 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		D4FC14E728C66A180081BCC0 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		D4FC4DA628CB0B6800A1AF39 /* IlimiCandidates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IlimiCandidates.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +52,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D44CAD4F28C7583D0046E5B6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D44CAD5028C7584A0046E5B6 /* CandidatesWindow.swift */,
+				D44CAD5228C7585B0046E5B6 /* CandidatesView.swift */,
+				D44CAD5428C759030046E5B6 /* UISettings.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		D4FC14C128C649F70081BCC0 = {
 			isa = PBXGroup;
 			children = (
@@ -52,11 +81,18 @@
 		D4FC14CC28C649F70081BCC0 /* ilimi */ = {
 			isa = PBXGroup;
 			children = (
-				D4FC14CD28C649F70081BCC0 /* ilimiApp.swift */,
-				D4FC14CF28C649F70081BCC0 /* ContentView.swift */,
+				D4FC4DA428CB0B3C00A1AF39 /* Model */,
+				D44CAD4F28C7583D0046E5B6 /* View */,
+				D4FC14E128C666DE0081BCC0 /* Utils */,
+				D4FC14E028C64F400081BCC0 /* Info.plist */,
 				D4FC14D128C649F80081BCC0 /* Assets.xcassets */,
 				D4FC14D628C649F80081BCC0 /* ilimi.entitlements */,
 				D4FC14D328C649F80081BCC0 /* Preview Content */,
+				D4FC14DC28C64A520081BCC0 /* AppDelegate.swift */,
+				D4FC14DE28C64A730081BCC0 /* IlimiInputController.swift */,
+				D4FC14E428C668A90081BCC0 /* Model.xcdatamodeld */,
+				D44CAD4D28C757C30046E5B6 /* InputContext.swift */,
+				D4B2B76928C7A9A4006F3967 /* InputEngine.swift */,
 			);
 			path = ilimi;
 			sourceTree = "<group>";
@@ -67,6 +103,23 @@
 				D4FC14D428C649F80081BCC0 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		D4FC14E128C666DE0081BCC0 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				D4FC14E228C667200081BCC0 /* PhraseInitilizer.swift */,
+				D4FC14E728C66A180081BCC0 /* PersistenceController.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		D4FC4DA428CB0B3C00A1AF39 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D4FC4DA628CB0B6800A1AF39 /* IlimiCandidates.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -101,6 +154,7 @@
 				TargetAttributes = {
 					D4FC14C928C649F70081BCC0 = {
 						CreatedOnToolsVersion = 13.4.1;
+						LastSwiftMigration = 1340;
 					};
 				};
 			};
@@ -139,8 +193,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4FC14D028C649F70081BCC0 /* ContentView.swift in Sources */,
-				D4FC14CE28C649F70081BCC0 /* ilimiApp.swift in Sources */,
+				D4FC14DD28C64A520081BCC0 /* AppDelegate.swift in Sources */,
+				D4FC14DF28C64A730081BCC0 /* IlimiInputController.swift in Sources */,
+				D44CAD5328C7585B0046E5B6 /* CandidatesView.swift in Sources */,
+				D44CAD5128C7584A0046E5B6 /* CandidatesWindow.swift in Sources */,
+				D44CAD4E28C757C30046E5B6 /* InputContext.swift in Sources */,
+				D4FC4DA728CB0B6800A1AF39 /* IlimiCandidates.swift in Sources */,
+				D4FC14E328C667200081BCC0 /* PhraseInitilizer.swift in Sources */,
+				D4FC14E628C668A90081BCC0 /* Model.xcdatamodeld in Sources */,
+				D4FC14E828C66A180081BCC0 /* PersistenceController.swift in Sources */,
+				D4B2B76A28C7A9A4006F3967 /* InputEngine.swift in Sources */,
+				D44CAD5528C759030046E5B6 /* UISettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,6 +267,7 @@
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SYMROOT = "/Library/Input Methods/";
 			};
 			name = Debug;
 		};
@@ -257,6 +321,7 @@
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SYMROOT = "/Library/Input Methods/";
 			};
 			name = Release;
 		};
@@ -265,16 +330,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ilimi/ilimi.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "/Library/Input Methods";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ilimi/Preview Content\"";
 				DEVELOPMENT_TEAM = SH6X4V52X3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_FILE = ilimi/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSPrincipalClass = "$(PRODUCT_MODULE_NAME).NSManualApplication";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -283,7 +352,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jefferson.inputmethod.ilimi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				SYMROOT = "/Library/Input Methods/";
 			};
 			name = Debug;
 		};
@@ -292,16 +363,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ilimi/ilimi.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CONFIGURATION_BUILD_DIR = "/Library/Input Methods";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ilimi/Preview Content\"";
 				DEVELOPMENT_TEAM = SH6X4V52X3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_FILE = ilimi/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSPrincipalClass = "$(PRODUCT_MODULE_NAME).NSManualApplication";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -311,6 +386,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
+				SYMROOT = "/Library/Input Methods/";
 			};
 			name = Release;
 		};
@@ -336,6 +412,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		D4FC14E428C668A90081BCC0 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				D4FC14E528C668A90081BCC0 /* Model.xcdatamodel */,
+			);
+			currentVersion = D4FC14E528C668A90081BCC0 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = D4FC14C228C649F70081BCC0 /* Project object */;
 }

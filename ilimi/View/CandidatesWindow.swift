@@ -47,13 +47,13 @@ class CandidatesWindow: NSWindow {
             rect = NSMakeRect(
                 caretPosition.x,
                 caretPosition.y - textToPaint.size().height - UISettings.WindowPaddingY * 2,
-                textToPaint.size().width + UISettings.WindowPaddingX * 2,
-                textToPaint.size().height + UISettings.WindowPaddingY * 2)
+				textToPaint.size().width + UISettings.WindowPaddingX * 3.5,
+				textToPaint.size().height + UISettings.WindowPaddingY * 3.5)
         }
         setFrame(rect, display: true)
         _view.setNeedsDisplay(rect)
     }
-
+	
     func getCaretPosition(sender: IMKTextInput) -> NSPoint {
         var pos: NSPoint
         let lineHeightRect: UnsafeMutablePointer<NSRect> = UnsafeMutablePointer<NSRect>.allocate(
