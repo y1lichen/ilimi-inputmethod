@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D44CAD4E28C757C30046E5B6 /* InputContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44CAD4D28C757C30046E5B6 /* InputContext.swift */; };
 		D4B2B76A28C7A9A4006F3967 /* InputEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B2B76928C7A9A4006F3967 /* InputEngine.swift */; };
+		D4C45A3228CBB00B003DC3B0 /* IlimiMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C45A3128CBB00B003DC3B0 /* IlimiMenu.swift */; };
 		D4FC14D228C649F80081BCC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4FC14D128C649F80081BCC0 /* Assets.xcassets */; };
 		D4FC14D528C649F80081BCC0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4FC14D428C649F80081BCC0 /* Preview Assets.xcassets */; };
 		D4FC14DD28C64A520081BCC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC14DC28C64A520081BCC0 /* AppDelegate.swift */; };
@@ -22,6 +23,7 @@
 		D44CAD4D28C757C30046E5B6 /* InputContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputContext.swift; sourceTree = "<group>"; };
 		D4B2B76928C7A9A4006F3967 /* InputEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputEngine.swift; sourceTree = "<group>"; };
 		D4C45A2B28CB9B07003DC3B0 /* ilimi-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ilimi-Bridging-Header.h"; sourceTree = "<group>"; };
+		D4C45A3128CBB00B003DC3B0 /* IlimiMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IlimiMenu.swift; sourceTree = "<group>"; };
 		D4FC14CA28C649F70081BCC0 /* ilimi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ilimi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4FC14D128C649F80081BCC0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D4FC14D428C649F80081BCC0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -45,6 +47,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D4C45A2C28CBA773003DC3B0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D4C45A3128CBB00B003DC3B0 /* IlimiMenu.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		D4FC14C128C649F70081BCC0 = {
 			isa = PBXGroup;
 			children = (
@@ -64,6 +74,7 @@
 		D4FC14CC28C649F70081BCC0 /* ilimi */ = {
 			isa = PBXGroup;
 			children = (
+				D4C45A2C28CBA773003DC3B0 /* View */,
 				D4FC14E128C666DE0081BCC0 /* Utils */,
 				D4FC14E028C64F400081BCC0 /* Info.plist */,
 				D4FC14D128C649F80081BCC0 /* Assets.xcassets */,
@@ -170,6 +181,7 @@
 				D4FC14DD28C64A520081BCC0 /* AppDelegate.swift in Sources */,
 				D4FC14DF28C64A730081BCC0 /* IlimiInputController.swift in Sources */,
 				D44CAD4E28C757C30046E5B6 /* InputContext.swift in Sources */,
+				D4C45A3228CBB00B003DC3B0 /* IlimiMenu.swift in Sources */,
 				D4FC14E328C667200081BCC0 /* PhraseInitilizer.swift in Sources */,
 				D4FC14E628C668A90081BCC0 /* Model.xcdatamodeld in Sources */,
 				D4FC14E828C66A180081BCC0 /* PersistenceController.swift in Sources */,
@@ -302,6 +314,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ilimi/ilimi.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "/Library/Input Methods";
@@ -313,7 +326,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ilimi/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSPrincipalClass = "$(PRODUCT_MODULE_NAME).NSManualApplication";
+				INFOPLIST_KEY_NSPrincipalClass = ilimi.NSManualApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -321,6 +334,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jefferson.inputmethod.ilimi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "$(SRCROOT)/$(PROJECT_NAME)/ilimi-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -336,6 +350,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ilimi/ilimi.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "/Library/Input Methods";
@@ -347,7 +362,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ilimi/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSPrincipalClass = "$(PRODUCT_MODULE_NAME).NSManualApplication";
+				INFOPLIST_KEY_NSPrincipalClass = ilimi.NSManualApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -355,6 +370,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jefferson.inputmethod.ilimi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "$(SRCROOT)/$(PROJECT_NAME)/ilimi-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;

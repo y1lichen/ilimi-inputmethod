@@ -27,13 +27,12 @@ class NSManualApplication: NSApplication {
 class AppDelegate: NSObject, NSApplicationDelegate {
 	var server = IMKServer()
 	var candidatesWindow = IMKCandidates()
-	var phraseInitializer: PhraseInitilizer? = nil
 
 	func applicationDidFinishLaunching(_ notification: Notification) {
 		// Insert code here to initialize your application
 		server = IMKServer(name: Bundle.main.infoDictionary?["InputMethodConnectionName"] as? String, bundleIdentifier: Bundle.main.bundleIdentifier)
 		candidatesWindow = IMKCandidates(server: server, panelType: kIMKSingleRowSteppingCandidatePanel, styleType: kIMKMain)
-		phraseInitializer =  PhraseInitilizer()
+		PhraseInitilizer.shared.initPhraseWhenStart()
 		NSLog("tried connection")
 	}
 

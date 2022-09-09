@@ -9,23 +9,37 @@ import CoreData
 import Foundation
 
 class PhraseInitilizer {
+    static let shared = PhraseInitilizer()
+
     let persistenceContainer = PersistenceController.shared
     let path = NSHomeDirectory() + "/liu.json"
     let userDefaults = UserDefaults.standard
 
-    init() {
+    func initPhraseWhenStart() {
         let hadRead = userDefaults.object(forKey: "hadReadLiuJson") as? Bool ?? false
         if !hadRead {
-            initPhraseData()
+            loadLiuJson()
         }
     }
 
-    func initPhraseData() {
+    func cleanAllPhrase() {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Phrase")
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        do {
+			try persistenceContainer.container.viewContext.execute(batchDeleteRequest)
+        } catch {
+            NSLog("Error: "+String(describing: error))
+        }
+		NSLog("Core Data cleaned")
+    }
+
+    func loadLiuJson() {
+		cleanAllPhrase()
         do {
             let data = try Data(contentsOf: URL(fileURLWithPath: path))
             if let json = try JSONSerialization.jsonObject(with: data) as? [String: Any] {
-				if let chardefs = json["chardefs"] as? [String: [String]] {
-					let res = chardefs.sorted(by: {$0.0 < $1.0})
+                if let chardefs = json["chardefs"] as? [String: [String]] {
+                    let res = chardefs.sorted(by: { $0.0 < $1.0 })
                     var count: Int64 = 0
                     for (key, value) in res {
                         for v in value {
@@ -38,10 +52,11 @@ class PhraseInitilizer {
                     }
                     persistenceContainer.saveContext()
                     userDefaults.set(true, forKey: "hadReadLiuJson")
+                    NSLog("liu.json loaded")
                 }
             }
         } catch {
-            NSLog(String(describing: error))
+			NSLog("Error: "+String(describing: error))
         }
     }
 }
