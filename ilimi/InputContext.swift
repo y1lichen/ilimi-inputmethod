@@ -11,9 +11,9 @@ class InputContext {
     static let shared = InputContext()
     var currentInput: String = ""
     var currentIndex: Int = 0
-    private var _candidates: [NSAttributedString] = []
+    private var _candidates: [String] = []
     private var _numberedCandidates: [String] = []
-    var candidates: [NSAttributedString] {
+    var candidates: [String] {
         get { return _candidates }
         set {
             _candidates = newValue

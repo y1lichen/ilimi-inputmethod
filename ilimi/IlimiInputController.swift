@@ -15,7 +15,11 @@ class IlimiInputController: IMKInputController {
 
     override init!(server: IMKServer!, delegate: Any!, client inputClient: Any!) {
         // 橫式候選字窗
-        candidates = IlimiCandidates(server: server, panelType: kIMKScrollingGridCandidatePanel)
+		self.candidates = IMKCandidates(server: server, panelType: kIMKScrollingGridCandidatePanel)
+		var attributes = self.candidates.attributes()
+		let font = NSFont.systemFont(ofSize: 22)
+		attributes?[NSAttributedString.Key.font] = font
+		self.candidates.setFontSize(font.pointSize)
         super.init(server: server, delegate: delegate, client: inputClient)
     }
 
@@ -55,14 +59,14 @@ class IlimiInputController: IMKInputController {
     }
 
     override func candidateSelected(_ candidateString: NSAttributedString!) {
-        let id = InputContext.shared.candidates.firstIndex(of: candidateString) ?? -1
+		let id = InputContext.shared.candidates.firstIndex(of: candidateString.string) ?? -1
         NSLog("id: \(id), candidate: \(candidateString.string)")
         InputContext.shared.currentIndex = id
         commitCandidate(client: client())
     }
 
     func getNewCandidates(_ text: String) {
-        let candidates: [NSAttributedString] = InputEngine.shared.getCandidates(text)
+        let candidates = InputEngine.shared.getCandidates(text)
         InputContext.shared.candidates = candidates
         self.candidates.update()
     }

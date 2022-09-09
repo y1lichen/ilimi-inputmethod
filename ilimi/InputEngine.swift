@@ -12,17 +12,16 @@ import AppKit
 struct InputEngine {
     static let shared = InputEngine()
 
-    func getCandidates(_ text: String) -> [NSAttributedString] {
+    func getCandidates(_ text: String) -> [String] {
         let request = NSFetchRequest<Phrase>(entityName: "Phrase")
         request.predicate = NSPredicate(format: "key BEGINSWITH %@", text)
 		request.sortDescriptors = [NSSortDescriptor(key: "key_priority", ascending: true)]
         do {
             let response = try PersistenceController.shared.container.viewContext.fetch(request)
-            var candidates: [NSAttributedString] = []
+            var candidates: [String] = []
             for r in response {
                 let value: String = r.value(forKey: "value") as! String
-				let attValue = NSAttributedString.init(string: value)
-                candidates.append(attValue)
+                candidates.append(value)
             }
             return candidates
         } catch {
