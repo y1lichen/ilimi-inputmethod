@@ -11,18 +11,21 @@ class InputContext {
     static let shared = InputContext()
     var currentInput: String = ""
     var currentIndex: Int = 0
+	var candidatesCount = 0
     private var _candidates: [String] = []
     private var _numberedCandidates: [String] = []
     var candidates: [String] {
         get { return _candidates }
         set {
             _candidates = newValue
+			candidatesCount = _candidates.count
             _numberedCandidates = []
             for i in 0 ..< _candidates.count {
                 _numberedCandidates.append("\(i + 1) \(_candidates[i])")
             }
         }
     }
+	
 	var numberedCandidates: [String] {
 		return _numberedCandidates
 	}
