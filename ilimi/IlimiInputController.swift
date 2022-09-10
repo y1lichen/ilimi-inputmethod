@@ -55,7 +55,8 @@ class IlimiInputController: IMKInputController {
         let id = InputContext.shared.currentIndex
         let candidate = InputContext.shared.candidates[id]
         client().insertText(candidate, replacementRange: NSMakeRange(0, comp.count))
-        //		let range = NSMakeRange(NSNotFound, NSNotFound)
+		InputContext.shared.cleanUp()
+		updateCandidatesWindow()
     }
 
     override func candidateSelected(_ candidateString: NSAttributedString!) {
@@ -83,6 +84,12 @@ class IlimiInputController: IMKInputController {
             candidates.show()
         }
     }
+	
+	override func cancelComposition() {
+		super.cancelComposition()
+		let range = NSMakeRange(NSNotFound, NSNotFound)
+		client().setMarkedText("", selectionRange: range, replacementRange: range)
+	}
 
     override func handle(_ event: NSEvent!, client sender: Any!) -> Bool {
         if event.type == NSEvent.EventType.keyDown {
@@ -93,7 +100,17 @@ class IlimiInputController: IMKInputController {
                 InputContext.shared.currentInput.append(inputStr)
                 updateCandidatesWindow()
                 return true
-            } else if event.keyCode == kVK_ANSI_Minus || event.keyCode == kVK_PageDown {
+			} else if event.keyCode == kVK_RightArrow && InputContext.shared.currentIndex < InputContext.shared.candidatesCount - 1 {
+				InputContext.shared.currentIndex += 1
+				return true
+			} else if event.keyCode == kVK_LeftArrow && InputContext.shared.currentIndex > 0 {
+				InputContext.shared.currentIndex -= 1
+				return true
+			} else if event.keyCode == kVK_UpArrow || event.keyCode == kVK_ANSI_Minus || event.keyCode == kVK_PageUp {
+				self.candidates.pageUp(sender)
+				return true
+			} else if event.keyCode == kVK_DownArrow || event.keyCode == kVK_ANSI_Equal || event.keyCode == kVK_PageDown {
+				self.candidates.pageDown(sender)
                 return true
             } else if (event.keyCode == kVK_Shift || event.keyCode == kVK_Return) && InputContext.shared.currentInput.count > 0 {
                 commitInputText(client: sender)
@@ -103,6 +120,7 @@ class IlimiInputController: IMKInputController {
                 InputContext.shared.cleanUp()
                 candidates.update()
                 candidates.hide()
+				self.cancelComposition()
                 return true
             } else if event.keyCode == kVK_Space && InputContext.shared.candidates.count > 0 {
                 // commit the input
