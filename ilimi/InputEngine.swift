@@ -19,8 +19,13 @@ struct InputEngine {
         do {
             let response = try PersistenceController.shared.container.viewContext.fetch(request)
             var candidates: [String] = []
+			var candidatesSet: Set<String> = []
             for r in response {
                 let value: String = r.value(forKey: "value") as! String
+				if candidatesSet.contains(value) {
+					continue
+				}
+				candidatesSet.insert(value)
                 candidates.append(value)
             }
             return candidates
