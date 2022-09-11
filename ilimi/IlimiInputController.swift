@@ -115,10 +115,13 @@ class IlimiInputController: IMKInputController {
             let key = inputStr.first!
             if (event.keyCode == kVK_Shift || event.keyCode == kVK_Return) && InputContext.shared.currentInput.count > 0 {
                 return true
-            } else if event.keyCode == kVK_Space && InputContext.shared.candidates.count > 0 {
-                // commit the input
-                commitCandidate(client: sender)
-                return true
+            } else if event.keyCode == kVK_Space {
+                if InputContext.shared.candidates.count > 0 {
+                    // commit the input
+                    commitCandidate(client: sender)
+                    return true
+                }
+                return false
             } else if event.keyCode == kVK_Delete {
                 if InputContext.shared.currentInput.count > 0 {
                     InputContext.shared.currentInput.removeLast()
@@ -172,7 +175,7 @@ class IlimiInputController: IMKInputController {
                     candidates.pageDown(sender)
                     return true
                 }
-			}
+            }
         }
         return false
     }
