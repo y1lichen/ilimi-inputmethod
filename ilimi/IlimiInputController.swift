@@ -11,7 +11,7 @@ import SwiftUI
 @objc(IMKitSampleInputController)
 class IlimiInputController: IMKInputController {
     private let candidates: IMKCandidates
-	private var prefixHasCandidates: Bool = true
+    private var prefixHasCandidates: Bool = true
 
     override init!(server: IMKServer!, delegate: Any!, client inputClient: Any!) {
         // 橫式候選字窗
@@ -47,13 +47,19 @@ class IlimiInputController: IMKInputController {
         return InputContext.shared.candidates
     }
 
-    func commitInputText(client sender: Any!) {
+    func commitText(client sender: Any!, text: String) {
+        client().insertText(text, replacementRange: NSMakeRange(0, text.count))
+        InputContext.shared.cleanUp()
+        candidates.hide()
     }
 
     func commitCandidate(client sender: Any!) {
         let comp = InputContext.shared.currentInput
         let id = InputContext.shared.currentIndex
-        let candidate = InputContext.shared.candidates[id]
+        var candidate = InputContext.shared.candidates[id]
+        if InputContext.shared.isTradToSim {
+            candidate = GBig.shared.simplify(candidate)
+        }
         client().insertText(candidate, replacementRange: NSMakeRange(0, comp.count))
         InputContext.shared.cleanUp()
         updateCandidatesWindow()
@@ -66,9 +72,14 @@ class IlimiInputController: IMKInputController {
         commitCandidate(client: client())
     }
 
+    // 參考威注音 不實作該函式
+    // 詳見https://github.com/vChewing/vChewing-macOS/blob/main/Source/Modules/ControllerModules/ctlInputMethod_Core.swift
+    override func candidateSelectionChanged(_ candidateString: NSAttributedString!) {
+    }
+
     func getNewCandidates(_ text: String) {
         let candidates = InputEngine.shared.getCandidates(text)
-		prefixHasCandidates = candidates.count > 0 ? true : false
+        prefixHasCandidates = candidates.count > 0 ? true : false
         InputContext.shared.candidates = candidates
         self.candidates.update()
     }
@@ -91,6 +102,9 @@ class IlimiInputController: IMKInputController {
 
     override func cancelComposition() {
         super.cancelComposition()
+        InputContext.shared.cleanUp()
+        candidates.update()
+        candidates.hide()
         let range = NSMakeRange(NSNotFound, NSNotFound)
         client().setMarkedText("", selectionRange: range, replacementRange: range)
     }
@@ -99,18 +113,7 @@ class IlimiInputController: IMKInputController {
         if event.type == NSEvent.EventType.keyDown {
             let inputStr = event.characters!
             let key = inputStr.first!
-            NSLog("key: %@", String(key))
-            if key.isLetter {
-                // 字根最多只有5碼
-				if InputContext.shared.currentInput.count >= 5 || !prefixHasCandidates {
-                    NSSound.beep()
-                    return true
-                }
-                InputContext.shared.currentInput.append(inputStr)
-                updateCandidatesWindow()
-                return true
-            } else if (event.keyCode == kVK_Shift || event.keyCode == kVK_Return) && InputContext.shared.currentInput.count > 0 {
-                commitInputText(client: sender)
+            if (event.keyCode == kVK_Shift || event.keyCode == kVK_Return) && InputContext.shared.currentInput.count > 0 {
                 return true
             } else if event.keyCode == kVK_Space && InputContext.shared.candidates.count > 0 {
                 // commit the input
@@ -128,14 +131,21 @@ class IlimiInputController: IMKInputController {
             } else if event.keyCode == kVK_Escape {
                 // cleanup the input
                 if InputContext.shared.currentInput.count > 0 {
-                    InputContext.shared.cleanUp()
-                    candidates.update()
-                    candidates.hide()
                     cancelComposition()
                     return true
                 }
                 return false
+            } else if key.isLetter || key.isPunctuation {
+                // 字根最多只有5碼
+                if InputContext.shared.currentInput.count >= 5 || !prefixHasCandidates {
+                    NSSound.beep()
+                    return true
+                }
+                InputContext.shared.currentInput.append(inputStr)
+                updateCandidatesWindow()
+                return true
             } else if candidates.isVisible() {
+                // 使用數字鍵選字
                 if key.isNumber {
                     let keyValue = Int(key.hexDigitValue!)
                     if keyValue > 0 && keyValue <= InputContext.shared.candidatesCount {
@@ -162,14 +172,7 @@ class IlimiInputController: IMKInputController {
                     candidates.pageDown(sender)
                     return true
                 }
-                if event.keyCode == kVK_Delete {
-                    // remove last char from marked text
-                    InputContext.shared.currentInput.removeLast()
-                }
-            } else {
-                commitInputText(client: sender)
-                return false
-            }
+			}
         }
         return false
     }

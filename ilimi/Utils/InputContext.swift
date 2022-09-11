@@ -9,6 +9,7 @@ import Foundation
 
 class InputContext {
     static let shared = InputContext()
+	var isTradToSim: Bool = false
     var currentInput: String = ""
     var currentIndex: Int = 0
 	var candidatesCount = 0
@@ -43,4 +44,5 @@ class InputContext {
 		_candidates = []
 		_numberedCandidates = []
 	}
+	
 }
