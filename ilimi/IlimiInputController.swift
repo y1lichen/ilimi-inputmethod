@@ -11,6 +11,7 @@ import SwiftUI
 @objc(IMKitSampleInputController)
 class IlimiInputController: IMKInputController {
     private let candidates: IMKCandidates
+	private var prefixHasCandidates: Bool = true
 
     override init!(server: IMKServer!, delegate: Any!, client inputClient: Any!) {
         // 橫式候選字窗
@@ -67,6 +68,7 @@ class IlimiInputController: IMKInputController {
 
     func getNewCandidates(_ text: String) {
         let candidates = InputEngine.shared.getCandidates(text)
+		prefixHasCandidates = candidates.count > 0 ? true : false
         InputContext.shared.candidates = candidates
         self.candidates.update()
     }
@@ -100,7 +102,7 @@ class IlimiInputController: IMKInputController {
             NSLog("key: %@", String(key))
             if key.isLetter {
                 // 字根最多只有5碼
-                if InputContext.shared.currentInput.count >= 5 {
+				if InputContext.shared.currentInput.count >= 5 || !prefixHasCandidates {
                     NSSound.beep()
                     return true
                 }
