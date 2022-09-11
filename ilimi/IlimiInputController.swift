@@ -101,8 +101,8 @@ class IlimiInputController: IMKInputController {
             if key.isLetter {
                 // 字根最多只有5碼
                 if InputContext.shared.currentInput.count >= 5 {
-					NSSound.beep()
-                    return false
+                    NSSound.beep()
+                    return true
                 }
                 InputContext.shared.currentInput.append(inputStr)
                 updateCandidatesWindow()
@@ -114,15 +114,34 @@ class IlimiInputController: IMKInputController {
                 // commit the input
                 commitCandidate(client: sender)
                 return true
+            } else if event.keyCode == kVK_Delete {
+                if InputContext.shared.currentInput.count > 0 {
+                    InputContext.shared.currentInput.removeLast()
+                    let range = NSMakeRange(NSNotFound, NSNotFound)
+                    client().setMarkedText(InputContext.shared.currentInput, selectionRange: range, replacementRange: range)
+                    updateCandidatesWindow()
+                    return true
+                }
+                return false
+            } else if event.keyCode == kVK_Escape {
+                // cleanup the input
+                if InputContext.shared.currentInput.count > 0 {
+                    InputContext.shared.cleanUp()
+                    candidates.update()
+                    candidates.hide()
+                    cancelComposition()
+                    return true
+                }
+                return false
             } else if candidates.isVisible() {
-				if key.isNumber {
-					let keyValue = Int(key.hexDigitValue!)
-					if keyValue > 0 && keyValue <= InputContext.shared.candidatesCount {
-						InputContext.shared.currentIndex = keyValue - 1
-						commitCandidate(client: sender)
-						return true
-					}
-				}
+                if key.isNumber {
+                    let keyValue = Int(key.hexDigitValue!)
+                    if keyValue > 0 && keyValue <= InputContext.shared.candidatesCount {
+                        InputContext.shared.currentIndex = keyValue - 1
+                        commitCandidate(client: sender)
+                        return true
+                    }
+                }
                 if event.keyCode == kVK_RightArrow && InputContext.shared.currentIndex < InputContext.shared.candidatesCount - 1 {
                     InputContext.shared.currentIndex += 1
                     candidates.moveRight(sender)
@@ -141,13 +160,9 @@ class IlimiInputController: IMKInputController {
                     candidates.pageDown(sender)
                     return true
                 }
-                if event.keyCode == kVK_Escape {
-                    // cleanup the input
-                    InputContext.shared.cleanUp()
-                    candidates.update()
-                    candidates.hide()
-                    cancelComposition()
-                    return true
+                if event.keyCode == kVK_Delete {
+                    // remove last char from marked text
+                    InputContext.shared.currentInput.removeLast()
                 }
             } else {
                 commitInputText(client: sender)
