@@ -58,9 +58,9 @@ class IlimiInputController: IMKInputController {
     func commitCandidate(client sender: Any!) {
         let comp = InputContext.shared.currentInput
         let id = InputContext.shared.currentIndex
-		if id < 0 || id >= InputContext.shared.candidatesCount {
-			return
-		}
+        if id < 0 || id >= InputContext.shared.candidatesCount {
+            return
+        }
         var candidate = InputContext.shared.candidates[id]
         if InputContext.shared.isTradToSim {
             candidate = GBig.shared.simplify(candidate)
@@ -120,7 +120,7 @@ class IlimiInputController: IMKInputController {
         InputContext.shared.cleanUp()
         candidates.update()
         candidates.hide()
-        super.cancelComposition()
+		super.cancelComposition()
     }
 
     override func handle(_ event: NSEvent!, client sender: Any!) -> Bool {
@@ -154,19 +154,25 @@ class IlimiInputController: IMKInputController {
                 return false
             } else if key.isLetter || key.isPunctuation {
                 // 字根最多只有5碼
-                if InputContext.shared.currentInput.count >= 5 || !prefixHasCandidates {
+				if (InputContext.shared.currentInput.count >= 5 || !prefixHasCandidates) && InputContext.shared.currentInput.prefix(2) != ",,"{
                     NSSound.beep()
                     return true
                 }
-                // 加v、r、s等選字
-                if InputContext.shared.candidatesCount > 0 {
+				// 正常輸入至markedText
+				InputContext.shared.currentInput.append(inputStr)
+				// 加v、r、s等選字
+				if !(InputContext.shared.preInputPrefixSet.contains(InputContext.shared.currentInput)) && InputContext.shared.candidatesCount > 0 {
                     if let id = assistantDict[inputStr] {
                         if selectCandidatesByNumAndCommit(client: sender, id: id) {
                             return true
                         }
                     }
                 }
-                InputContext.shared.currentInput.append(inputStr)
+                // ,,CT -> 打繁出簡模式
+                let currentInput = InputContext.shared.currentInput
+                if checkIsTradToSimToggle(input: currentInput) {
+                    return true
+                }
                 updateCandidatesWindow()
                 return true
             } else if candidates.isVisible() {
@@ -194,6 +200,17 @@ class IlimiInputController: IMKInputController {
                     return true
                 }
             }
+        }
+        return false
+    }
+}
+
+extension IlimiInputController {
+    func checkIsTradToSimToggle(input: String) -> Bool {
+        if input == ",,CT" {
+            InputContext.shared.isTradToSim = true
+            cancelComposition()
+            return true
         }
         return false
     }

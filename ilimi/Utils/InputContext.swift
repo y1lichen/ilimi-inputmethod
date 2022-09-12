@@ -13,6 +13,7 @@ class InputContext {
     var currentInput: String = ""
     var currentIndex: Int = 0
 	var candidatesCount = 0
+	var preInputPrefixSet: Set<String> = []
     private var _candidates: [String] = []
     private var _numberedCandidates: [String] = []
     var candidates: [String] {
@@ -40,8 +41,10 @@ class InputContext {
 	
 	func cleanUp() {
 		currentIndex = 0
+		candidatesCount = 0
 		currentInput  = ""
-		_candidates = []
+		preInputPrefixSet = []
+		candidates = []
 		_numberedCandidates = []
 	}
 	

@@ -11,6 +11,7 @@ import AppKit
 
 struct InputEngine {
     static let shared = InputEngine()
+	
 
     func getCandidates(_ text: String) -> [String] {
         let request = NSFetchRequest<Phrase>(entityName: "Phrase")
@@ -20,14 +21,19 @@ struct InputEngine {
             let response = try PersistenceController.shared.container.viewContext.fetch(request)
             var candidates: [String] = []
 			var candidatesSet: Set<String> = []
+			var inputStrSet: Set<String> = []
             for r in response {
                 let value: String = r.value(forKey: "value") as! String
 				if candidatesSet.contains(value) {
 					continue
 				}
+				if r.key!.count > text.count {
+					inputStrSet.insert(String(r.key!.prefix(text.count+1)))
+				}
 				candidatesSet.insert(value)
                 candidates.append(value)
             }
+			InputContext.shared.preInputPrefixSet = inputStrSet
             return candidates
         } catch {
             NSLog(error.localizedDescription)
