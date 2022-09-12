@@ -13,6 +13,8 @@ class IlimiInputController: IMKInputController {
     private let candidates: IMKCandidates
     private var prefixHasCandidates: Bool = true
 
+    let assistantDict: [String: Int] = ["v": 1, "r": 2, "s": 3, "f": 4, "w": 5, "l": 6, "c": 7, "b": 8]
+
     override init!(server: IMKServer!, delegate: Any!, client inputClient: Any!) {
         // 橫式候選字窗
         candidates = IMKCandidates(server: server, panelType: kIMKScrollingGridCandidatePanel)
@@ -56,6 +58,9 @@ class IlimiInputController: IMKInputController {
     func commitCandidate(client sender: Any!) {
         let comp = InputContext.shared.currentInput
         let id = InputContext.shared.currentIndex
+		if id < 0 || id >= InputContext.shared.candidatesCount {
+			return
+		}
         var candidate = InputContext.shared.candidates[id]
         if InputContext.shared.isTradToSim {
             candidate = GBig.shared.simplify(candidate)
@@ -100,13 +105,22 @@ class IlimiInputController: IMKInputController {
         }
     }
 
+    func selectCandidatesByNumAndCommit(client sender: Any!, id: Int) -> Bool {
+        if id >= 0 && id < InputContext.shared.candidatesCount {
+            InputContext.shared.currentIndex = id
+            commitCandidate(client: sender)
+            return true
+        }
+        return false
+    }
+
     override func cancelComposition() {
-        super.cancelComposition()
+        let range = NSMakeRange(NSNotFound, NSNotFound)
+        client().setMarkedText("", selectionRange: range, replacementRange: range)
         InputContext.shared.cleanUp()
         candidates.update()
         candidates.hide()
-        let range = NSMakeRange(NSNotFound, NSNotFound)
-        client().setMarkedText("", selectionRange: range, replacementRange: range)
+        super.cancelComposition()
     }
 
     override func handle(_ event: NSEvent!, client sender: Any!) -> Bool {
@@ -144,6 +158,14 @@ class IlimiInputController: IMKInputController {
                     NSSound.beep()
                     return true
                 }
+                // 加v、r、s等選字
+                if InputContext.shared.candidatesCount > 0 {
+                    if let id = assistantDict[inputStr] {
+                        if selectCandidatesByNumAndCommit(client: sender, id: id) {
+                            return true
+                        }
+                    }
+                }
                 InputContext.shared.currentInput.append(inputStr)
                 updateCandidatesWindow()
                 return true
@@ -151,11 +173,7 @@ class IlimiInputController: IMKInputController {
                 // 使用數字鍵選字
                 if key.isNumber {
                     let keyValue = Int(key.hexDigitValue!)
-                    if keyValue > 0 && keyValue <= InputContext.shared.candidatesCount {
-                        InputContext.shared.currentIndex = keyValue - 1
-                        commitCandidate(client: sender)
-                        return true
-                    }
+                    return selectCandidatesByNumAndCommit(client: sender, id: keyValue - 1)
                 }
                 if event.keyCode == kVK_RightArrow && InputContext.shared.currentIndex < InputContext.shared.candidatesCount - 1 {
                     InputContext.shared.currentIndex += 1

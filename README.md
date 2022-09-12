@@ -2,14 +2,15 @@
 利用[InputMethodKit](https://developer.apple.com/documentation/inputmethodkit)開發的仿蝦米
 
 一粒米輸入法的字根檔使用的是[肥米輸入法](https://github.com/shadowjohn/UCL_LIU)的字根檔
-⚠️ 因尚未釐清嘸蝦米版權問題，如同肥米輸入法，一粒米輸入法暫不直接發布字根檔。  
-待一粒米輸入法開發至一階段後會研究這問題，並研擬字根檔的發布方式。  
+⚠️ 因尚未釐清嘸蝦米版權問題，如同肥米輸入法，一粒米輸入法暫不直接發布字根檔。
+待一粒米輸入法開發至一階段後會研究這問題，並研擬字根檔的發布方式。
 目前若需要字根檔可發信至 *y1lichen@icloud.com* 或是依照[肥米輸入法](https://github.com/shadowjohn/UCL_LIU)的說明，生成liu.json檔案
 
-## 功能（未完成）
+## 功能（未完成、仍持續新增）
 
 1. 一般輸入
 2. 打繁出簡
+3. 加v、r、s等輔助選字
 
 ## Reference
 ---
