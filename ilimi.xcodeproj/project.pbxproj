@@ -64,6 +64,7 @@
 				D4FC14CB28C649F70081BCC0 /* Products */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		D4FC14CB28C649F70081BCC0 /* Products */ = {
 			isa = PBXGroup;

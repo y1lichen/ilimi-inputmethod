@@ -1,4 +1,4 @@
-//  IlimiInputController.swift
+//   IlimiInputController.swift
 //  ilimi
 //
 //  Created by 陳奕利 on 2022/9/5.
@@ -11,26 +11,30 @@ import InputMethodKit
 class IlimiInputController: IMKInputController {
     private let candidates: IMKCandidates
     private var prefixHasCandidates: Bool = true
-
+    // 輔助選字的字典
     let assistantDict: [String: Int] = ["v": 1, "r": 2, "s": 3, "f": 4, "w": 5, "l": 6, "c": 7, "b": 8]
 
     override init!(server: IMKServer!, delegate: Any!, client inputClient: Any!) {
         // 橫式候選字窗
         candidates = IMKCandidates(server: server, panelType: kIMKScrollingGridCandidatePanel)
-		super.init(server: server, delegate: delegate, client: inputClient)
         var attributes = candidates.attributes()
         let font = NSFont.systemFont(ofSize: 22)
         attributes?[NSAttributedString.Key.font] = font
         candidates.setFontSize(font.pointSize)
-		activateServer(inputClient)
+        super.init(server: server, delegate: delegate, client: inputClient)
+        activateServer(inputClient)
     }
 
     override func activateServer(_ sender: Any!) {
         guard sender is IMKTextInput else {
             return
         }
+        NSLog("start!")
         InputContext.shared.cleanUp()
         candidates.hide()
+        if let client = client(), client.bundleIdentifier() != Bundle.main.bundleIdentifier {
+            setKeyLayout()
+        }
     }
 
     override func deactivateServer(_ sender: Any!) {
@@ -90,7 +94,7 @@ class IlimiInputController: IMKInputController {
     }
 
     func updateCandidatesWindow() {
-		guard let client = client() else {return}
+        guard let client = client() else { return }
         let comp = InputContext.shared.currentInput
         let range = NSMakeRange(NSNotFound, NSNotFound)
         client.setMarkedText(comp, selectionRange: range, replacementRange: range)
@@ -101,13 +105,22 @@ class IlimiInputController: IMKInputController {
                 return
             }
             candidates.show()
-			// 嘗試實作https://github.com/gureum/gureum/issues/843
-			while self.candidates.windowLevel() <= client.windowLevel() {
-				self.candidates.setWindowLevel(UInt64(max(0, client.windowLevel() + 1000)))
-			}
+            // 嘗試實作https://github.com/gureum/gureum/issues/843
+            while candidates.windowLevel() <= client.windowLevel() {
+                candidates.setWindowLevel(UInt64(max(0, client.windowLevel() + 1000)))
+            }
         } else {
             candidates.hide()
         }
+    }
+
+    func checkIsTradToSimToggle(input: String) -> Bool {
+        if input == ",,CT" {
+            InputContext.shared.isTradToSim = true
+            cancelComposition()
+            return true
+        }
+        return false
     }
 
     func selectCandidatesByNumAndCommit(client sender: Any!, id: Int) -> Bool {
@@ -122,70 +135,27 @@ class IlimiInputController: IMKInputController {
     override func cancelComposition() {
         client().setMarkedText("", selectionRange: NSMakeRange(0, 0), replacementRange: NSMakeRange(NSNotFound, NSNotFound))
         InputContext.shared.cleanUp()
-		self.candidates.update()
-		self.candidates.hide()
-		super.cancelComposition()
+        candidates.update()
+        candidates.hide()
+        prefixHasCandidates = true
+        super.cancelComposition()
     }
 
     override func handle(_ event: NSEvent!, client sender: Any!) -> Bool {
-		guard let event = event, sender is IMKTextInput else {
-			cancelComposition()
-			NSLog("Unable to handle NSEvent")
-			return false
-		}
+        guard let event = event, sender is IMKTextInput else {
+            cancelComposition()
+            NSLog("Unable to handle NSEvent")
+            return false
+        }
+        if event.type == .flagsChanged {
+            NSLog("Flag Changed")
+            return false
+        }
+        guard client() != nil else { return false }
         if event.type == NSEvent.EventType.keyDown {
-            if event.keyCode == kVK_Return && InputContext.shared.currentInput.count > 0 {
-                return true
-            } else if event.keyCode == kVK_Space {
-                if InputContext.shared.candidates.count > 0 {
-                    // commit the input
-                    commitCandidate(client: sender)
-                    return true
-                }
-                return false
-            } else if event.keyCode == kVK_Delete {
-                if InputContext.shared.currentInput.count > 0 {
-                    InputContext.shared.currentInput.removeLast()
-                    let range = NSMakeRange(NSNotFound, NSNotFound)
-                    client().setMarkedText(InputContext.shared.currentInput, selectionRange: range, replacementRange: range)
-                    updateCandidatesWindow()
-                    return true
-                }
-                return false
-            } else if event.keyCode == kVK_Escape {
-                // cleanup the input
-				if InputContext.shared.currentInput.count > 0 {
-					cancelComposition()
-					return true
-				}
-				return false
-			}
-			let inputStr = event.characters!
-			let key = inputStr.first!
-			if key.isLetter || key.isPunctuation {
-				NSLog("\(inputStr)")
-                // 字根最多只有5碼
-				if (InputContext.shared.currentInput.count >= 5 || !prefixHasCandidates) && InputContext.shared.currentInput.prefix(2) != ",,"{
-                    NSSound.beep()
-                    return true
-                }
-				// 正常輸入至markedText
-				InputContext.shared.currentInput.append(inputStr)
-				// 加v、r、s等選字
-				if !(InputContext.shared.preInputPrefixSet.contains(InputContext.shared.currentInput)) && InputContext.shared.candidatesCount > 0 {
-                    if let id = assistantDict[inputStr] {
-                        if selectCandidatesByNumAndCommit(client: sender, id: id) {
-                            return true
-                        }
-                    }
-                }
-                // ,,CT -> 打繁出簡模式
-                if checkIsTradToSimToggle(input: InputContext.shared.currentInput) {
-                    return true
-                }
-                updateCandidatesWindow()
-                return true
-            } else if candidates.isVisible() {
+            let inputStr = event.characters!
+            let key = inputStr.first!
+            if candidates.isVisible() {
                 // 使用數字鍵選字
                 if key.isNumber {
                     let keyValue = Int(key.hexDigitValue!)
@@ -209,6 +179,56 @@ class IlimiInputController: IMKInputController {
                     candidates.pageDown(sender)
                     return true
                 }
+                if event.keyCode == kVK_Space {
+                    if InputContext.shared.candidates.count > 0 {
+                        // commit the input
+                        commitCandidate(client: sender)
+                        return true
+                    }
+                    return false
+                } else if event.keyCode == kVK_Return && InputContext.shared.currentInput.count > 0 {
+                    return true
+                } else if event.keyCode == kVK_Delete {
+                    if InputContext.shared.currentInput.count > 0 {
+                        InputContext.shared.currentInput.removeLast()
+                        let range = NSMakeRange(NSNotFound, NSNotFound)
+                        client().setMarkedText(InputContext.shared.currentInput, selectionRange: range, replacementRange: range)
+                        updateCandidatesWindow()
+                        return true
+                    }
+                    return false
+                } else if event.keyCode == kVK_Escape {
+                    // cleanup the input
+                    if InputContext.shared.currentInput.count > 0 {
+                        cancelComposition()
+                        return true
+                    }
+                    return false
+                }
+            }
+            if key.isLetter || key.isPunctuation {
+                NSLog("\(inputStr)")
+                // 字根最多只有5碼
+                if (InputContext.shared.currentInput.count >= 5 || !prefixHasCandidates) && InputContext.shared.currentInput.prefix(2) != ",," {
+                    NSSound.beep()
+                    return true
+                }
+                // 正常輸入至markedText
+                InputContext.shared.currentInput.append(inputStr)
+                // ,,CT -> 打繁出簡模式
+                if checkIsTradToSimToggle(input: InputContext.shared.currentInput) {
+                    return true
+                }
+                // 加v、r、s等選字
+                if !(InputContext.shared.preInputPrefixSet.contains(InputContext.shared.currentInput)) && InputContext.shared.candidatesCount > 0 {
+                    if let id = assistantDict[inputStr] {
+                        if selectCandidatesByNumAndCommit(client: sender, id: id) {
+                            return true
+                        }
+                    }
+                }
+                updateCandidatesWindow()
+                return true
             }
         }
         return false
@@ -216,15 +236,18 @@ class IlimiInputController: IMKInputController {
 }
 
 extension IlimiInputController {
-    func checkIsTradToSimToggle(input: String) -> Bool {
-        if input == ",,CT" {
-            InputContext.shared.isTradToSim = true
-			cancelComposition()
-            return true
-        }
-        return false
+    override func recognizedEvents(_ sender: Any!) -> Int {
+        let events: NSEvent.EventTypeMask = [.keyDown, .flagsChanged]
+        return Int(events.rawValue)
+    }
+
+    var clientBundleIdentifier: String {
+        guard let client = client() else { return "" }
+        return client.bundleIdentifier() ?? ""
+    }
+
+    func setKeyLayout() {
+        guard let client = client() else { return }
+        client.overrideKeyboard(withKeyboardNamed: "BasicKeyboardLayout")
     }
 }
-
-/*
- */
