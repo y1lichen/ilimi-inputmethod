@@ -15,7 +15,7 @@
 		D4FC14D528C649F80081BCC0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4FC14D428C649F80081BCC0 /* Preview Assets.xcassets */; };
 		D4FC14DD28C64A520081BCC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC14DC28C64A520081BCC0 /* AppDelegate.swift */; };
 		D4FC14DF28C64A730081BCC0 /* IlimiInputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC14DE28C64A730081BCC0 /* IlimiInputController.swift */; };
-		D4FC14E328C667200081BCC0 /* PhraseInitilizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC14E228C667200081BCC0 /* PhraseInitilizer.swift */; };
+		D4FC14E328C667200081BCC0 /* DataInitilizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC14E228C667200081BCC0 /* DataInitilizer.swift */; };
 		D4FC14E628C668A90081BCC0 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D4FC14E428C668A90081BCC0 /* Model.xcdatamodeld */; };
 		D4FC14E828C66A180081BCC0 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC14E728C66A180081BCC0 /* PersistenceController.swift */; };
 /* End PBXBuildFile section */
@@ -33,7 +33,7 @@
 		D4FC14DC28C64A520081BCC0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D4FC14DE28C64A730081BCC0 /* IlimiInputController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IlimiInputController.swift; sourceTree = "<group>"; };
 		D4FC14E028C64F400081BCC0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		D4FC14E228C667200081BCC0 /* PhraseInitilizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhraseInitilizer.swift; sourceTree = "<group>"; };
+		D4FC14E228C667200081BCC0 /* DataInitilizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataInitilizer.swift; sourceTree = "<group>"; };
 		D4FC14E528C668A90081BCC0 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		D4FC14E728C66A180081BCC0 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -104,7 +104,7 @@
 			children = (
 				D4B2B76928C7A9A4006F3967 /* InputEngine.swift */,
 				D44CAD4D28C757C30046E5B6 /* InputContext.swift */,
-				D4FC14E228C667200081BCC0 /* PhraseInitilizer.swift */,
+				D4FC14E228C667200081BCC0 /* DataInitilizer.swift */,
 				D4FC14E728C66A180081BCC0 /* PersistenceController.swift */,
 				D4C45A3328CDF702003DC3B0 /* TradToSim.swift */,
 			);
@@ -139,7 +139,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1340;
-				LastUpgradeCheck = 1340;
+				LastUpgradeCheck = 1400;
 				TargetAttributes = {
 					D4FC14C928C649F70081BCC0 = {
 						CreatedOnToolsVersion = 13.4.1;
@@ -186,7 +186,7 @@
 				D4FC14DF28C64A730081BCC0 /* IlimiInputController.swift in Sources */,
 				D44CAD4E28C757C30046E5B6 /* InputContext.swift in Sources */,
 				D4C45A3228CBB00B003DC3B0 /* IlimiMenu.swift in Sources */,
-				D4FC14E328C667200081BCC0 /* PhraseInitilizer.swift in Sources */,
+				D4FC14E328C667200081BCC0 /* DataInitilizer.swift in Sources */,
 				D4C45A3428CDF702003DC3B0 /* TradToSim.swift in Sources */,
 				D4FC14E628C668A90081BCC0 /* Model.xcdatamodeld in Sources */,
 				D4FC14E828C66A180081BCC0 /* PersistenceController.swift in Sources */,
@@ -230,6 +230,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -291,6 +292,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -324,6 +326,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "/Library/Input Methods";
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"ilimi/Preview Content\"";
 				DEVELOPMENT_TEAM = SH6X4V52X3;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -360,6 +363,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "/Library/Input Methods";
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"ilimi/Preview Content\"";
 				DEVELOPMENT_TEAM = SH6X4V52X3;
 				ENABLE_HARDENED_RUNTIME = YES;

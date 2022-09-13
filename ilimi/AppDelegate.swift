@@ -32,7 +32,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 		// Insert code here to initialize your application
 		server = IMKServer(name: Bundle.main.infoDictionary?["InputMethodConnectionName"] as? String, bundleIdentifier: Bundle.main.bundleIdentifier)
 		candidatesWindow = IMKCandidates(server: server, panelType: kIMKSingleRowSteppingCandidatePanel, styleType: kIMKMain)
-		PhraseInitilizer.shared.initPhraseWhenStart()
+		DataInitilizer.shared.initDataWhenStart()
 		NSLog("tried connection")
 	}
 

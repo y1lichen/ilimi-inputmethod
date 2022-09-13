@@ -10,7 +10,7 @@ import Foundation
 extension IlimiInputController {
 
     @objc func reloadLiuJson() {
-        PhraseInitilizer.shared.loadLiuJson()
+        DataInitilizer.shared.loadLiuJson()
     }
 
     @objc func toggleTradToSim() {

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21G83" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21279" systemVersion="21G83" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Phrase" representedClassName="Phrase" syncable="YES" codeGenerationType="class">
         <attribute name="key" optional="YES" attributeType="String"/>
         <attribute name="key_priority" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="value" optional="YES" attributeType="String" valueTransformerName="NSSecureUnarchiveFromData"/>
     </entity>
-    <elements>
-        <element name="Phrase" positionX="-63" positionY="-18" width="128" height="74"/>
-    </elements>
+    <entity name="Zhuin" representedClassName="Zhuin" syncable="YES" codeGenerationType="class">
+        <attribute name="key" optional="YES" attributeType="String"/>
+        <attribute name="value" optional="YES" attributeType="String"/>
+    </entity>
 </model>
