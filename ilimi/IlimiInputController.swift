@@ -6,9 +6,8 @@
 
 import Cocoa
 import InputMethodKit
-import SwiftUI
 
-@objc(IMKitSampleInputController)
+@objc(IlimiInputController)
 class IlimiInputController: IMKInputController {
     private let candidates: IMKCandidates
     private var prefixHasCandidates: Bool = true
@@ -18,11 +17,12 @@ class IlimiInputController: IMKInputController {
     override init!(server: IMKServer!, delegate: Any!, client inputClient: Any!) {
         // 橫式候選字窗
         candidates = IMKCandidates(server: server, panelType: kIMKScrollingGridCandidatePanel)
+		super.init(server: server, delegate: delegate, client: inputClient)
         var attributes = candidates.attributes()
         let font = NSFont.systemFont(ofSize: 22)
         attributes?[NSAttributedString.Key.font] = font
         candidates.setFontSize(font.pointSize)
-        super.init(server: server, delegate: delegate, client: inputClient)
+		activateServer(inputClient)
     }
 
     override func activateServer(_ sender: Any!) {
@@ -90,9 +90,10 @@ class IlimiInputController: IMKInputController {
     }
 
     func updateCandidatesWindow() {
+		guard let client = client() else {return}
         let comp = InputContext.shared.currentInput
         let range = NSMakeRange(NSNotFound, NSNotFound)
-        client().setMarkedText(comp, selectionRange: range, replacementRange: range)
+        client.setMarkedText(comp, selectionRange: range, replacementRange: range)
         if comp.count > 0 {
             getNewCandidates(comp)
             if InputContext.shared.candidatesCount <= 0 {
@@ -100,6 +101,10 @@ class IlimiInputController: IMKInputController {
                 return
             }
             candidates.show()
+			// 嘗試實作https://github.com/gureum/gureum/issues/843
+			while self.candidates.windowLevel() <= client.windowLevel() {
+				self.candidates.setWindowLevel(UInt64(max(0, client.windowLevel() + 1000)))
+			}
         } else {
             candidates.hide()
         }
@@ -115,19 +120,21 @@ class IlimiInputController: IMKInputController {
     }
 
     override func cancelComposition() {
-        let range = NSMakeRange(NSNotFound, NSNotFound)
-        client().setMarkedText("", selectionRange: range, replacementRange: range)
+        client().setMarkedText("", selectionRange: NSMakeRange(0, 0), replacementRange: NSMakeRange(NSNotFound, NSNotFound))
         InputContext.shared.cleanUp()
-        candidates.update()
-        candidates.hide()
+		self.candidates.update()
+		self.candidates.hide()
 		super.cancelComposition()
     }
 
     override func handle(_ event: NSEvent!, client sender: Any!) -> Bool {
+		guard let event = event, sender is IMKTextInput else {
+			cancelComposition()
+			NSLog("Unable to handle NSEvent")
+			return false
+		}
         if event.type == NSEvent.EventType.keyDown {
-            let inputStr = event.characters!
-            let key = inputStr.first!
-            if (event.keyCode == kVK_Shift || event.keyCode == kVK_Return) && InputContext.shared.currentInput.count > 0 {
+            if event.keyCode == kVK_Return && InputContext.shared.currentInput.count > 0 {
                 return true
             } else if event.keyCode == kVK_Space {
                 if InputContext.shared.candidates.count > 0 {
@@ -147,12 +154,16 @@ class IlimiInputController: IMKInputController {
                 return false
             } else if event.keyCode == kVK_Escape {
                 // cleanup the input
-                if InputContext.shared.currentInput.count > 0 {
-                    cancelComposition()
-                    return true
-                }
-                return false
-            } else if key.isLetter || key.isPunctuation {
+				if InputContext.shared.currentInput.count > 0 {
+					cancelComposition()
+					return true
+				}
+				return false
+			}
+			let inputStr = event.characters!
+			let key = inputStr.first!
+			if key.isLetter || key.isPunctuation {
+				NSLog("\(inputStr)")
                 // 字根最多只有5碼
 				if (InputContext.shared.currentInput.count >= 5 || !prefixHasCandidates) && InputContext.shared.currentInput.prefix(2) != ",,"{
                     NSSound.beep()
@@ -169,8 +180,7 @@ class IlimiInputController: IMKInputController {
                     }
                 }
                 // ,,CT -> 打繁出簡模式
-                let currentInput = InputContext.shared.currentInput
-                if checkIsTradToSimToggle(input: currentInput) {
+                if checkIsTradToSimToggle(input: InputContext.shared.currentInput) {
                     return true
                 }
                 updateCandidatesWindow()
@@ -209,9 +219,12 @@ extension IlimiInputController {
     func checkIsTradToSimToggle(input: String) -> Bool {
         if input == ",,CT" {
             InputContext.shared.isTradToSim = true
-            cancelComposition()
+			cancelComposition()
             return true
         }
         return false
     }
 }
+
+/*
+ */

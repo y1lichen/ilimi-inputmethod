@@ -12,9 +12,11 @@
 
 #import <InputMethodKit/InputMethodKit.h>
 
-@interface IMKCandidates(ilimi) {
+@interface IMKCandidates (ilimi) {
 }
 
--(void)setFontSize:(double)fontSize;
+- (unsigned long long)windowLevel;  // Please do not use perform-selector with this since it will return a null value.
+- (void)setWindowLevel:(unsigned long long)level;  // Please do not use perform-selector with this since it never works.
+- (void)setFontSize:(double)fontSize;
 
 @end
