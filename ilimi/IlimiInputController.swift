@@ -124,6 +124,8 @@ class IlimiInputController: IMKInputController {
                     }
                     return false
                 } else if event.keyCode == kVK_Return && InputContext.shared.currentInput.count > 0 {
+                    commitText(client: sender, text: InputContext.shared.currentInput)
+                    cancelComposition()
                     return true
                 } else if event.keyCode == kVK_Delete {
                     if InputContext.shared.currentInput.count > 0 {
