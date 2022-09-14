@@ -26,15 +26,15 @@ class StringConverter {
             dict[big5[i]] = gb[i]
         }
     }
-
+    // only convert a single char
     func simplify(_ ch: String) -> String {
         if let c = dict[ch] {
             return c
         }
         return ch
     }
-    
-    func keyToZhuyin(_ text: String) -> String {
+
+    func keyToZhuyins(_ text: String) -> String {
         var res = ""
         for i in 0..<text.count {
             res.append(zhuyinDict[text[i]] ?? "")

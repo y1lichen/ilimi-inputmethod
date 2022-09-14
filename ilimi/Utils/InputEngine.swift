@@ -13,7 +13,7 @@ struct InputEngine {
     static let shared = InputEngine()
 	
 
-    func getCandidates(_ text: String) -> [String] {
+    func getCandidates(_ text: String) {
         let request = NSFetchRequest<Phrase>(entityName: "Phrase")
         request.predicate = NSPredicate(format: "key BEGINSWITH %@", text)
 		request.sortDescriptors = [NSSortDescriptor(key: "key_priority", ascending: true)]
@@ -34,10 +34,9 @@ struct InputEngine {
                 candidates.append(value)
             }
 			InputContext.shared.preInputPrefixSet = inputStrSet
-            return candidates
+            InputContext.shared.candidates = candidates
         } catch {
             NSLog(error.localizedDescription)
         }
-        return []
     }
 }

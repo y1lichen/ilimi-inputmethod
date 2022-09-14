@@ -10,7 +10,9 @@ import InputMethodKit
 @objc(IlimiInputController)
 class IlimiInputController: IMKInputController {
     private let candidates: IMKCandidates
-    private var prefixHasCandidates: Bool = true
+    static var prefixHasCandidates: Bool = true
+    private var isZhuyinMode: Bool = false
+    private let puntuationSet: Set<Character> = [",", "'", ";", ".", "[", "]", "(", ")"]
     // 輔助選字的字典
     let assistantDict: [String: Int] = ["v": 1, "r": 2, "s": 3, "f": 4, "w": 5, "l": 6, "c": 7, "b": 8]
 
@@ -29,7 +31,6 @@ class IlimiInputController: IMKInputController {
         guard sender is IMKTextInput else {
             return
         }
-        NSLog("start!")
         InputContext.shared.cleanUp()
         candidates.hide()
         if let client = client(), client.bundleIdentifier() != Bundle.main.bundleIdentifier {
@@ -44,7 +45,7 @@ class IlimiInputController: IMKInputController {
         InputContext.shared.cleanUp()
         candidates.hide()
     }
-    
+
     override func recognizedEvents(_ sender: Any!) -> Int {
         let events: NSEvent.EventTypeMask = [.keyDown, .flagsChanged]
         return Int(events.rawValue)
@@ -75,7 +76,7 @@ class IlimiInputController: IMKInputController {
         InputContext.shared.cleanUp()
         candidates.update()
         candidates.hide()
-        prefixHasCandidates = true
+        IlimiInputController.prefixHasCandidates = true
         super.cancelComposition()
     }
 
@@ -127,15 +128,6 @@ class IlimiInputController: IMKInputController {
                     commitText(client: sender, text: InputContext.shared.currentInput)
                     cancelComposition()
                     return true
-                } else if event.keyCode == kVK_Delete {
-                    if InputContext.shared.currentInput.count > 0 {
-                        InputContext.shared.currentInput.removeLast()
-                        let range = NSMakeRange(NSNotFound, NSNotFound)
-                        client().setMarkedText(InputContext.shared.currentInput, selectionRange: range, replacementRange: range)
-                        updateCandidatesWindow()
-                        return true
-                    }
-                    return false
                 } else if event.keyCode == kVK_Escape {
                     // cleanup the input
                     if InputContext.shared.currentInput.count > 0 {
@@ -145,10 +137,20 @@ class IlimiInputController: IMKInputController {
                     return false
                 }
             }
-            if key.isLetter || key.isPunctuation {
-                NSLog("\(inputStr)")
+            if event.keyCode == kVK_Delete {
+                if InputContext.shared.currentInput.count > 0 {
+                    InputContext.shared.currentInput.removeLast()
+                    let range = NSMakeRange(NSNotFound, NSNotFound)
+                    client().setMarkedText(InputContext.shared.currentInput, selectionRange: range, replacementRange: range)
+                    updateCandidatesWindow()
+                    return true
+                }
+                return false
+            }
+            if key.isLetter || puntuationSet.contains(key) {
+                NSLog("\(key)")
                 // 字根最多只有5碼
-                if (InputContext.shared.currentInput.count >= 5 || !prefixHasCandidates) && (InputContext.shared.currentInput.prefix(2) != ",," || InputContext.shared.currentInput.prefix(2) != "';") {
+                if (InputContext.shared.currentInput.count >= 5 || !IlimiInputController.prefixHasCandidates) && InputContext.shared.currentInput.prefix(2) != ",," && InputContext.shared.currentInput.prefix(2) != "';" {
                     NSSound.beep()
                     return true
                 }
@@ -158,8 +160,9 @@ class IlimiInputController: IMKInputController {
                 if checkIsTradToSimToggle(input: InputContext.shared.currentInput) {
                     return true
                 }
-                // 注音模式
-                if InputContext.shared.currentInput == "';" {
+                // '; -> 注音模式
+                if checkIsZhuyinMode(input: InputContext.shared.currentInput) {
+                    return true
                 }
                 // 加v、r、s等選字
                 if !(InputContext.shared.preInputPrefixSet.contains(InputContext.shared.currentInput)) && InputContext.shared.candidatesCount > 0 {
@@ -178,7 +181,13 @@ class IlimiInputController: IMKInputController {
 }
 
 extension IlimiInputController {
-    
+    func checkIsZhuyinMode(input: String) -> Bool {
+        if input == "';" {
+            isZhuyinMode = true
+        }
+        return isZhuyinMode
+    }
+
     var clientBundleIdentifier: String {
         guard let client = client() else { return "" }
         return client.bundleIdentifier() ?? ""
@@ -188,7 +197,7 @@ extension IlimiInputController {
         guard let client = client() else { return }
         client.overrideKeyboard(withKeyboardNamed: "BasicKeyboardLayout")
     }
-    
+
     func checkIsTradToSimToggle(input: String) -> Bool {
         if input == ",,CT" {
             InputContext.shared.isTradToSim = true
@@ -197,13 +206,6 @@ extension IlimiInputController {
         }
         return false
     }
-    
-    func getNewCandidates(_ text: String) {
-        let candidates = InputEngine.shared.getCandidates(text)
-        prefixHasCandidates = candidates.count > 0 ? true : false
-        InputContext.shared.candidates = candidates
-        self.candidates.update()
-    }
 
     func updateCandidatesWindow() {
         guard let client = client() else { return }
@@ -211,11 +213,12 @@ extension IlimiInputController {
         let range = NSMakeRange(NSNotFound, NSNotFound)
         client.setMarkedText(comp, selectionRange: range, replacementRange: range)
         if comp.count > 0 {
-            getNewCandidates(comp)
+            InputEngine.shared.getCandidates(comp)
             if InputContext.shared.candidatesCount <= 0 {
                 candidates.hide()
                 return
             }
+            candidates.update()
             candidates.show()
             // 嘗試實作https://github.com/gureum/gureum/issues/843
             while candidates.windowLevel() <= client.windowLevel() {
@@ -225,13 +228,13 @@ extension IlimiInputController {
             candidates.hide()
         }
     }
-    
+
     func commitText(client sender: Any!, text: String) {
         client().insertText(text, replacementRange: NSMakeRange(0, text.count))
         InputContext.shared.cleanUp()
         candidates.hide()
     }
-
+    
     func commitCandidate(client sender: Any!) {
         let comp = InputContext.shared.currentInput
         let id = InputContext.shared.currentIndex
@@ -255,11 +258,4 @@ extension IlimiInputController {
         }
         return false
     }
-    
-    func setMarkedTextForPinyinMode(text: String, client sender: Any!) {
-        let range = NSMakeRange(NSNotFound, NSNotFound)
-        let markedText = "注" + text
-        client().setMarkedText(markedText, selectionRange: range, replacementRange: range)
-    }
-
 }

@@ -21,6 +21,7 @@ class InputContext {
         set {
             _candidates = newValue
 			candidatesCount = _candidates.count
+            IlimiInputController.prefixHasCandidates = (candidatesCount > 0) ? true : false
             _numberedCandidates = []
             for i in 0 ..< _candidates.count {
                 _numberedCandidates.append("\(i + 1) \(_candidates[i])")
@@ -46,6 +47,7 @@ class InputContext {
 		preInputPrefixSet = []
 		candidates = []
 		_numberedCandidates = []
+        IlimiInputController.prefixHasCandidates = true
 	}
-	
 }
+
