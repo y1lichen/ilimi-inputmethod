@@ -44,6 +44,11 @@ class IlimiInputController: IMKInputController {
         InputContext.shared.cleanUp()
         candidates.hide()
     }
+    
+    override func recognizedEvents(_ sender: Any!) -> Int {
+        let events: NSEvent.EventTypeMask = [.keyDown, .flagsChanged]
+        return Int(events.rawValue)
+    }
 
     override func selectionRange() -> NSRange {
         return NSMakeRange(NSNotFound, NSNotFound)
@@ -51,27 +56,6 @@ class IlimiInputController: IMKInputController {
 
     override func candidates(_ sender: Any!) -> [Any]! {
         return InputContext.shared.candidates
-    }
-
-    func commitText(client sender: Any!, text: String) {
-        client().insertText(text, replacementRange: NSMakeRange(0, text.count))
-        InputContext.shared.cleanUp()
-        candidates.hide()
-    }
-
-    func commitCandidate(client sender: Any!) {
-        let comp = InputContext.shared.currentInput
-        let id = InputContext.shared.currentIndex
-        if id < 0 || id >= InputContext.shared.candidatesCount {
-            return
-        }
-        var candidate = InputContext.shared.candidates[id]
-        if InputContext.shared.isTradToSim {
-            candidate = GBig.shared.simplify(candidate)
-        }
-        client().insertText(candidate, replacementRange: NSMakeRange(0, comp.count))
-        InputContext.shared.cleanUp()
-        updateCandidatesWindow()
     }
 
     override func candidateSelected(_ candidateString: NSAttributedString!) {
@@ -84,52 +68,6 @@ class IlimiInputController: IMKInputController {
     // 參考威注音 不實作該函式
     // 詳見https://github.com/vChewing/vChewing-macOS/blob/main/Source/Modules/ControllerModules/ctlInputMethod_Core.swift
     override func candidateSelectionChanged(_ candidateString: NSAttributedString!) {
-    }
-
-    func getNewCandidates(_ text: String) {
-        let candidates = InputEngine.shared.getCandidates(text)
-        prefixHasCandidates = candidates.count > 0 ? true : false
-        InputContext.shared.candidates = candidates
-        self.candidates.update()
-    }
-
-    func updateCandidatesWindow() {
-        guard let client = client() else { return }
-        let comp = InputContext.shared.currentInput
-        let range = NSMakeRange(NSNotFound, NSNotFound)
-        client.setMarkedText(comp, selectionRange: range, replacementRange: range)
-        if comp.count > 0 {
-            getNewCandidates(comp)
-            if InputContext.shared.candidatesCount <= 0 {
-                candidates.hide()
-                return
-            }
-            candidates.show()
-            // 嘗試實作https://github.com/gureum/gureum/issues/843
-            while candidates.windowLevel() <= client.windowLevel() {
-                candidates.setWindowLevel(UInt64(max(0, client.windowLevel() + 1000)))
-            }
-        } else {
-            candidates.hide()
-        }
-    }
-
-    func checkIsTradToSimToggle(input: String) -> Bool {
-        if input == ",,CT" {
-            InputContext.shared.isTradToSim = true
-            cancelComposition()
-            return true
-        }
-        return false
-    }
-
-    func selectCandidatesByNumAndCommit(client sender: Any!, id: Int) -> Bool {
-        if id >= 0 && id < InputContext.shared.candidatesCount {
-            InputContext.shared.currentIndex = id
-            commitCandidate(client: sender)
-            return true
-        }
-        return false
     }
 
     override func cancelComposition() {
@@ -148,7 +86,6 @@ class IlimiInputController: IMKInputController {
             return false
         }
         if event.type == .flagsChanged {
-            NSLog("Flag Changed")
             return false
         }
         guard client() != nil else { return false }
@@ -209,7 +146,7 @@ class IlimiInputController: IMKInputController {
             if key.isLetter || key.isPunctuation {
                 NSLog("\(inputStr)")
                 // 字根最多只有5碼
-                if (InputContext.shared.currentInput.count >= 5 || !prefixHasCandidates) && InputContext.shared.currentInput.prefix(2) != ",," {
+                if (InputContext.shared.currentInput.count >= 5 || !prefixHasCandidates) && (InputContext.shared.currentInput.prefix(2) != ",," || InputContext.shared.currentInput.prefix(2) != "';") {
                     NSSound.beep()
                     return true
                 }
@@ -218,6 +155,9 @@ class IlimiInputController: IMKInputController {
                 // ,,CT -> 打繁出簡模式
                 if checkIsTradToSimToggle(input: InputContext.shared.currentInput) {
                     return true
+                }
+                // 注音模式
+                if InputContext.shared.currentInput == "';" {
                 }
                 // 加v、r、s等選字
                 if !(InputContext.shared.preInputPrefixSet.contains(InputContext.shared.currentInput)) && InputContext.shared.candidatesCount > 0 {
@@ -236,11 +176,7 @@ class IlimiInputController: IMKInputController {
 }
 
 extension IlimiInputController {
-    override func recognizedEvents(_ sender: Any!) -> Int {
-        let events: NSEvent.EventTypeMask = [.keyDown, .flagsChanged]
-        return Int(events.rawValue)
-    }
-
+    
     var clientBundleIdentifier: String {
         guard let client = client() else { return "" }
         return client.bundleIdentifier() ?? ""
@@ -250,4 +186,78 @@ extension IlimiInputController {
         guard let client = client() else { return }
         client.overrideKeyboard(withKeyboardNamed: "BasicKeyboardLayout")
     }
+    
+    func checkIsTradToSimToggle(input: String) -> Bool {
+        if input == ",,CT" {
+            InputContext.shared.isTradToSim = true
+            cancelComposition()
+            return true
+        }
+        return false
+    }
+    
+    func getNewCandidates(_ text: String) {
+        let candidates = InputEngine.shared.getCandidates(text)
+        prefixHasCandidates = candidates.count > 0 ? true : false
+        InputContext.shared.candidates = candidates
+        self.candidates.update()
+    }
+
+    func updateCandidatesWindow() {
+        guard let client = client() else { return }
+        let comp = InputContext.shared.currentInput
+        let range = NSMakeRange(NSNotFound, NSNotFound)
+        client.setMarkedText(comp, selectionRange: range, replacementRange: range)
+        if comp.count > 0 {
+            getNewCandidates(comp)
+            if InputContext.shared.candidatesCount <= 0 {
+                candidates.hide()
+                return
+            }
+            candidates.show()
+            // 嘗試實作https://github.com/gureum/gureum/issues/843
+            while candidates.windowLevel() <= client.windowLevel() {
+                candidates.setWindowLevel(UInt64(max(0, client.windowLevel() + 1000)))
+            }
+        } else {
+            candidates.hide()
+        }
+    }
+    
+    func commitText(client sender: Any!, text: String) {
+        client().insertText(text, replacementRange: NSMakeRange(0, text.count))
+        InputContext.shared.cleanUp()
+        candidates.hide()
+    }
+
+    func commitCandidate(client sender: Any!) {
+        let comp = InputContext.shared.currentInput
+        let id = InputContext.shared.currentIndex
+        if id < 0 || id >= InputContext.shared.candidatesCount {
+            return
+        }
+        var candidate = InputContext.shared.candidates[id]
+        if InputContext.shared.isTradToSim {
+            candidate = StringConverter.shared.simplify(candidate)
+        }
+        client().insertText(candidate, replacementRange: NSMakeRange(0, comp.count))
+        InputContext.shared.cleanUp()
+        updateCandidatesWindow()
+    }
+
+    func selectCandidatesByNumAndCommit(client sender: Any!, id: Int) -> Bool {
+        if id >= 0 && id < InputContext.shared.candidatesCount {
+            InputContext.shared.currentIndex = id
+            commitCandidate(client: sender)
+            return true
+        }
+        return false
+    }
+    
+    func setMarkedTextForPinyinMode(text: String, client sender: Any!) {
+        let range = NSMakeRange(NSNotFound, NSNotFound)
+        let markedText = "注" + text
+        client().setMarkedText(markedText, selectionRange: range, replacementRange: range)
+    }
+
 }
