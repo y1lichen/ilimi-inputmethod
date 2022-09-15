@@ -77,6 +77,7 @@ class IlimiInputController: IMKInputController {
         candidates.update()
         candidates.hide()
         IlimiInputController.prefixHasCandidates = true
+        isZhuyinMode = false
         super.cancelComposition()
     }
 
@@ -95,7 +96,11 @@ class IlimiInputController: IMKInputController {
             let key = inputStr.first!
             if candidates.isVisible() {
                 // 使用數字鍵選字
-                if key.isNumber {
+                if !isZhuyinMode && key.isNumber {
+                    let keyValue = Int(key.hexDigitValue!)
+                    return selectCandidatesByNumAndCommit(client: sender, id: keyValue - 1)
+                }
+                if isZhuyinMode && checkIsEndOfZhuyin(text: InputContext.shared.currentInput) && key.isNumber {
                     let keyValue = Int(key.hexDigitValue!)
                     return selectCandidatesByNumAndCommit(client: sender, id: keyValue - 1)
                 }
@@ -128,14 +133,15 @@ class IlimiInputController: IMKInputController {
                     commitText(client: sender, text: InputContext.shared.currentInput)
                     cancelComposition()
                     return true
-                } else if event.keyCode == kVK_Escape {
-                    // cleanup the input
-                    if InputContext.shared.currentInput.count > 0 {
-                        cancelComposition()
-                        return true
-                    }
-                    return false
                 }
+            }
+            if event.keyCode == kVK_Escape {
+                // cleanup the input
+                if InputContext.shared.currentInput.count > 0 {
+                    cancelComposition()
+                    return true
+                }
+                return false
             }
             if event.keyCode == kVK_Delete {
                 if InputContext.shared.currentInput.count > 0 {
@@ -147,21 +153,21 @@ class IlimiInputController: IMKInputController {
                 }
                 return false
             }
-            if key.isLetter || puntuationSet.contains(key) {
+            if key.isLetter || puntuationSet.contains(key) || (isZhuyinMode && key.isNumber) {
                 NSLog("\(key)")
                 // 字根最多只有5碼
                 if (InputContext.shared.currentInput.count >= 5 || !IlimiInputController.prefixHasCandidates) && InputContext.shared.currentInput.prefix(2) != ",," && InputContext.shared.currentInput.prefix(2) != "';" {
                     NSSound.beep()
                     return true
                 }
-                // 正常輸入至markedText
+                // 加到comp
                 InputContext.shared.currentInput.append(inputStr)
-                // ,,CT -> 打繁出簡模式
-                if checkIsTradToSimToggle(input: InputContext.shared.currentInput) {
+                // '; -> 注音模式
+                if !isZhuyinMode && checkIsZhuyinMode(input: InputContext.shared.currentInput) {
                     return true
                 }
-                // '; -> 注音模式
-                if checkIsZhuyinMode(input: InputContext.shared.currentInput) {
+                // ,,CT -> 打繁出簡模式
+                if checkIsTradToSimToggle(input: InputContext.shared.currentInput) {
                     return true
                 }
                 // 加v、r、s等選字
@@ -182,10 +188,14 @@ class IlimiInputController: IMKInputController {
 
 extension IlimiInputController {
     func checkIsZhuyinMode(input: String) -> Bool {
-        if input == "';" {
-            isZhuyinMode = true
+        isZhuyinMode = (input == "';") ? true : false
+        if isZhuyinMode {
+            InputContext.shared.cleanUp()
+            let range = NSMakeRange(NSNotFound, NSNotFound)
+            client().setMarkedText("注", selectionRange: range, replacementRange: range)
+            return true
         }
-        return isZhuyinMode
+        return false
     }
 
     var clientBundleIdentifier: String {
@@ -207,11 +217,43 @@ extension IlimiInputController {
         return false
     }
 
-    func updateCandidatesWindow() {
-        guard let client = client() else { return }
-        let comp = InputContext.shared.currentInput
-        let range = NSMakeRange(NSNotFound, NSNotFound)
-        client.setMarkedText(comp, selectionRange: range, replacementRange: range)
+    func getZhuyinMarkedText(_ text: String) -> String {
+        return "注" + StringConverter.shared.keyToZhuyins(text)
+    }
+
+    func ensureWindowLevel(client sender: Any!) {
+        // 嘗試實作https://github.com/gureum/gureum/issues/843
+        while candidates.windowLevel() <= client().windowLevel() {
+            candidates.setWindowLevel(UInt64(max(0, client().windowLevel() + 1000)))
+        }
+    }
+
+    func getNewCandidatesByZhuyin(comp: String, client sender: Any!) {
+        if comp.count > 0 {
+            InputEngine.shared.getCadidatesByZhuyin(comp)
+            if InputContext.shared.candidatesCount <= 0 {
+                candidates.hide()
+                return
+            }
+            candidates.update()
+            candidates.show()
+            ensureWindowLevel(client: client())
+        } else {
+            candidates.hide()
+        }
+    }
+
+    func checkIsEndOfZhuyin(text: String) -> Bool {
+        if (text.last?.isLetter) != nil {
+            let num = Int(String(text.last!))
+            if num == 3 || num == 4 || num == 6 || num == 7 {
+                return true
+            }
+        }
+        return false
+    }
+
+    func getNewCandidates(comp: String, client sender: Any!) {
         if comp.count > 0 {
             InputEngine.shared.getCandidates(comp)
             if InputContext.shared.candidatesCount <= 0 {
@@ -220,12 +262,22 @@ extension IlimiInputController {
             }
             candidates.update()
             candidates.show()
-            // 嘗試實作https://github.com/gureum/gureum/issues/843
-            while candidates.windowLevel() <= client.windowLevel() {
-                candidates.setWindowLevel(UInt64(max(0, client.windowLevel() + 1000)))
-            }
+            ensureWindowLevel(client: client())
         } else {
             candidates.hide()
+        }
+    }
+
+    func updateCandidatesWindow() {
+        guard let client = client() else { return }
+        let comp = InputContext.shared.currentInput
+        let range = NSMakeRange(NSNotFound, NSNotFound)
+        if isZhuyinMode {
+            client.setMarkedText(getZhuyinMarkedText(comp), selectionRange: range, replacementRange: range)
+            getNewCandidatesByZhuyin(comp: comp, client: client)
+        } else {
+            client.setMarkedText(comp, selectionRange: range, replacementRange: range)
+            getNewCandidates(comp: comp, client: client)
         }
     }
 
@@ -233,8 +285,11 @@ extension IlimiInputController {
         client().insertText(text, replacementRange: NSMakeRange(0, text.count))
         InputContext.shared.cleanUp()
         candidates.hide()
+        if isZhuyinMode {
+            isZhuyinMode = false
+        }
     }
-    
+
     func commitCandidate(client sender: Any!) {
         let comp = InputContext.shared.currentInput
         let id = InputContext.shared.currentIndex
@@ -245,7 +300,12 @@ extension IlimiInputController {
         if InputContext.shared.isTradToSim {
             candidate = StringConverter.shared.simplify(candidate)
         }
-        client().insertText(candidate, replacementRange: NSMakeRange(0, comp.count))
+        if isZhuyinMode {
+            client().insertText(candidate, replacementRange: NSMakeRange(0, comp.count + 1))
+            isZhuyinMode = false
+        } else {
+            client().insertText(candidate, replacementRange: NSMakeRange(0, comp.count))
+        }
         InputContext.shared.cleanUp()
         updateCandidatesWindow()
     }
