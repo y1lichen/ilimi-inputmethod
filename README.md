@@ -1,4 +1,4 @@
-# Ilimi 一粒米輸入法
+叉 Ilimi 一粒米輸入法
 利用[InputMethodKit](https://developer.apple.com/documentation/inputmethodkit)開發的仿蝦米
 
 一粒米輸入法的字根檔使用的是[肥米輸入法](https://github.com/shadowjohn/UCL_LIU)的字根檔
@@ -11,6 +11,7 @@
 1. 一般輸入
 2. 打繁出簡
 3. 加v、r、s等輔助選字
+4. 注音輸入
 
 ## Reference
 ---
