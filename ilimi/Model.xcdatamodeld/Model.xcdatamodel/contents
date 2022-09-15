@@ -7,6 +7,7 @@
     </entity>
     <entity name="Zhuin" representedClassName="Zhuin" syncable="YES" codeGenerationType="class">
         <attribute name="key" optional="YES" attributeType="String"/>
+        <attribute name="key_priority" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="value" optional="YES" attributeType="String"/>
     </entity>
 </model>

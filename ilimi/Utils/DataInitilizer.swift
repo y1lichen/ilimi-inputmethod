@@ -43,11 +43,14 @@ class DataInitilizer {
         do {
             let data = try Data(contentsOf: URL(fileURLWithPath: pinyinPath))
             if let json = try JSONSerialization.jsonObject(with: data) as? [String: [String]] {
+                var count: Int64 = 0
                 for (key, value) in json {
                     for v in value {
                         let model = NSEntityDescription.insertNewObject(forEntityName: "Zhuin", into: persistenceContainer.container.viewContext) as! Zhuin
                         model.key = key
                         model.value = v
+                        model.key_priority = count
+                        count += 1
                     }
                 }
                 persistenceContainer.saveContext()
