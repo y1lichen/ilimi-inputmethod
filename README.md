@@ -10,7 +10,7 @@
 
 1. 一般輸入
 
-![一般輸入](https://github.com/y1lichen/ilimi-inputmethod/media/demo01.gif)
+![一般輸入](https://github.com/y1lichen/ilimi-inputmethod/blob/main/media/demo01.gif)
 
 2. 打繁出簡
 3. 加v、r、s等輔助選字
