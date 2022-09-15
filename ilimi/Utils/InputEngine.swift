@@ -11,7 +11,7 @@ import Foundation
 
 struct InputEngine {
     static let shared = InputEngine()
-
+    
     func getCadidatesByZhuyin(_ text: String) {
         let request = NSFetchRequest<Zhuin>(entityName: "Zhuin")
         request.predicate = NSPredicate(format: "key BEGINSWITH %@", text)
@@ -24,7 +24,7 @@ struct InputEngine {
             NSLog(error.localizedDescription)
         }
     }
-
+    
     func getCandidates(_ text: String) {
         let request = NSFetchRequest<Phrase>(entityName: "Phrase")
         request.predicate = NSPredicate(format: "key BEGINSWITH %@", text)
@@ -50,5 +50,18 @@ struct InputEngine {
         } catch {
             NSLog(error.localizedDescription)
         }
+    }
+    
+    func getKeysOfChar(_ text: String) -> [String] {
+        let request = NSFetchRequest<Zhuin>(entityName: "Zhuin")
+        request.predicate = NSPredicate(format: "value == %@", text)
+        do {
+            let response = try PersistenceController.shared.container.viewContext.fetch(request)
+            let res = response.map({ $0.key! })
+            return res
+        } catch {
+            NSLog(error.localizedDescription)
+        }
+        return []
     }
 }

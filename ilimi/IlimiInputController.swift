@@ -129,10 +129,6 @@ class IlimiInputController: IMKInputController {
                         return true
                     }
                     return false
-                } else if event.keyCode == kVK_Return && InputContext.shared.currentInput.count > 0 {
-                    commitText(client: sender, text: InputContext.shared.currentInput)
-                    cancelComposition()
-                    return true
                 }
             }
             if event.keyCode == kVK_Escape {
@@ -142,8 +138,7 @@ class IlimiInputController: IMKInputController {
                     return true
                 }
                 return false
-            }
-            if event.keyCode == kVK_Delete {
+            } else if event.keyCode == kVK_Delete {
                 if InputContext.shared.currentInput.count > 0 {
                     InputContext.shared.currentInput.removeLast()
                     let range = NSMakeRange(NSNotFound, NSNotFound)
@@ -152,6 +147,10 @@ class IlimiInputController: IMKInputController {
                     return true
                 }
                 return false
+            } else if event.keyCode == kVK_Return && InputContext.shared.currentInput.count > 0 {
+                commitText(client: sender, text: InputContext.shared.currentInput)
+                cancelComposition()
+                return true
             }
             if key.isLetter || puntuationSet.contains(key) || (isZhuyinMode && key.isNumber) {
                 NSLog("\(key)")
