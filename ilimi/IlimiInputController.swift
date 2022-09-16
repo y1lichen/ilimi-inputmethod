@@ -133,7 +133,7 @@ class IlimiInputController: IMKInputController {
             }
             if event.keyCode == kVK_Escape {
                 // cleanup the input
-                if InputContext.shared.currentInput.count > 0 {
+                if InputContext.shared.currentInput.count > 0 || isZhuyinMode {
                     cancelComposition()
                     return true
                 }
