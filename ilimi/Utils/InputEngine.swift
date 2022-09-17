@@ -36,11 +36,11 @@ struct InputEngine {
             var inputStrSet: Set<String> = []
             for r in response {
                 let value: String = r.value(forKey: "value") as! String
-                if candidatesSet.contains(value) {
-                    continue
-                }
                 if r.key!.count > text.count {
                     inputStrSet.insert(String(r.key!.prefix(text.count + 1)))
+                }
+                if candidatesSet.contains(value) {
+                    continue
                 }
                 candidatesSet.insert(value)
                 candidates.append(value)
