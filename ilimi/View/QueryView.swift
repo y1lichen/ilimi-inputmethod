@@ -7,36 +7,64 @@
 
 import SwiftUI
 
-struct QueryView: View {
-    var body: some View {
-        VStack {
-            Text("hello world")
-        }.frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
+struct QueryResult: Identifiable {
+    let id = UUID()
+
+    var char: String
+    var zhuyin: String
+    var inputCode: String
 }
 
-class QueryWindowController: NSWindowController, NSWindowDelegate {
-    override init(window: NSWindow?) {
-        super.init(window: window)
-        self.window?.isReleasedWhenClosed = false
+struct QueryView: View {
+    @State var textFieldText: String = ""
+    @State var results: [QueryResult] = []
+
+    func onCommit() {
+        results = []
+        for i in 0 ..< textFieldText.count {
+            results.append(handler(textFieldText[i]))
+        }
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+
+    func handler(_ text: String) -> QueryResult {
+        var res = QueryResult(char: "", zhuyin: "", inputCode: "")
+        let requestForKey = NSFetchRequest<Phrase>(entityName: "Phrase")
+        requestForKey.predicate = NSPredicate(format: "key == %@", text)
+        let requestForZhuyin = NSFetchRequest<Zhuin>(entityName: "Zhuin")
+        requestForZhuyin.predicate = NSPredicate(format: "key == %@", text)
+        do {
+            let responseForKey = try PersistenceController.shared.container.viewContext.fetch(requestForKey)
+            var keys = ""
+            for phrase in responseForKey {
+                keys += phrase.value!
+                keys += " "
+            }
+            res.inputCode = keys
+            let responseForZhuyin = try PersistenceController.shared.container.viewContext.fetch(requestForZhuyin)
+            var zhuyins = ""
+            for zhuyin in responseForZhuyin {
+                zhuyins += StringConverter.shared.keyToZhuyins(zhuyin.value!)
+                zhuyins += " "
+            }
+            res.zhuyin = zhuyins
+        } catch {
+            NSLog(error.localizedDescription)
+        }
+        return res
     }
-    
-    override func windowDidLoad() {
-        super.windowDidLoad()
-        self.window?.delegate = self
-        self.window?.makeKeyAndOrderFront(nil)
-        self.window?.orderFrontRegardless()
-        self.window?.level = .floating
-        self.window?.contentView = NSHostingView(rootView: QueryView())
-        NSApp.activate(ignoringOtherApps: true)
-    }
-    
-    func windowWillClose(_ notification: Notification) {
-        let delegate = (NSApplication.shared.delegate) as! AppDelegate
-        delegate.queryWindow = nil
+
+    var body: some View {
+        VStack {
+            TextField("輸入字詞", text: $textFieldText, onCommit: onCommit)
+                .textFieldStyle(.plain)
+                .padding()
+                .frame(width: 380)
+            Spacer()
+            Table(results) {
+                TableColumn("文字", value: \.char)
+                TableColumn("輸入碼", value: \.inputCode)
+                TableColumn("注音", value: \.zhuyin)
+            }
+        }.padding()
     }
 }

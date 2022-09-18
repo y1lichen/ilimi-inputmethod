@@ -22,7 +22,6 @@ extension IlimiInputController {
 
     @objc func toggleGetZhuyinPanel() {
         (NSApp.delegate as? AppDelegate)?.showQueryWindow()
-        NSApp.activate(ignoringOtherApps: true)
     }
 
     override func menu() -> NSMenu! {

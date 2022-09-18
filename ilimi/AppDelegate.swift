@@ -26,7 +26,7 @@ class NSManualApplication: NSApplication {
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
-    var queryWindow: QueryWindowController?
+    var queryWindow: NSWindow? = nil
     var server = IMKServer()
     var candidatesWindow = IMKCandidates()
 
@@ -43,15 +43,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func showQueryWindow() {
-        if queryWindow != nil {
-            queryWindow?.window?.orderFrontRegardless()
-            return
+        if let queryWindow = queryWindow {
+            if queryWindow.isVisible {
+                queryWindow.makeKeyAndOrderFront(self)
+                queryWindow.orderFrontRegardless()
+                return
+            }
         }
-        queryWindow = QueryWindowController(
-            window: NSWindow(contentRect: NSMakeRect(0, 0, 400, 300),
+        queryWindow = NSWindow(contentRect: NSMakeRect(0, 0, 400, 300),
                              styleMask: [.closable, .resizable, .miniaturizable, .titled],
                              backing: .buffered,
-                             defer: false))
-        queryWindow?.showWindow(self)
+                             defer: false)
+        queryWindow?.collectionBehavior = [.stationary, .canJoinAllSpaces, .fullScreenAuxiliary]
+        let queryView = QueryView()
+        queryWindow?.center()
+        queryWindow?.contentView = NSHostingView(rootView: queryView)
+        queryWindow?.makeKeyAndOrderFront(self)
+        queryWindow?.orderFrontRegardless()
+        queryWindow?.isReleasedWhenClosed = false
+        NSApp.setActivationPolicy(.accessory)
     }
+
 }
