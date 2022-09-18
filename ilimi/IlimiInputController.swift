@@ -94,7 +94,8 @@ class IlimiInputController: IMKInputController {
         if event.type == NSEvent.EventType.keyDown {
             let inputStr = event.characters!
             let key = inputStr.first!
-            if candidates.isVisible() {
+            // 原先使用的是self.candidates.isVisible
+            if InputContext.shared.candidatesCount > 0 {
                 // 使用數字鍵選字
                 if !isZhuyinMode && key.isNumber {
                     let keyValue = Int(key.hexDigitValue!)
@@ -114,21 +115,18 @@ class IlimiInputController: IMKInputController {
                     candidates.moveLeft(sender)
                     return true
                 }
-                if event.keyCode == kVK_UpArrow || event.keyCode == kVK_ANSI_Minus || event.keyCode == kVK_PageUp {
+                if event.keyCode == kVK_UpArrow || event.keyCode == kVK_PageUp || key == "[" {
                     candidates.pageUp(sender)
                     return true
                 }
-                if event.keyCode == kVK_DownArrow || event.keyCode == kVK_ANSI_Equal || event.keyCode == kVK_PageDown {
+                if event.keyCode == kVK_DownArrow || event.keyCode == kVK_PageDown || key == "]" {
                     candidates.pageDown(sender)
                     return true
                 }
                 if event.keyCode == kVK_Space {
-                    if InputContext.shared.candidates.count > 0 {
-                        // commit the input
-                        commitCandidate(client: sender)
-                        return true
-                    }
-                    return false
+                    // commit the input
+                    commitCandidate(client: sender)
+                    return true
                 }
             }
             if event.keyCode == kVK_Escape {
@@ -181,6 +179,7 @@ class IlimiInputController: IMKInputController {
                 return true
             }
         }
+        InputContext.shared.cleanUp()
         return false
     }
 }
