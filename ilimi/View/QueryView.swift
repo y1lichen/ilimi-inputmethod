@@ -9,7 +9,7 @@ import SwiftUI
 
 struct QueryResult: Identifiable {
     let id = UUID()
-
+    
     var char: String
     var zhuyin: String
     var inputCode: String
@@ -21,29 +21,31 @@ struct QueryView: View {
 
     func onCommit() {
         results = []
+        var temp = [QueryResult]()
         for i in 0 ..< textFieldText.count {
-            results.append(handler(textFieldText[i]))
+            temp.append(handler(textFieldText[i]))
         }
+        results = temp
     }
 
     func handler(_ text: String) -> QueryResult {
-        var res = QueryResult(char: "", zhuyin: "", inputCode: "")
+        var res = QueryResult(char: text, zhuyin: "", inputCode: "")
         let requestForKey = NSFetchRequest<Phrase>(entityName: "Phrase")
-        requestForKey.predicate = NSPredicate(format: "key == %@", text)
+        requestForKey.predicate = NSPredicate(format: "value == %@", text)
         let requestForZhuyin = NSFetchRequest<Zhuin>(entityName: "Zhuin")
-        requestForZhuyin.predicate = NSPredicate(format: "key == %@", text)
+        requestForZhuyin.predicate = NSPredicate(format: "value == %@", text)
         do {
             let responseForKey = try PersistenceController.shared.container.viewContext.fetch(requestForKey)
             var keys = ""
             for phrase in responseForKey {
-                keys += phrase.value!
+                keys += phrase.key!
                 keys += " "
             }
             res.inputCode = keys
             let responseForZhuyin = try PersistenceController.shared.container.viewContext.fetch(requestForZhuyin)
             var zhuyins = ""
             for zhuyin in responseForZhuyin {
-                zhuyins += StringConverter.shared.keyToZhuyins(zhuyin.value!)
+                zhuyins += StringConverter.shared.keyToZhuyins(zhuyin.key!)
                 zhuyins += " "
             }
             res.zhuyin = zhuyins
@@ -62,6 +64,7 @@ struct QueryView: View {
             Spacer()
             Table(results) {
                 TableColumn("文字", value: \.char)
+                    .width(60)
                 TableColumn("輸入碼", value: \.inputCode)
                 TableColumn("注音", value: \.zhuyin)
             }
