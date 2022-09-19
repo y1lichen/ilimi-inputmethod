@@ -1,6 +1,9 @@
 # Ilimi 一粒米輸入法
 利用[InputMethodKit](https://developer.apple.com/documentation/inputmethodkit)開發的仿蝦米
 
+最低系統要求： macOS 12.0+
+---
+
 一粒米輸入法的字根檔使用的是[肥米輸入法](https://github.com/shadowjohn/UCL_LIU)的字根檔
 ⚠️ 因尚未釐清嘸蝦米版權問題，如同肥米輸入法，一粒米輸入法暫不直接發布字根檔。
 待一粒米輸入法開發至一階段後會研究這問題，並研擬字根檔的發布方式。

@@ -94,6 +94,17 @@ class IlimiInputController: IMKInputController {
         if event.type == NSEvent.EventType.keyDown {
             let inputStr = event.characters!
             let key = inputStr.first!
+            if event.keyCode == kVK_Space {
+                if InputContext.shared.candidatesCount > 0 {
+                    // commit the input
+                    commitCandidate(client: sender)
+                    return true
+                } else if InputContext.shared.currentInput.count > 0 {
+                    // do nothing if composed string isn't empty
+                    return true
+                }
+                return false
+            }
             // 原先使用的是self.candidates.isVisible
             if InputContext.shared.candidatesCount > 0 {
                 // 使用數字鍵選字
@@ -121,11 +132,6 @@ class IlimiInputController: IMKInputController {
                 }
                 if event.keyCode == kVK_DownArrow || event.keyCode == kVK_PageDown || key == "]" {
                     candidates.pageDown(sender)
-                    return true
-                }
-                if event.keyCode == kVK_Space {
-                    // commit the input
-                    commitCandidate(client: sender)
                     return true
                 }
             }
