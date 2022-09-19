@@ -87,10 +87,11 @@ class IlimiInputController: IMKInputController {
             NSLog("Unable to handle NSEvent")
             return false
         }
-        if event.type == .flagsChanged {
+        guard client() != nil else { return false }
+        // don't handle the event with command and control modifier
+        if event.modifierFlags.contains(.command) || event.modifierFlags.contains(.control) {
             return false
         }
-        guard client() != nil else { return false }
         if event.type == NSEvent.EventType.keyDown {
             let inputStr = event.characters!
             let key = inputStr.first!
