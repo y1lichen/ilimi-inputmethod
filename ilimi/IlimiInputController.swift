@@ -1,4 +1,4 @@
-//   IlimiInputController.swift
+//  IlimiInputController.swift
 //  ilimi
 //
 //  Created by 陳奕利 on 2022/9/5.
@@ -11,6 +11,7 @@ import InputMethodKit
 class IlimiInputController: IMKInputController {
     private let candidates: IMKCandidates
     static var prefixHasCandidates: Bool = true
+    private var isASCIIMode: Bool = false
     private var isZhuyinMode: Bool = false
     private let puntuationSet: Set<Character> = [",", "'", ";", ".", "[", "]", "(", ")"]
     // 輔助選字的字典
@@ -44,6 +45,13 @@ class IlimiInputController: IMKInputController {
         }
         InputContext.shared.cleanUp()
         candidates.hide()
+    }
+
+    // 依照威注音註解，此函式可能因IMK的bug而不會被執行
+    // https://github.com/vChewing/vChewing-macOS/blob/main/Source/Modules/ControllerModules/ctlInputMethod_Core.swift
+    override func inputControllerWillClose() {
+        cancelComposition()
+        super.inputControllerWillClose()
     }
 
     override func recognizedEvents(_ sender: Any!) -> Int {
@@ -81,6 +89,17 @@ class IlimiInputController: IMKInputController {
         super.cancelComposition()
     }
 
+    func toggleASCIIMode() {
+        cancelComposition()
+        isASCIIMode.toggle()
+        if isASCIIMode {
+            NSLog("ascii mode is on")
+        } else {
+            NSLog("ascii mode is off")
+        }
+        setKeyLayout()
+    }
+
     override func handle(_ event: NSEvent!, client sender: Any!) -> Bool {
         guard let event = event, sender is IMKTextInput else {
             cancelComposition()
@@ -88,8 +107,17 @@ class IlimiInputController: IMKInputController {
             return false
         }
         guard client() != nil else { return false }
-        // don't handle the event with command and control modifier
-        if event.modifierFlags.contains(.command) || event.modifierFlags.contains(.control) {
+        // toggle isASCIIMode by capslock
+        if event.modifierFlags.contains(.capsLock) {
+            if event.characters == nil {
+                cancelComposition()
+                toggleASCIIMode()
+                return true
+            }
+        }
+        // don't handle the event with modifier
+        // Otherwise, copy & paste won't work
+        if !event.modifierFlags.isEmpty {
             return false
         }
         if event.type == NSEvent.EventType.keyDown {
@@ -210,6 +238,10 @@ extension IlimiInputController {
 
     func setKeyLayout() {
         guard let client = client() else { return }
+        if isASCIIMode {
+            client.overrideKeyboard(withKeyboardNamed: "AlphanumericalKeyboardLayout")
+            return
+        }
         client.overrideKeyboard(withKeyboardNamed: "BasicKeyboardLayout")
     }
 
@@ -290,9 +322,8 @@ extension IlimiInputController {
         client().insertText(text, replacementRange: NSMakeRange(0, text.count))
         InputContext.shared.cleanUp()
         candidates.hide()
-        if isZhuyinMode {
-            isZhuyinMode = false
-        }
+        // 如果是注音模式則關閉注音模式
+        isZhuyinMode = false
     }
 
     func commitCandidate(client sender: Any!) {
