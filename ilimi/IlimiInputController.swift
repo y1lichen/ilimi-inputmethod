@@ -108,16 +108,18 @@ class IlimiInputController: IMKInputController {
         }
         guard client() != nil else { return false }
         // toggle isASCIIMode by capslock
-        if event.modifierFlags.contains(.capsLock) {
+        if event.isCapsLockOn {
             if event.characters == nil {
                 cancelComposition()
                 toggleASCIIMode()
                 return true
             }
         }
+
         // don't handle the event with modifier
         // Otherwise, copy & paste won't work
-        if !event.modifierFlags.isEmpty {
+        // 不能直接pass所有含有modifier 否則方向鍵選字也會失效
+        if event.modifierFlags.contains(.control) || event.modifierFlags.contains(.command) || event.modifierFlags.contains(.option) {
             return false
         }
         if event.type == NSEvent.EventType.keyDown {
@@ -155,11 +157,11 @@ class IlimiInputController: IMKInputController {
                     candidates.moveLeft(sender)
                     return true
                 }
-                if event.keyCode == kVK_UpArrow || event.keyCode == kVK_PageUp || key == "[" {
+                if event.keyCode == kVK_UpArrow || event.keyCode == kVK_PageUp {
                     candidates.pageUp(sender)
                     return true
                 }
-                if event.keyCode == kVK_DownArrow || event.keyCode == kVK_PageDown || key == "]" {
+                if event.keyCode == kVK_DownArrow || event.keyCode == kVK_PageDown {
                     candidates.pageDown(sender)
                     return true
                 }

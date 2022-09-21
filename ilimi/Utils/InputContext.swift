@@ -42,11 +42,9 @@ class InputContext {
 	
 	func cleanUp() {
 		currentIndex = 0
-		candidatesCount = 0
 		currentInput  = ""
 		preInputPrefixSet = []
 		candidates = []
-		_numberedCandidates = []
         IlimiInputController.prefixHasCandidates = true
 	}
 }
