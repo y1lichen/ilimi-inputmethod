@@ -17,10 +17,11 @@
 
 2. 打繁出簡
  
-![打繁出簡](https://github.com/y1lichen/ilimi-inputmethod/blob/main/media/demo02.gif)  
+![打繁出簡](https://github.com/y1lichen/ilimi-inputmethod/blob/main/media/demo02.gif)
  
 3. 加v、r、s等輔助選字
 4. 注音輸入
+5. 英數模式
 
 ## Reference
 ---

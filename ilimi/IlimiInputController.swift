@@ -219,7 +219,7 @@ extension IlimiInputController {
 
     func checkIsTradToSimToggle(input: String) -> Bool {
         if input == ",,CT" {
-            InputContext.shared.isTradToSim = true
+            InputContext.shared.isTradToSim.toggle()
             cancelComposition()
             return true
         }
@@ -291,7 +291,8 @@ extension IlimiInputController {
     }
 
     func commitText(client sender: Any!, text: String) {
-        client().insertText(text, replacementRange: NSMakeRange(0, text.count))
+//        client().insertText(text, replacementRange: NSMakeRange(0, text.count))
+        client().insertText(text, replacementRange: NSMakeRange(NSNotFound, NSNotFound))
         InputContext.shared.cleanUp()
         candidates.hide()
         // 如果是注音模式則關閉注音模式
