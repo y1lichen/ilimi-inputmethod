@@ -53,6 +53,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D4499B0F28DC384700AF2FC1 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				D49E99B928D8D4BC00E00200 /* NSEventExtension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		D4C45A2C28CBA773003DC3B0 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -82,6 +90,7 @@
 		D4FC14CC28C649F70081BCC0 /* ilimi */ = {
 			isa = PBXGroup;
 			children = (
+				D4499B0F28DC384700AF2FC1 /* Extension */,
 				D4C45A2C28CBA773003DC3B0 /* View */,
 				D4FC14E128C666DE0081BCC0 /* Utils */,
 				D4FC14E028C64F400081BCC0 /* Info.plist */,
@@ -92,7 +101,6 @@
 				D4FC14DE28C64A730081BCC0 /* IlimiInputController.swift */,
 				D4FC14E428C668A90081BCC0 /* Model.xcdatamodeld */,
 				D4C45A2B28CB9B07003DC3B0 /* ilimi-Bridging-Header.h */,
-				D49E99B928D8D4BC00E00200 /* NSEventExtension.swift */,
 			);
 			path = ilimi;
 			sourceTree = "<group>";

@@ -11,7 +11,6 @@ import InputMethodKit
 class IlimiInputController: IMKInputController {
     private let candidates: IMKCandidates
     static var prefixHasCandidates: Bool = true
-    private var isASCIIMode: Bool = false
     private var isZhuyinMode: Bool = false
     private let puntuationSet: Set<Character> = [",", "'", ";", ".", "[", "]", "(", ")"]
     // 輔助選字的字典
@@ -47,18 +46,6 @@ class IlimiInputController: IMKInputController {
         candidates.hide()
     }
 
-    // 依照威注音註解，此函式可能因IMK的bug而不會被執行
-    // https://github.com/vChewing/vChewing-macOS/blob/main/Source/Modules/ControllerModules/ctlInputMethod_Core.swift
-    override func inputControllerWillClose() {
-        cancelComposition()
-        super.inputControllerWillClose()
-    }
-
-    override func recognizedEvents(_ sender: Any!) -> Int {
-        let events: NSEvent.EventTypeMask = [.keyDown, .flagsChanged]
-        return Int(events.rawValue)
-    }
-
     override func selectionRange() -> NSRange {
         return NSMakeRange(NSNotFound, NSNotFound)
     }
@@ -89,17 +76,6 @@ class IlimiInputController: IMKInputController {
         super.cancelComposition()
     }
 
-    func toggleASCIIMode() {
-        cancelComposition()
-        isASCIIMode.toggle()
-        if isASCIIMode {
-            NSLog("ascii mode is on")
-        } else {
-            NSLog("ascii mode is off")
-        }
-        setKeyLayout()
-    }
-
     override func handle(_ event: NSEvent!, client sender: Any!) -> Bool {
         guard let event = event, sender is IMKTextInput else {
             cancelComposition()
@@ -107,15 +83,6 @@ class IlimiInputController: IMKInputController {
             return false
         }
         guard client() != nil else { return false }
-        // toggle isASCIIMode by capslock
-        if event.isCapsLockOn {
-            if event.characters == nil {
-                cancelComposition()
-                toggleASCIIMode()
-                return true
-            }
-        }
-
         // don't handle the event with modifier
         // Otherwise, copy & paste won't work
         // 不能直接pass所有含有modifier 否則方向鍵選字也會失效
@@ -129,12 +96,11 @@ class IlimiInputController: IMKInputController {
                 if InputContext.shared.candidatesCount > 0 {
                     // commit the input
                     commitCandidate(client: sender)
-                    return true
-                } else if InputContext.shared.currentInput.count > 0 {
+                } else if InputContext.shared.currentInput.isEmpty {
                     // do nothing if composed string isn't empty
-                    return true
+                    return false
                 }
-                return false
+                return true
             }
             // 原先使用的是self.candidates.isVisible
             if InputContext.shared.candidatesCount > 0 {
@@ -189,6 +155,14 @@ class IlimiInputController: IMKInputController {
             }
             if key.isLetter || puntuationSet.contains(key) || (isZhuyinMode && key.isNumber) {
                 NSLog("\(key)")
+                if event.modifierFlags.contains(.capsLock) {
+                    if event.modifierFlags.contains(.shift) {
+                        return false
+                    } else {
+                        commitText(client: sender, text: inputStr.lowercased())
+                    }
+                    return true
+                }
                 // 字根最多只有5碼
                 if (InputContext.shared.currentInput.count >= 5 || !IlimiInputController.prefixHasCandidates) && InputContext.shared.currentInput.prefix(2) != ",," && InputContext.shared.currentInput.prefix(2) != "';" {
                     NSSound.beep()
@@ -240,10 +214,6 @@ extension IlimiInputController {
 
     func setKeyLayout() {
         guard let client = client() else { return }
-        if isASCIIMode {
-            client.overrideKeyboard(withKeyboardNamed: "AlphanumericalKeyboardLayout")
-            return
-        }
         client.overrideKeyboard(withKeyboardNamed: "BasicKeyboardLayout")
     }
 
@@ -355,5 +325,12 @@ extension IlimiInputController {
             return true
         }
         return false
+    }
+
+    // 依照威注音註解，此函式可能因IMK的bug而不會被執行
+    // https://github.com/vChewing/vChewing-macOS/blob/main/Source/Modules/ControllerModules/ctlInputMethod_Core.swift
+    override func inputControllerWillClose() {
+        cancelComposition()
+        super.inputControllerWillClose()
     }
 }
