@@ -35,11 +35,7 @@ extension IlimiInputController {
             // 原先使用的是self.candidates.isVisible
             if InputContext.shared.candidatesCount > 0 {
                 // 使用數字鍵選字
-                if !isZhuyinMode && key.isNumber {
-                    let keyValue = Int(key.hexDigitValue!)
-                    return selectCandidatesByNumAndCommit(client: sender, id: keyValue - 1)
-                }
-                if isZhuyinMode && checkIsEndOfZhuyin(text: InputContext.shared.currentInput) && key.isNumber {
+                if  (!isZhuyinMode && key.isNumber) || (isZhuyinMode && checkIsEndOfZhuyin(text: InputContext.shared.currentInput) && key.isNumber) {
                     let keyValue = Int(key.hexDigitValue!)
                     return selectCandidatesByNumAndCommit(client: sender, id: keyValue - 1)
                 }
@@ -112,6 +108,7 @@ extension IlimiInputController {
         return false
     }
 
+    // 如果currentInput為空就直接pass esc事件，讓系統處理
     func escHandler() -> Bool {
         if InputContext.shared.currentInput.count > 0 || isZhuyinMode {
             cancelComposition()
@@ -121,6 +118,15 @@ extension IlimiInputController {
     }
     
     func handleCandidatesWindowNavigation(_ event: NSEvent, client sender: Any!) -> Bool {
+        if let key = event.characters?.first {
+            if key == "[" {
+                candidates.moveUp(sender)
+                return true
+            } else if key == "]" {
+                candidates.moveDown(sender)
+                return true
+            }
+        }
         if event.keyCode == kVK_RightArrow && InputContext.shared.currentIndex < InputContext.shared.candidatesCount - 1 {
             InputContext.shared.currentIndex += 1
             candidates.moveRight(sender)
