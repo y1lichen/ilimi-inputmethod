@@ -9,6 +9,10 @@ import Foundation
 
 class InputContext {
     static let shared = InputContext()
+    let closureDict: [String: String] = ["「": "」", "（": "）",
+                                         "【": "】", "〈": "〉",
+                                         "『": "』", "《": "》",
+                                         "«": "»"]
 	var isTradToSim: Bool = false
     var currentInput: String = ""
     var currentIndex: Int = 0
@@ -27,6 +31,18 @@ class InputContext {
                 _numberedCandidates.append("\(i + 1) \(_candidates[i])")
             }
         }
+    }
+    
+    var closureStack: [String] = []
+    func getClosingClosure() -> String? {
+        if currentInput.isEmpty && !closureStack.isEmpty {
+            let closure = closureStack.removeLast()
+            if let closingClosure = closureDict[closure] {
+                NSLog("\(closure), \(closingClosure)")
+                return closingClosure
+            }
+        }
+        return nil
     }
 	
 	var numberedCandidates: [String] {
@@ -47,5 +63,9 @@ class InputContext {
 		candidates = []
         IlimiInputController.prefixHasCandidates = true
 	}
+    
+    func isClosure(input: String) -> Bool {
+        return (closureDict[input] != nil)
+    }
 }
 

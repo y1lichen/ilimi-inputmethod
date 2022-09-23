@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D44CAD4E28C757C30046E5B6 /* InputContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44CAD4D28C757C30046E5B6 /* InputContext.swift */; };
+		D453523228DD8A970007BB09 /* IlimiControllerEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D453523128DD8A970007BB09 /* IlimiControllerEventHandler.swift */; };
 		D474F5C228D4430E00E9717F /* QueryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D474F5C128D4430E00E9717F /* QueryView.swift */; };
 		D4B2B76A28C7A9A4006F3967 /* InputEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B2B76928C7A9A4006F3967 /* InputEngine.swift */; };
 		D4C45A3228CBB00B003DC3B0 /* IlimiMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C45A3128CBB00B003DC3B0 /* IlimiMenu.swift */; };
@@ -23,6 +24,7 @@
 
 /* Begin PBXFileReference section */
 		D44CAD4D28C757C30046E5B6 /* InputContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputContext.swift; sourceTree = "<group>"; };
+		D453523128DD8A970007BB09 /* IlimiControllerEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IlimiControllerEventHandler.swift; sourceTree = "<group>"; };
 		D474F5C128D4430E00E9717F /* QueryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryView.swift; sourceTree = "<group>"; };
 		D4B2B76928C7A9A4006F3967 /* InputEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputEngine.swift; sourceTree = "<group>"; };
 		D4C45A2B28CB9B07003DC3B0 /* ilimi-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ilimi-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 				D4FC14DE28C64A730081BCC0 /* IlimiInputController.swift */,
 				D4FC14E428C668A90081BCC0 /* Model.xcdatamodeld */,
 				D4C45A2B28CB9B07003DC3B0 /* ilimi-Bridging-Header.h */,
+				D453523128DD8A970007BB09 /* IlimiControllerEventHandler.swift */,
 			);
 			path = ilimi;
 			sourceTree = "<group>";
@@ -187,6 +190,7 @@
 			files = (
 				D4FC14DD28C64A520081BCC0 /* AppDelegate.swift in Sources */,
 				D4FC14DF28C64A730081BCC0 /* IlimiInputController.swift in Sources */,
+				D453523228DD8A970007BB09 /* IlimiControllerEventHandler.swift in Sources */,
 				D474F5C228D4430E00E9717F /* QueryView.swift in Sources */,
 				D44CAD4E28C757C30046E5B6 /* InputContext.swift in Sources */,
 				D4C45A3228CBB00B003DC3B0 /* IlimiMenu.swift in Sources */,

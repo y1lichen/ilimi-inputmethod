@@ -12,6 +12,7 @@ import Foundation
 struct InputEngine {
     static let shared = InputEngine()
     
+    // 取得以注音輸入的候選字
     func getCadidatesByZhuyin(_ text: String) {
         let request = NSFetchRequest<Zhuin>(entityName: "Zhuin")
         request.predicate = NSPredicate(format: "key BEGINSWITH %@", text)
@@ -25,6 +26,7 @@ struct InputEngine {
         }
     }
     
+    // 取的以嘸蝦米輸入的候選字
     func getCandidates(_ text: String) {
         let request = NSFetchRequest<Phrase>(entityName: "Phrase")
         request.predicate = NSPredicate(format: "key BEGINSWITH %@", text)
