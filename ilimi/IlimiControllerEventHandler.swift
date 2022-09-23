@@ -43,32 +43,13 @@ extension IlimiInputController {
                     let keyValue = Int(key.hexDigitValue!)
                     return selectCandidatesByNumAndCommit(client: sender, id: keyValue - 1)
                 }
-                if event.keyCode == kVK_RightArrow && InputContext.shared.currentIndex < InputContext.shared.candidatesCount - 1 {
-                    InputContext.shared.currentIndex += 1
-                    candidates.moveRight(sender)
-                    return true
-                }
-                if event.keyCode == kVK_LeftArrow && InputContext.shared.currentIndex > 0 {
-                    InputContext.shared.currentIndex -= 1
-                    candidates.moveLeft(sender)
-                    return true
-                }
-                if event.keyCode == kVK_UpArrow || event.keyCode == kVK_PageUp {
-                    candidates.pageUp(sender)
-                    return true
-                }
-                if event.keyCode == kVK_DownArrow || event.keyCode == kVK_PageDown {
-                    candidates.pageDown(sender)
+                if handleCandidatesWindowNavigation(event, client: sender) {
                     return true
                 }
             }
             if event.keyCode == kVK_Escape {
                 // cleanup the input
-                if InputContext.shared.currentInput.count > 0 || isZhuyinMode {
-                    cancelComposition()
-                    return true
-                }
-                return false
+                return escHandler()
             } else if event.keyCode == kVK_Delete {
                 if InputContext.shared.currentInput.count > 0 {
                     InputContext.shared.currentInput.removeLast()
@@ -100,7 +81,6 @@ extension IlimiInputController {
                 }
                 // 關閉括弧
                 if key == "]" {
-                    NSLog("is right closure!")
                     if let closure = InputContext.shared.getClosingClosure() {
                         commitText(client: sender, text: closure)
                         return true
@@ -129,6 +109,44 @@ extension IlimiInputController {
             }
         }
         InputContext.shared.cleanUp()
+        return false
+    }
+
+    func escHandler() -> Bool {
+        if InputContext.shared.currentInput.count > 0 || isZhuyinMode {
+            cancelComposition()
+            return true
+        }
+        return false
+    }
+    
+    func handleCandidatesWindowNavigation(_ event: NSEvent, client sender: Any!) -> Bool {
+        if event.keyCode == kVK_RightArrow && InputContext.shared.currentIndex < InputContext.shared.candidatesCount - 1 {
+            InputContext.shared.currentIndex += 1
+            candidates.moveRight(sender)
+            return true
+        }
+        if event.keyCode == kVK_LeftArrow && InputContext.shared.currentIndex > 0 {
+            InputContext.shared.currentIndex -= 1
+            candidates.moveLeft(sender)
+            return true
+        }
+        if event.keyCode == kVK_UpArrow {
+            candidates.moveUp(sender)
+            return true
+        }
+        if event.keyCode == kVK_DownArrow {
+            candidates.moveDown(sender)
+            return true
+        }
+        if event.keyCode == kVK_PageUp {
+            candidates.pageUp(sender)
+            return true
+        }
+        if event.keyCode == kVK_PageDown {
+            candidates.pageDown(sender)
+            return true
+        }
         return false
     }
 }
