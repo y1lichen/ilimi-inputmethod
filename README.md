@@ -16,15 +16,21 @@
 ![一般輸入](https://github.com/y1lichen/ilimi-inputmethod/blob/main/media/demo01.gif)
 
 2. 打繁出簡
- 
+輸入,,CT切換打繁出簡模
 ![打繁出簡](https://github.com/y1lichen/ilimi-inputmethod/blob/main/media/demo02.gif)
  
 3. 加v、r、s等輔助選字
 4. 注音輸入
+
+輸入';即可使用注音輸入
+
 5. 英數模式
 
+使用CapsLock即可切換英數模式
+
+
 ## Reference
----
+
 本專案的IMK機制參考[vChewing威注音](https://vchewing.github.io/README.html)，該專案的源碼對IMK許多函式有清楚註解
 
 [https://mzp.hatenablog.com/entry/2017/09/17/220320](https://mzp.hatenablog.com/entry/2017/09/17/220320)

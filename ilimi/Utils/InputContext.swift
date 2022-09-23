@@ -38,7 +38,6 @@ class InputContext {
         if currentInput.isEmpty && !closureStack.isEmpty {
             let closure = closureStack.removeLast()
             if let closingClosure = closureDict[closure] {
-                NSLog("\(closure), \(closingClosure)")
                 return closingClosure
             }
         }
