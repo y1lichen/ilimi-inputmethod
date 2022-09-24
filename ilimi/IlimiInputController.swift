@@ -15,13 +15,14 @@ class IlimiInputController: IMKInputController {
     let puntuationSet: Set<Character> = [",", "'", ";", ".", "[", "]", "(", ")"]
     // 輔助選字的字典
     let assistantDict: [String: Int] = ["v": 1, "r": 2, "s": 3, "f": 4, "w": 5, "l": 6, "c": 7, "b": 8]
-
+    
     override init!(server: IMKServer!, delegate: Any!, client inputClient: Any!) {
         // 橫式候選字窗
         candidates = IMKCandidates(server: server, panelType: kIMKScrollingGridCandidatePanel)
         var attributes = candidates.attributes()
         let font = NSFont.systemFont(ofSize: 22)
         attributes?[NSAttributedString.Key.font] = font
+        // 若只設attributes無法調整字體大小
         candidates.setFontSize(font.pointSize)
         super.init(server: server, delegate: delegate, client: inputClient)
         activateServer(inputClient)
@@ -113,8 +114,8 @@ extension IlimiInputController {
         return "注" + StringConverter.shared.keyToZhuyins(text)
     }
 
+    // 嘗試實作https://github.com/gureum/gureum/issues/843
     func ensureWindowLevel(client sender: Any!) {
-        // 嘗試實作https://github.com/gureum/gureum/issues/843
         while candidates.windowLevel() <= client().windowLevel() {
             candidates.setWindowLevel(UInt64(max(0, client().windowLevel() + 1000)))
         }
@@ -135,6 +136,7 @@ extension IlimiInputController {
         }
     }
 
+    // 注音輸入的最後一碼是聲調
     func checkIsEndOfZhuyin(text: String) -> Bool {
         if (text.last?.isLetter) != nil {
             let num = Int(String(text.last!))

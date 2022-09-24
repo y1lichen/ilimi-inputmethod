@@ -35,12 +35,9 @@ extension IlimiInputController {
             // 原先使用的是self.candidates.isVisible
             if InputContext.shared.candidatesCount > 0 {
                 // 使用數字鍵選字
-                if  (!isZhuyinMode && key.isNumber) || (isZhuyinMode && checkIsEndOfZhuyin(text: InputContext.shared.currentInput) && key.isNumber) {
+                if (!isZhuyinMode && key.isNumber) || (isZhuyinMode && checkIsEndOfZhuyin(text: InputContext.shared.currentInput) && key.isNumber) {
                     let keyValue = Int(key.hexDigitValue!)
-                    if keyValue > InputContext.shared.candidatesCount {
-                        return true
-                    }
-                    return selectCandidatesByNumAndCommit(client: sender, id: keyValue - 1)
+                    return handleSelectCandidatesByNum(keyValue, client: sender)
                 }
                 if handleCandidatesWindowNavigation(event, client: sender) {
                     return true
@@ -120,7 +117,32 @@ extension IlimiInputController {
         return false
     }
     
+    func handleSelectCandidatesByNum(_ keyValue: Int, client sender: Any!) -> Bool {
+        if keyValue > InputContext.shared.candidatesCount {
+            return true
+        }
+        if InputContext.shared.candidatesPageId == 0 {
+            return selectCandidatesByNumAndCommit(client: sender, id: keyValue - 1)
+        } else {
+            if keyValue > 5 {
+                return false
+            }
+            let selectedId = ((InputContext.shared.candidatesPageId - 1) * 5) + keyValue - 1
+            return selectCandidatesByNumAndCommit(client: sender, id: selectedId)
+        }
+    }
+
     func handleCandidatesWindowNavigation(_ event: NSEvent, client sender: Any!) -> Bool {
+        if let key = event.characters?.first {
+            if key == "[" {
+                candidates.moveUp(sender)
+                return true
+            } else if key == "]" {
+                candidates.moveDown(sender)
+                return true
+            }
+        }
+        // 即使已經在最左或最右也要攔截左﹑右方向鍵事件。否則輸入法會在再次按下方向鍵時卡死
         var isArrow = false
         if event.keyCode == kVK_RightArrow {
             if InputContext.shared.currentIndex < InputContext.shared.candidatesCount - 1 {
@@ -136,15 +158,21 @@ extension IlimiInputController {
             isArrow = true
         } else if event.keyCode == kVK_UpArrow {
             candidates.moveUp(sender)
+            if InputContext.shared.candidatesPageId > 0 {
+                if InputContext.shared.candidatesPageId > 1 {
+                    InputContext.shared.currentIndex -= 5
+                }
+                InputContext.shared.candidatesPageId -= 1
+            }
             isArrow = true
         } else if event.keyCode == kVK_DownArrow {
             candidates.moveDown(sender)
-            isArrow = true
-        } else if event.keyCode == kVK_PageUp {
-            candidates.pageUp(sender)
-            isArrow = true
-        } else if event.keyCode == kVK_PageDown {
-            candidates.pageDown(sender)
+            if InputContext.shared.candidatesPageId < InputContext.shared.candidatesPagesCount {
+                if InputContext.shared.candidatesPageId > 0 {
+                    InputContext.shared.currentIndex += 5
+                }
+                InputContext.shared.candidatesPageId += 1
+            }
             isArrow = true
         }
         return isArrow
