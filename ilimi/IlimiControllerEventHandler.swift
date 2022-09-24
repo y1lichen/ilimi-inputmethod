@@ -37,6 +37,9 @@ extension IlimiInputController {
                 // 使用數字鍵選字
                 if  (!isZhuyinMode && key.isNumber) || (isZhuyinMode && checkIsEndOfZhuyin(text: InputContext.shared.currentInput) && key.isNumber) {
                     let keyValue = Int(key.hexDigitValue!)
+                    if keyValue > InputContext.shared.candidatesCount {
+                        return true
+                    }
                     return selectCandidatesByNumAndCommit(client: sender, id: keyValue - 1)
                 }
                 if handleCandidatesWindowNavigation(event, client: sender) {
@@ -118,41 +121,32 @@ extension IlimiInputController {
     }
     
     func handleCandidatesWindowNavigation(_ event: NSEvent, client sender: Any!) -> Bool {
-        if let key = event.characters?.first {
-            if key == "[" {
-                candidates.moveUp(sender)
-                return true
-            } else if key == "]" {
-                candidates.moveDown(sender)
-                return true
+        var isArrow = false
+        if event.keyCode == kVK_RightArrow {
+            if InputContext.shared.currentIndex < InputContext.shared.candidatesCount - 1 {
+                InputContext.shared.currentIndex += 1
+                candidates.moveRight(sender)
             }
-        }
-        if event.keyCode == kVK_RightArrow && InputContext.shared.currentIndex < InputContext.shared.candidatesCount - 1 {
-            InputContext.shared.currentIndex += 1
-            candidates.moveRight(sender)
-            return true
-        }
-        if event.keyCode == kVK_LeftArrow && InputContext.shared.currentIndex > 0 {
-            InputContext.shared.currentIndex -= 1
-            candidates.moveLeft(sender)
-            return true
-        }
-        if event.keyCode == kVK_UpArrow {
+            isArrow = true
+        } else if event.keyCode == kVK_LeftArrow {
+            if InputContext.shared.currentIndex > 0 {
+                InputContext.shared.currentIndex -= 1
+                candidates.moveLeft(sender)
+            }
+            isArrow = true
+        } else if event.keyCode == kVK_UpArrow {
             candidates.moveUp(sender)
-            return true
-        }
-        if event.keyCode == kVK_DownArrow {
+            isArrow = true
+        } else if event.keyCode == kVK_DownArrow {
             candidates.moveDown(sender)
-            return true
-        }
-        if event.keyCode == kVK_PageUp {
+            isArrow = true
+        } else if event.keyCode == kVK_PageUp {
             candidates.pageUp(sender)
-            return true
-        }
-        if event.keyCode == kVK_PageDown {
+            isArrow = true
+        } else if event.keyCode == kVK_PageDown {
             candidates.pageDown(sender)
-            return true
+            isArrow = true
         }
-        return false
+        return isArrow
     }
 }
