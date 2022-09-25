@@ -16,17 +16,21 @@
 ![一般輸入](https://github.com/y1lichen/ilimi-inputmethod/blob/main/media/demo01.gif)
 
 2. 打繁出簡
-輸入,,CT切換打繁出簡模
+輸入,,CT切換打繁出簡模  
+
 ![打繁出簡](https://github.com/y1lichen/ilimi-inputmethod/blob/main/media/demo02.gif)
  
 3. 加v、r、s等輔助選字
 4. 注音輸入
 
+若要啟用注音輸入法，必須要將[pinyin.json](https://github.com/y1lichen/ilimi-inputmethod/blob/main/others/pinyin.json)
+檔案放在/Library/Containers/ilimi/Data，或是自選單欄選開啟使用者設定目錄並將pinyin.json放入其中。
+
 輸入';即可使用注音輸入
 
 5. 英數模式
  
-6. 反查注音、輸入法 
+6. 反查注音、輸入法
 
 使用CapsLock即可切換英數模式
 
@@ -37,5 +41,7 @@
 
 [https://mzp.hatenablog.com/entry/2017/09/17/220320](https://mzp.hatenablog.com/entry/2017/09/17/220320)
 [https://arika.org/2022/04/02/macos-inputmethodkit/](https://arika.org/2022/04/02/macos-inputmethodkit/)
+ 
 ---
+
 打繁出簡模式的「繁體字轉簡體字」程式碼是由[GBig](https://github.com/RockfordWei/GBig)修改而來，利用dictionary加速查找速度。
