@@ -50,6 +50,10 @@ extension IlimiInputController {
                 if InputContext.shared.currentInput.count > 0 {
                     InputContext.shared.currentInput.removeLast()
                     let range = NSMakeRange(NSNotFound, NSNotFound)
+                    if isZhuyinMode && InputContext.shared.currentInput.count == 0 {
+                        client().setMarkedText("", selectionRange: range, replacementRange: range)
+                        isZhuyinMode.toggle()
+                    }
                     client().setMarkedText(InputContext.shared.currentInput, selectionRange: range, replacementRange: range)
                     updateCandidatesWindow()
                     return true
