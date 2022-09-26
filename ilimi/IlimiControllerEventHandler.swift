@@ -60,7 +60,7 @@ extension IlimiInputController {
                 cancelComposition()
                 return true
             }
-            if key.isLetter || puntuationSet.contains(key) || (isZhuyinMode && key.isNumber) {
+            if key.isLetter || puntuationSet.contains(key) || (isZhuyinMode && (key.isNumber || key.isPunctuation)) {
                 NSLog("\(key)")
                 if event.modifierFlags.contains(.capsLock) {
                     if event.modifierFlags.contains(.shift) {
