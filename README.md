@@ -16,7 +16,7 @@
 ![一般輸入](https://github.com/y1lichen/ilimi-inputmethod/blob/main/media/demo01.gif)
 
 2. 打繁出簡
-輸入,,CT切換打繁出簡模  
+輸入,,CT切換打繁出簡模
 
 ![打繁出簡](https://github.com/y1lichen/ilimi-inputmethod/blob/main/media/demo02.gif)
  
@@ -34,6 +34,7 @@
 
 使用CapsLock即可切換英數模式
 
+7. 同音輸入
 
 ## Reference
 

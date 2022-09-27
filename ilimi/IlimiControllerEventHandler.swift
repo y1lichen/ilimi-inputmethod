@@ -23,14 +23,7 @@ extension IlimiInputController {
             let inputStr = event.characters!
             let key = inputStr.first!
             if event.keyCode == kVK_Space {
-                if InputContext.shared.candidatesCount > 0 {
-                    // commit the input
-                    commitCandidate(client: sender)
-                } else if InputContext.shared.currentInput.isEmpty {
-                    // do nothing if composed string isn't empty
-                    return false
-                }
-                return true
+                return spcHandler(client: sender)
             }
             // 原先使用的是self.candidates.isVisible
             if InputContext.shared.candidatesCount > 0 {
@@ -50,9 +43,11 @@ extension IlimiInputController {
                 if InputContext.shared.currentInput.count > 0 {
                     InputContext.shared.currentInput.removeLast()
                     let range = NSMakeRange(NSNotFound, NSNotFound)
-                    if isZhuyinMode && InputContext.shared.currentInput.count == 0 {
+                    // 如果是注音模式，則在composition清空時關閉注音模式。
+                    if (isZhuyinMode || isTypeByPronunciationMode) && InputContext.shared.currentInput.count == 0 {
                         client().setMarkedText("", selectionRange: range, replacementRange: range)
-                        isZhuyinMode.toggle()
+                        isZhuyinMode = false
+                        isTypeByPronunciationMode = false
                     }
                     client().setMarkedText(InputContext.shared.currentInput, selectionRange: range, replacementRange: range)
                     updateCandidatesWindow()
@@ -64,7 +59,7 @@ extension IlimiInputController {
                 cancelComposition()
                 return true
             }
-            if key.isLetter || puntuationSet.contains(key) || (isZhuyinMode && (key.isNumber || key.isPunctuation)) {
+            if key.isLetter || puntuationSet.contains(key) || (isZhuyinMode && (key.isNumber || key.isPunctuation)) || key == "\\" {
                 NSLog("\(key)")
                 if event.modifierFlags.contains(.capsLock) {
                     if event.modifierFlags.contains(.shift) {
@@ -88,8 +83,12 @@ extension IlimiInputController {
                 }
                 // 加到composition
                 InputContext.shared.currentInput.append(inputStr)
+                // \ -> 同音輸入模式
+                if !isTypeByPronunciationMode && checkIsInputByPronunciationMode(InputContext.shared.currentInput) {
+                    return true
+                }
                 // '; -> 注音模式
-                if !isZhuyinMode && checkIsZhuyinMode(input: InputContext.shared.currentInput) {
+                if !isZhuyinMode && checkIsZhuyinMode(InputContext.shared.currentInput) {
                     return true
                 }
                 // ,,CT -> 打繁出簡模式
@@ -111,10 +110,21 @@ extension IlimiInputController {
         InputContext.shared.cleanUp()
         return false
     }
+    
+    func spcHandler(client sender: Any!) -> Bool {
+        if InputContext.shared.candidatesCount > 0 {
+            // commit the input
+            commitCandidate(client: sender)
+        } else if InputContext.shared.currentInput.isEmpty {
+            // do nothing if composed string isn't empty
+            return false
+        }
+        return true
+    }
 
     // 如果currentInput為空就直接pass esc事件，讓系統處理
     func escHandler() -> Bool {
-        if InputContext.shared.currentInput.count > 0 || isZhuyinMode {
+        if InputContext.shared.currentInput.count > 0 || isZhuyinMode || isTypeByPronunciationMode {
             cancelComposition()
             return true
         }

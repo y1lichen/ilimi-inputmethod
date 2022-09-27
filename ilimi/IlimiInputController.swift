@@ -11,11 +11,17 @@ import InputMethodKit
 class IlimiInputController: IMKInputController {
     let candidates: IMKCandidates
     static var prefixHasCandidates: Bool = true
+    let notFoundRange = NSMakeRange(NSNotFound, NSNotFound)
+    // 注音輸入模式
     var isZhuyinMode: Bool = false
+    // 同音輸入模式
+    var isTypeByPronunciationMode = false
+    var isSecondCommitOfTypeByPronunciationMode = false
+    //
     let puntuationSet: Set<Character> = [",", "'", ";", ".", "[", "]", "(", ")"]
     // 輔助選字的字典
     let assistantDict: [String: Int] = ["v": 1, "r": 2, "s": 3, "f": 4, "w": 5, "l": 6, "c": 7, "b": 8]
-    
+
     override init!(server: IMKServer!, delegate: Any!, client inputClient: Any!) {
         // 橫式候選字窗
         candidates = IMKCandidates(server: server, panelType: kIMKScrollingGridCandidatePanel)
@@ -48,7 +54,7 @@ class IlimiInputController: IMKInputController {
     }
 
     override func selectionRange() -> NSRange {
-        return NSMakeRange(NSNotFound, NSNotFound)
+        return notFoundRange
     }
 
     override func candidates(_ sender: Any!) -> [Any]! {
@@ -68,24 +74,34 @@ class IlimiInputController: IMKInputController {
     }
 
     override func cancelComposition() {
-        client().setMarkedText("", selectionRange: NSMakeRange(0, 0), replacementRange: NSMakeRange(NSNotFound, NSNotFound))
+        client().setMarkedText("", selectionRange: NSMakeRange(0, 0), replacementRange: notFoundRange)
         InputContext.shared.cleanUp()
         candidates.update()
         candidates.hide()
         IlimiInputController.prefixHasCandidates = true
         isZhuyinMode = false
+        isTypeByPronunciationMode = false
+        isSecondCommitOfTypeByPronunciationMode = false
         super.cancelComposition()
     }
-
 }
 
 extension IlimiInputController {
-    func checkIsZhuyinMode(input: String) -> Bool {
-        isZhuyinMode = (input == "';") ? true : false
+    func checkIsInputByPronunciationMode(_ input: String) -> Bool {
+        isTypeByPronunciationMode = (input == "\\")
+        if isTypeByPronunciationMode {
+            InputContext.shared.cleanUp()
+            client().setMarkedText("音", selectionRange: notFoundRange, replacementRange: notFoundRange)
+            return true
+        }
+        return false
+    }
+
+    func checkIsZhuyinMode(_ input: String) -> Bool {
+        isZhuyinMode = (input == "';")
         if isZhuyinMode {
             InputContext.shared.cleanUp()
-            let range = NSMakeRange(NSNotFound, NSNotFound)
-            client().setMarkedText("注", selectionRange: range, replacementRange: range)
+            client().setMarkedText("注", selectionRange: notFoundRange, replacementRange: notFoundRange)
             return true
         }
         return false
@@ -118,6 +134,23 @@ extension IlimiInputController {
     func ensureWindowLevel(client sender: Any!) {
         while candidates.windowLevel() <= client().windowLevel() {
             candidates.setWindowLevel(UInt64(max(0, client().windowLevel() + 1000)))
+        }
+    }
+
+    func getNewCandidatesOfSamePronunciation(text: String, client sender: Any!) {
+        InputEngine.shared.getCandidatesByPronunciation(text)
+        if InputContext.shared.candidatesCount > 0 {
+            isSecondCommitOfTypeByPronunciationMode = true
+            candidates.update()
+            candidates.show()
+            ensureWindowLevel(client: client())
+        } else {
+            // 沒有同音字時直接輸入該文字
+            client().insertText(text, replacementRange: NSMakeRange(0, 2))
+            isTypeByPronunciationMode = false
+            isSecondCommitOfTypeByPronunciationMode = false
+            InputContext.shared.cleanUp()
+            candidates.hide()
         }
     }
 
@@ -165,23 +198,28 @@ extension IlimiInputController {
     func updateCandidatesWindow() {
         guard let client = client() else { return }
         let comp = InputContext.shared.currentInput
-        let range = NSMakeRange(NSNotFound, NSNotFound)
         if isZhuyinMode {
-            client.setMarkedText(getZhuyinMarkedText(comp), selectionRange: range, replacementRange: range)
+            client.setMarkedText(getZhuyinMarkedText(comp), selectionRange: notFoundRange, replacementRange: notFoundRange)
             getNewCandidatesByZhuyin(comp: comp, client: client)
         } else {
-            client.setMarkedText(comp, selectionRange: range, replacementRange: range)
+            if isTypeByPronunciationMode && !isSecondCommitOfTypeByPronunciationMode {
+                client.setMarkedText("音" + comp, selectionRange: notFoundRange, replacementRange: notFoundRange)
+            } else {
+                client.setMarkedText(comp, selectionRange: notFoundRange, replacementRange: notFoundRange)
+            }
             getNewCandidates(comp: comp, client: client)
         }
     }
 
     func commitText(client sender: Any!, text: String) {
 //        client().insertText(text, replacementRange: NSMakeRange(0, text.count))
-        client().insertText(text, replacementRange: NSMakeRange(NSNotFound, NSNotFound))
+        client().insertText(text, replacementRange: notFoundRange)
         InputContext.shared.cleanUp()
         candidates.hide()
         // 如果是注音模式則關閉注音模式
         isZhuyinMode = false
+        // 如果是同音輸入模式則關閉同音輸入模式
+        isTypeByPronunciationMode = false
     }
 
     func commitCandidate(client sender: Any!) {
@@ -197,6 +235,15 @@ extension IlimiInputController {
         if isZhuyinMode {
             client().insertText(candidate, replacementRange: NSMakeRange(0, comp.count + 1))
             isZhuyinMode = false
+        } else if isSecondCommitOfTypeByPronunciationMode {
+            client().insertText(candidate, replacementRange: NSMakeRange(0, 2))
+            isTypeByPronunciationMode = false
+            isSecondCommitOfTypeByPronunciationMode = false
+        } else if isTypeByPronunciationMode {
+            client().setMarkedText("音" + candidate, selectionRange: notFoundRange, replacementRange: notFoundRange)
+            InputContext.shared.cleanUp()
+            getNewCandidatesOfSamePronunciation(text: candidate, client: sender)
+            return
         } else {
             client().insertText(candidate, replacementRange: NSMakeRange(0, comp.count))
             if InputContext.shared.isClosure(input: candidate) {

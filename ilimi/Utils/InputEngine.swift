@@ -54,6 +54,28 @@ struct InputEngine {
         }
     }
     
+    // 取得相同讀音的候選字
+    func getCandidatesByPronunciation(_ text: String) {
+        let zhuyins: [String] = getKeysOfChar(text)
+        let request = NSFetchRequest<Zhuin>(entityName: "Zhuin")
+        var result: [String] = []
+        do {
+            for zhuyin in zhuyins {
+                request.predicate = NSPredicate(format: "key == %@", zhuyin)
+                let response = try PersistenceController.shared.container.viewContext.fetch(request)
+                for item in response {
+                    if item.value! != text {
+                        result.append(item.value!)
+                    }
+                }
+            }
+            InputContext.shared.candidates = result
+        } catch {
+            NSLog(error.localizedDescription)
+        }
+    }
+    
+    //取得文字的注音碼
     func getKeysOfChar(_ text: String) -> [String] {
         let request = NSFetchRequest<Zhuin>(entityName: "Zhuin")
         request.predicate = NSPredicate(format: "value == %@", text)
