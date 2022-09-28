@@ -49,12 +49,15 @@ extension IlimiInputController {
             if key.isLetter || puntuationSet.contains(key) || (isZhuyinMode && (key.isNumber || key.isPunctuation)) || key == "\\" {
                 NSLog("\(key)")
                 if event.modifierFlags.contains(.capsLock) {
+                    isASCIIMode = true
                     if event.modifierFlags.contains(.shift) {
                         return false
                     } else {
                         commitText(client: sender, text: inputStr.lowercased())
                     }
                     return true
+                } else {
+                    isASCIIMode = false
                 }
                 // 字根最多只有5碼
                 if (InputContext.shared.currentInput.count >= 5 || !IlimiInputController.prefixHasCandidates) && InputContext.shared.currentInput.prefix(2) != ",," && InputContext.shared.currentInput.prefix(2) != "';" {

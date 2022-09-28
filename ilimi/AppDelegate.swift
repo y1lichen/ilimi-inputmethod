@@ -9,6 +9,7 @@
 import Cocoa
 import InputMethodKit
 import SwiftUI
+import UserNotifications
 
 // necessary to launch this app
 class NSManualApplication: NSApplication {
@@ -29,13 +30,24 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var queryWindow: NSWindow? = nil
     var server = IMKServer()
     var candidatesWindow = IMKCandidates()
+    let userNotificationCenter = UNUserNotificationCenter.current()
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Insert code here to initialize your application
         server = IMKServer(name: Bundle.main.infoDictionary?["InputMethodConnectionName"] as? String, bundleIdentifier: Bundle.main.bundleIdentifier)
         candidatesWindow = IMKCandidates(server: server, panelType: kIMKSingleRowSteppingCandidatePanel, styleType: kIMKMain)
         DataInitilizer.shared.initDataWhenStart()
+        // notification
+        userNotificationCenter.delegate = self
+        requestNotificationAuthorization()
         NSLog("tried connection")
+    }
+    
+    // request the authorization for pushing local notification
+    func requestNotificationAuthorization() {
+        userNotificationCenter.requestAuthorization(options: [.alert, .badge]) {
+            _, _ in
+        }
     }
 
     func applicationWillTerminate(_ notification: Notification) {

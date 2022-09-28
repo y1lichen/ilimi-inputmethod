@@ -9,6 +9,7 @@ import InputMethodKit
 
 @objc(IlimiInputController)
 class IlimiInputController: IMKInputController {
+    let appDelegate = NSApplication.shared.delegate as! AppDelegate
     let candidates: IMKCandidates
     static var prefixHasCandidates: Bool = true
     let notFoundRange = NSMakeRange(NSNotFound, NSNotFound)
@@ -21,6 +22,13 @@ class IlimiInputController: IMKInputController {
     let puntuationSet: Set<Character> = [",", "'", ";", ".", "[", "]", "(", ")"]
     // 輔助選字的字典
     let assistantDict: [String: Int] = ["v": 1, "r": 2, "s": 3, "f": 4, "w": 5, "l": 6, "c": 7, "b": 8]
+    var isASCIIMode: Bool = false {
+        willSet {
+            if isASCIIMode != newValue {
+                appDelegate.pushInstantNotification(title: newValue ? "英數模式" : "中文模式", subtitle: "", body: "", sound: false)
+            }
+        }
+    }
 
     override init!(server: IMKServer!, delegate: Any!, client inputClient: Any!) {
         // 橫式候選字窗
