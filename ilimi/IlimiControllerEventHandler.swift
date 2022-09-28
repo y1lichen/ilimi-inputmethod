@@ -25,8 +25,8 @@ extension IlimiInputController {
             if event.keyCode == kVK_Space {
                 return spcHandler(client: sender)
             }
-            // 原先使用的是self.candidates.isVisible
-            if InputContext.shared.candidatesCount > 0 {
+            // 選字窗出現時
+            if candidates.isVisible() {
                 // 使用數字鍵選字
                 if (!isZhuyinMode && key.isNumber) || (isZhuyinMode && checkIsEndOfZhuyin(text: InputContext.shared.currentInput) && key.isNumber) {
                     let keyValue = Int(key.hexDigitValue!)
@@ -47,7 +47,7 @@ extension IlimiInputController {
                     if (isZhuyinMode || isTypeByPronunciationMode) && InputContext.shared.currentInput.count == 0 {
                         client().setMarkedText("", selectionRange: range, replacementRange: range)
                         isZhuyinMode = false
-                        isTypeByPronunciationMode = false
+                        turnOffIsInputByPronunciationMode()
                     }
                     client().setMarkedText(InputContext.shared.currentInput, selectionRange: range, replacementRange: range)
                     updateCandidatesWindow()
@@ -138,6 +138,7 @@ extension IlimiInputController {
         if InputContext.shared.candidatesPageId == 0 {
             return selectCandidatesByNumAndCommit(client: sender, id: keyValue - 1)
         } else {
+            // 選字窗展開時只有5個候選字
             if keyValue > 5 {
                 return false
             }

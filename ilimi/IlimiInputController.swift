@@ -80,13 +80,17 @@ class IlimiInputController: IMKInputController {
         candidates.hide()
         IlimiInputController.prefixHasCandidates = true
         isZhuyinMode = false
-        isTypeByPronunciationMode = false
-        isSecondCommitOfTypeByPronunciationMode = false
+        turnOffIsInputByPronunciationMode()
         super.cancelComposition()
     }
 }
 
 extension IlimiInputController {
+    func turnOffIsInputByPronunciationMode() {
+        isTypeByPronunciationMode = false
+        isSecondCommitOfTypeByPronunciationMode = false
+    }
+    
     func checkIsInputByPronunciationMode(_ input: String) -> Bool {
         isTypeByPronunciationMode = (input == "\\")
         if isTypeByPronunciationMode {
@@ -126,6 +130,7 @@ extension IlimiInputController {
         return false
     }
 
+    // 把輸入碼轉成注音碼
     func getZhuyinMarkedText(_ text: String) -> String {
         return "注" + StringConverter.shared.keyToZhuyins(text)
     }
@@ -137,6 +142,7 @@ extension IlimiInputController {
         }
     }
 
+    // 取得同音輸入模式的同音候選字
     func getNewCandidatesOfSamePronunciation(text: String, client sender: Any!) {
         InputEngine.shared.getCandidatesByPronunciation(text)
         if InputContext.shared.candidatesCount > 0 {
@@ -147,13 +153,13 @@ extension IlimiInputController {
         } else {
             // 沒有同音字時直接輸入該文字
             client().insertText(text, replacementRange: NSMakeRange(0, 2))
-            isTypeByPronunciationMode = false
-            isSecondCommitOfTypeByPronunciationMode = false
+            turnOffIsInputByPronunciationMode()
             InputContext.shared.cleanUp()
             candidates.hide()
         }
     }
 
+    // 取得注音輸入的候選字
     func getNewCandidatesByZhuyin(comp: String, client sender: Any!) {
         if comp.count > 0 {
             InputEngine.shared.getCadidatesByZhuyin(comp)
@@ -219,7 +225,7 @@ extension IlimiInputController {
         // 如果是注音模式則關閉注音模式
         isZhuyinMode = false
         // 如果是同音輸入模式則關閉同音輸入模式
-        isTypeByPronunciationMode = false
+        turnOffIsInputByPronunciationMode()
     }
 
     func commitCandidate(client sender: Any!) {
@@ -236,10 +242,11 @@ extension IlimiInputController {
             client().insertText(candidate, replacementRange: NSMakeRange(0, comp.count + 1))
             isZhuyinMode = false
         } else if isSecondCommitOfTypeByPronunciationMode {
+            // 同音模式下，第二次選定候選字
             client().insertText(candidate, replacementRange: NSMakeRange(0, 2))
-            isTypeByPronunciationMode = false
-            isSecondCommitOfTypeByPronunciationMode = false
+            turnOffIsInputByPronunciationMode()
         } else if isTypeByPronunciationMode {
+            // 同音模式下，第一次選字候選字
             client().setMarkedText("音" + candidate, selectionRange: notFoundRange, replacementRange: notFoundRange)
             InputContext.shared.cleanUp()
             getNewCandidatesOfSamePronunciation(text: candidate, client: sender)
