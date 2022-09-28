@@ -49,6 +49,10 @@ extension IlimiInputController {
                         isZhuyinMode = false
                         turnOffIsInputByPronunciationMode()
                     }
+                    if InputContext.shared.currentInput.count == 0 {
+                        cancelComposition()
+                        return true
+                    }
                     client().setMarkedText(InputContext.shared.currentInput, selectionRange: range, replacementRange: range)
                     updateCandidatesWindow()
                     return true

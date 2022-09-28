@@ -79,7 +79,9 @@ class IlimiInputController: IMKInputController {
         candidates.update()
         candidates.hide()
         IlimiInputController.prefixHasCandidates = true
+        // 如果是注音模式則關閉注音模式
         isZhuyinMode = false
+        // 如果是同音輸入模式則關閉同音輸入模式
         turnOffIsInputByPronunciationMode()
         super.cancelComposition()
     }
@@ -220,12 +222,7 @@ extension IlimiInputController {
     func commitText(client sender: Any!, text: String) {
 //        client().insertText(text, replacementRange: NSMakeRange(0, text.count))
         client().insertText(text, replacementRange: notFoundRange)
-        InputContext.shared.cleanUp()
-        candidates.hide()
-        // 如果是注音模式則關閉注音模式
-        isZhuyinMode = false
-        // 如果是同音輸入模式則關閉同音輸入模式
-        turnOffIsInputByPronunciationMode()
+        cancelComposition()
     }
 
     func commitCandidate(client sender: Any!) {
