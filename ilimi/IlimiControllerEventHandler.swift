@@ -40,24 +40,7 @@ extension IlimiInputController {
                 // cleanup the input
                 return escHandler()
             } else if event.keyCode == kVK_Delete {
-                if InputContext.shared.currentInput.count > 0 {
-                    InputContext.shared.currentInput.removeLast()
-                    let range = NSMakeRange(NSNotFound, NSNotFound)
-                    // 如果是注音模式，則在composition清空時關閉注音模式。
-                    if (isZhuyinMode || isTypeByPronunciationMode) && InputContext.shared.currentInput.count == 0 {
-                        client().setMarkedText("", selectionRange: range, replacementRange: range)
-                        isZhuyinMode = false
-                        turnOffIsInputByPronunciationMode()
-                    }
-                    if InputContext.shared.currentInput.count == 0 {
-                        cancelComposition()
-                        return true
-                    }
-                    client().setMarkedText(InputContext.shared.currentInput, selectionRange: range, replacementRange: range)
-                    updateCandidatesWindow()
-                    return true
-                }
-                return false
+                return deleteHandler()
             } else if event.keyCode == kVK_Return && InputContext.shared.currentInput.count > 0 {
                 commitText(client: sender, text: InputContext.shared.currentInput)
                 cancelComposition()
@@ -124,6 +107,27 @@ extension IlimiInputController {
             return false
         }
         return true
+    }
+    
+    func deleteHandler() -> Bool {
+        if InputContext.shared.currentInput.count > 0 {
+            InputContext.shared.currentInput.removeLast()
+            let range = NSMakeRange(NSNotFound, NSNotFound)
+            // 如果是注音模式，則在composition清空時關閉注音模式。
+            if (isZhuyinMode || isTypeByPronunciationMode) && InputContext.shared.currentInput.count == 0 {
+                client().setMarkedText("", selectionRange: range, replacementRange: range)
+                isZhuyinMode = false
+                turnOffIsInputByPronunciationMode()
+            }
+            if InputContext.shared.currentInput.count == 0 {
+                cancelComposition()
+                return true
+            }
+            client().setMarkedText(InputContext.shared.currentInput, selectionRange: range, replacementRange: range)
+            updateCandidatesWindow()
+            return true
+        }
+        return false
     }
 
     // 如果currentInput為空就直接pass esc事件，讓系統處理
