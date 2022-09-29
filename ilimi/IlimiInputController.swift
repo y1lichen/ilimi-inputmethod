@@ -24,6 +24,7 @@ class IlimiInputController: IMKInputController {
     let assistantDict: [String: Int] = ["v": 1, "r": 2, "s": 3, "f": 4, "w": 5, "l": 6, "c": 7, "b": 8]
     var isASCIIMode: Bool = false {
         willSet {
+            // 在isASCIIMode改變時推播通知
             if isASCIIMode != newValue {
                 appDelegate.pushInstantNotification(title: newValue ? "英數模式" : "中文模式", subtitle: "", body: "", sound: false)
             }
@@ -36,7 +37,7 @@ class IlimiInputController: IMKInputController {
         var attributes = candidates.attributes()
         let font = NSFont.systemFont(ofSize: 22)
         attributes?[NSAttributedString.Key.font] = font
-        // 若只設attributes無法調整字體大小
+        // 若只設attributes無法調整字體大小，setFontSize方法使用bridging header暴露出來
         candidates.setFontSize(font.pointSize)
         super.init(server: server, delegate: delegate, client: inputClient)
         activateServer(inputClient)
@@ -101,6 +102,7 @@ extension IlimiInputController {
         isSecondCommitOfTypeByPronunciationMode = false
     }
     
+    //　輸入\進入同音輸入模式
     func checkIsInputByPronunciationMode(_ input: String) -> Bool {
         isTypeByPronunciationMode = (input == "\\")
         if isTypeByPronunciationMode {
@@ -111,6 +113,7 @@ extension IlimiInputController {
         return false
     }
 
+    // 輸入';進入注音模式
     func checkIsZhuyinMode(_ input: String) -> Bool {
         isZhuyinMode = (input == "';")
         if isZhuyinMode {
@@ -131,6 +134,7 @@ extension IlimiInputController {
         client.overrideKeyboard(withKeyboardNamed: "BasicKeyboardLayout")
     }
 
+    // 輸入,,CT進入打繁出簡模式
     func checkIsTradToSimToggle(input: String) -> Bool {
         if input == ",,CT" {
             InputContext.shared.isTradToSim.toggle()
@@ -258,6 +262,7 @@ extension IlimiInputController {
             return
         } else {
             client().insertText(candidate, replacementRange: NSMakeRange(0, comp.count))
+            // 如果輸出的字元是括弧的左部，則添加到closureStack
             if InputContext.shared.isClosure(input: candidate) {
                 InputContext.shared.closureStack.append(candidate)
             }

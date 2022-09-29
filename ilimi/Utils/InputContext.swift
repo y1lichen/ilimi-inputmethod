@@ -13,7 +13,12 @@ class InputContext {
                                          "【": "】", "〈": "〉",
                                          "『": "』", "《": "》",
                                          "«": "»"]
-    var isTradToSim: Bool = false
+    var isTradToSim: Bool = false {
+        didSet {
+            let appDelegate = NSApplication.shared.delegate as! AppDelegate
+            appDelegate.pushInstantNotification(title: isTradToSim ? "開啟打繁出簡" : "關閉打繁出簡", subtitle: "", body: "", sound: false)
+        }
+    }
     var currentInput: String = ""
     var currentIndex: Int = 0
     var candidatesCount = 0
