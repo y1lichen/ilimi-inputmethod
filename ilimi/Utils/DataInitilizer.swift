@@ -10,6 +10,7 @@ import Foundation
 
 class DataInitilizer {
     static let shared = DataInitilizer()
+    let appDelegate = NSApplication.shared.delegate as! AppDelegate
 
     let persistenceContainer = PersistenceController.shared
     let liuPath = NSHomeDirectory() + "/liu.json"
@@ -33,7 +34,7 @@ class DataInitilizer {
         do {
             try persistenceContainer.container.viewContext.execute(batchDeleteRequest)
         } catch {
-            NSLog("Error: " + String(describing: error))
+            appDelegate.pushInstantNotification(title: String(describing: error), subtitle: "", body: "", sound: true)
         }
         NSLog("Core Data cleaned")
     }
@@ -85,7 +86,7 @@ class DataInitilizer {
                 }
             }
         } catch {
-            NSLog("Error: " + String(describing: error))
+            appDelegate.pushInstantNotification(title: String(describing: error), subtitle: "", body: "", sound: true)
         }
     }
 }

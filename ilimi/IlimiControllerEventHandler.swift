@@ -47,15 +47,9 @@ extension IlimiInputController {
                 return true
             }
             if key.isLetter || puntuationSet.contains(key) || (isZhuyinMode && (key.isNumber || key.isPunctuation)) || key == "\\" {
-                NSLog("\(key)")
+//                NSLog("\(key)")
                 if event.modifierFlags.contains(.capsLock) {
-                    isASCIIMode = true
-                    if event.modifierFlags.contains(.shift) {
-                        return false
-                    } else {
-                        commitText(client: sender, text: inputStr.lowercased())
-                    }
-                    return true
+                    return capslockHandler(event: event, text: inputStr, client: sender)
                 } else {
                     isASCIIMode = false
                 }
@@ -99,6 +93,16 @@ extension IlimiInputController {
         }
         InputContext.shared.cleanUp()
         return false
+    }
+    
+    func capslockHandler(event: NSEvent, text: String, client sender: Any!) -> Bool {
+        isASCIIMode = true
+        if event.modifierFlags.contains(.shift) {
+            return false
+        } else {
+            commitText(client: sender, text: text.lowercased())
+        }
+        return true
     }
     
     func spcHandler(client sender: Any!) -> Bool {

@@ -9,7 +9,6 @@ import InputMethodKit
 
 @objc(IlimiInputController)
 class IlimiInputController: IMKInputController {
-    let appDelegate = NSApplication.shared.delegate as! AppDelegate
     let candidates: IMKCandidates
     static var prefixHasCandidates: Bool = true
     let notFoundRange = NSMakeRange(NSNotFound, NSNotFound)
@@ -26,7 +25,7 @@ class IlimiInputController: IMKInputController {
         willSet {
             // 在isASCIIMode改變時推播通知
             if isASCIIMode != newValue {
-                appDelegate.pushInstantNotification(title: newValue ? "英數模式" : "中文模式", subtitle: "", body: "", sound: false)
+                NotifierController.notify(message: newValue ? "英數模式" : "中文模式")
             }
         }
     }
@@ -102,7 +101,7 @@ extension IlimiInputController {
         isSecondCommitOfTypeByPronunciationMode = false
     }
     
-    //　輸入\進入同音輸入模式
+    // 輸入\進入同音輸入模式
     func checkIsInputByPronunciationMode(_ input: String) -> Bool {
         isTypeByPronunciationMode = (input == "\\")
         if isTypeByPronunciationMode {

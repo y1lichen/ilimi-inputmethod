@@ -15,8 +15,7 @@ class InputContext {
                                          "«": "»"]
     var isTradToSim: Bool = false {
         didSet {
-            let appDelegate = NSApplication.shared.delegate as! AppDelegate
-            appDelegate.pushInstantNotification(title: isTradToSim ? "開啟打繁出簡" : "關閉打繁出簡", subtitle: "", body: "", sound: false)
+            NotifierController.notify(message: isTradToSim ? "開啟打繁出簡" : "關閉打繁出簡")
         }
     }
     var currentInput: String = ""
