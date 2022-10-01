@@ -40,7 +40,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // notification
         userNotificationCenter.delegate = self
         requestNotificationAuthorization()
-        NSLog("tried connection")
+        // 在IMKInputController沒法正確取得flagsChanged，只得先使用global monitor監控flagsChanged事件
+        NSEvent.addGlobalMonitorForEvents(matching: .flagsChanged, handler: capsLockHandler)
+    }
+    
+    func capsLockHandler(with event: NSEvent) {
+        if event.keyCode == 57 {
+            IlimiInputController.isASCIIMode.toggle()
+        }
     }
     
     // request the authorization for pushing local notification

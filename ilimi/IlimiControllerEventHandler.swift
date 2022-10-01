@@ -5,6 +5,10 @@
 //  Created by 陳奕利 on 2022/9/23.
 //
 
+extension NSEvent {
+    
+}
+
 extension IlimiInputController {
     override func handle(_ event: NSEvent!, client sender: Any!) -> Bool {
         guard let event = event, sender is IMKTextInput else {
@@ -50,8 +54,6 @@ extension IlimiInputController {
 //                NSLog("\(key)")
                 if event.modifierFlags.contains(.capsLock) {
                     return capslockHandler(event: event, text: inputStr, client: sender)
-                } else {
-                    isASCIIMode = false
                 }
                 // 字根最多只有5碼
                 if (InputContext.shared.currentInput.count >= 5 || !IlimiInputController.prefixHasCandidates) && InputContext.shared.currentInput.prefix(2) != ",," && InputContext.shared.currentInput.prefix(2) != "';" {
@@ -96,7 +98,7 @@ extension IlimiInputController {
     }
     
     func capslockHandler(event: NSEvent, text: String, client sender: Any!) -> Bool {
-        isASCIIMode = true
+        // 如果按著shift則可直接輸出大寫字母
         if event.modifierFlags.contains(.shift) {
             return false
         } else {
