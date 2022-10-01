@@ -6,11 +6,22 @@
 //
 
 extension IlimiInputController {
+    
+    // IMK預設不會recognize flagsChanged事件
+    override func recognizedEvents(_ sender: Any!) -> Int {
+        let events: NSEvent.EventTypeMask = [.keyDown, .flagsChanged]
+        return Int(events.rawValue)
+    }
+    
     override func handle(_ event: NSEvent!, client sender: Any!) -> Bool {
         guard let event = event, sender is IMKTextInput else {
             cancelComposition()
             NSLog("Unable to handle NSEvent")
             return false
+        }
+        // toggle ascii mode
+        if event.type == .flagsChanged && event.keyCode == 57 {
+            isASCIIMode.toggle()
         }
         guard client() != nil else { return false }
         // don't handle the event with modifier
