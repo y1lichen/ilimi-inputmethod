@@ -9,6 +9,7 @@ import Foundation
 import UserNotifications
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
+    // 推送系統通知
     func pushInstantNotification(title: String, subtitle: String, body: String, sound: Bool) {
         userNotificationCenter.getNotificationSettings { settings in
             guard settings.authorizationStatus == .authorized else {

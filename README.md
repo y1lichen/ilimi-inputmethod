@@ -23,6 +23,8 @@
 3. 加v、r、s等輔助選字
 4. 注音輸入
 
+![注音輸入](https://github.com/y1lichen/ilimi-inputmethod/blob/main/media/zhuyin_demo.gif)
+
 若要啟用注音輸入法，必須要將[pinyin.json](https://github.com/y1lichen/ilimi-inputmethod/blob/main/others/pinyin.json)
 檔案放在/Library/Containers/ilimi/Data，或是自選單欄選開啟使用者設定目錄並將pinyin.json放入其中。
 
@@ -31,8 +33,12 @@
 5. 英數模式
 
 使用CapsLock即可切換英數模式
+
+![英數模式](https://github.com/y1lichen/ilimi-inputmethod/blob/main/media/ascii_demo.gif)
  
-6. 反查注音、輸入法
+6. 反查注音、輸入碼
+
+![反查](https://github.com/y1lichen/ilimi-inputmethod/blob/main/media/demo03.gif)
 
 7. 同音輸入
 

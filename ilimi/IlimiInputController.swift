@@ -111,12 +111,13 @@ extension IlimiInputController {
         }
         return false
     }
-
+    
     // 輸入';進入注音模式
     func checkIsZhuyinMode(_ input: String) -> Bool {
         isZhuyinMode = (input == "';")
         if isZhuyinMode {
             InputContext.shared.cleanUp()
+            candidates.hide()
             client().setMarkedText("注", selectionRange: notFoundRange, replacementRange: notFoundRange)
             return true
         }

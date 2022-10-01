@@ -5,10 +5,6 @@
 //  Created by 陳奕利 on 2022/9/23.
 //
 
-extension NSEvent {
-    
-}
-
 extension IlimiInputController {
     override func handle(_ event: NSEvent!, client sender: Any!) -> Bool {
         guard let event = event, sender is IMKTextInput else {
