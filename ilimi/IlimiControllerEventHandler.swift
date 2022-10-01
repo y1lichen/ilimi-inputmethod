@@ -22,12 +22,13 @@ extension IlimiInputController {
         // toggle ascii mode
         if event.type == .flagsChanged && event.keyCode == 57 {
             isASCIIMode.toggle()
+            return false
         }
         guard client() != nil else { return false }
         // don't handle the event with modifier
         // Otherwise, copy & paste won't work
         // 不能直接pass所有含有modifier 否則方向鍵選字也會失效
-        if event.modifierFlags.contains(.control) || event.modifierFlags.contains(.command) || event.modifierFlags.contains(.option) {
+        if event.type == .flagsChanged {
             return false
         }
         if event.type == NSEvent.EventType.keyDown {
@@ -59,6 +60,7 @@ extension IlimiInputController {
             }
             if key.isLetter || puntuationSet.contains(key) || (isZhuyinMode && (key.isNumber || key.isPunctuation)) || key == "\\" {
 //                NSLog("\(key)")
+                // 如果capsLock開啟
                 if event.modifierFlags.contains(.capsLock) {
                     return capslockHandler(event: event, text: inputStr, client: sender)
                 }

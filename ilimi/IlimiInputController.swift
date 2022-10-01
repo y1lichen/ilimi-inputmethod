@@ -23,7 +23,10 @@ class IlimiInputController: IMKInputController {
     let assistantDict: [String: Int] = ["v": 1, "r": 2, "s": 3, "f": 4, "w": 5, "l": 6, "c": 7, "b": 8]
     var isASCIIMode: Bool = false {
         willSet {
-            // 在isASCIIMode改變時推播通知
+            if !InputContext.shared.currentInput.isEmpty {
+                commitText(client: client(), text: InputContext.shared.currentInput)
+            }
+            // 在isASCIIMode改變時推播通知 
             if isASCIIMode != newValue {
                 NotifierController.notify(message: newValue ? "英數模式" : "中文模式")
             }
@@ -163,7 +166,7 @@ extension IlimiInputController {
             isSecondCommitOfTypeByPronunciationMode = true
             candidates.update()
             candidates.show()
-            ensureWindowLevel(client: client())
+            ensureWindowLevel(client: sender)
         } else {
             // 沒有同音字時直接輸入該文字
             client().insertText(text, replacementRange: NSMakeRange(0, 2))
@@ -183,7 +186,7 @@ extension IlimiInputController {
             }
             candidates.update()
             candidates.show()
-            ensureWindowLevel(client: client())
+            ensureWindowLevel(client: sender)
         } else {
             candidates.hide()
         }
@@ -209,7 +212,7 @@ extension IlimiInputController {
             }
             candidates.update()
             candidates.show()
-            ensureWindowLevel(client: client())
+            ensureWindowLevel(client: sender)
         } else {
             candidates.hide()
         }
