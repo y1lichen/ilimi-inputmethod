@@ -21,17 +21,7 @@ class IlimiInputController: IMKInputController {
     let puntuationSet: Set<Character> = [",", "'", ";", ".", "[", "]", "(", ")"]
     // 輔助選字的字典
     let assistantDict: [String: Int] = ["v": 1, "r": 2, "s": 3, "f": 4, "w": 5, "l": 6, "c": 7, "b": 8]
-    var isASCIIMode: Bool = false {
-        willSet {
-            if !InputContext.shared.currentInput.isEmpty {
-                commitText(client: client(), text: InputContext.shared.currentInput)
-            }
-            // 在isASCIIMode改變時推播通知
-            if isASCIIMode != newValue {
-                NotifierController.notify(message: newValue ? "英數模式" : "中文模式")
-            }
-        }
-    }
+    var isASCIIMode: Bool = false
 
     override init!(server: IMKServer!, delegate: Any!, client inputClient: Any!) {
         // 橫式候選字窗
