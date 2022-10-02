@@ -42,6 +42,8 @@
 
 7. 同音輸入
 
+![同音輸入](https://github.com/y1lichen/ilimi-inputmethod/blob/main/media/demo04.gif)
+
 ## Reference
 
 本專案的IMK機制參考[vChewing威注音](https://vchewing.github.io/README.html)，該專案的源碼對IMK許多函式有清楚註解
