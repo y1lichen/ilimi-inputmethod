@@ -26,7 +26,7 @@ class IlimiInputController: IMKInputController {
             if !InputContext.shared.currentInput.isEmpty {
                 commitText(client: client(), text: InputContext.shared.currentInput)
             }
-            // 在isASCIIMode改變時推播通知 
+            // 在isASCIIMode改變時推播通知
             if isASCIIMode != newValue {
                 NotifierController.notify(message: newValue ? "英數模式" : "中文模式")
             }

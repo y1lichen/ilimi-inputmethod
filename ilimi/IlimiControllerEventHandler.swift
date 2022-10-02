@@ -21,16 +21,20 @@ extension IlimiInputController {
         }
         // toggle ascii mode
         if event.type == .flagsChanged && event.keyCode == 57 {
-            isASCIIMode.toggle()
+            DispatchQueue.main.async {
+                let capsLockIsOn = event.modifierFlags.intersection(.deviceIndependentFlagsMask).contains(.capsLock)
+                self.isASCIIMode = capsLockIsOn
+            }
             return false
         }
-        guard client() != nil else { return false }
         // don't handle the event with modifier
         // Otherwise, copy & paste won't work
         // 不能直接pass所有含有modifier 否則方向鍵選字也會失效
         if event.type == .flagsChanged {
             return false
         }
+        guard client() != nil else { return false }
+        
         if event.type == NSEvent.EventType.keyDown {
             let inputStr = event.characters!
             let key = inputStr.first!
@@ -60,8 +64,8 @@ extension IlimiInputController {
             }
             if key.isLetter || puntuationSet.contains(key) || (isZhuyinMode && (key.isNumber || key.isPunctuation)) || key == "\\" {
 //                NSLog("\(key)")
-                // 如果capsLock開啟
-                if event.modifierFlags.contains(.capsLock) {
+                //
+                if isASCIIMode {
                     return capslockHandler(event: event, text: inputStr, client: sender)
                 }
                 // 字根最多只有5碼

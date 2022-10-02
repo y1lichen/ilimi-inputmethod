@@ -16,7 +16,7 @@ struct InputEngine {
     func getCadidatesByZhuyin(_ text: String) {
         let request = NSFetchRequest<Zhuin>(entityName: "Zhuin")
         request.predicate = NSPredicate(format: "key BEGINSWITH %@", text)
-        request.sortDescriptors = [NSSortDescriptor(key: "key_priority", ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(key: "key.length", ascending: true), NSSortDescriptor(key: "key_priority", ascending: true)]
         do {
             let response = try PersistenceController.shared.container.viewContext.fetch(request)
             let candidates: [String] = response.map({ $0.value! })
