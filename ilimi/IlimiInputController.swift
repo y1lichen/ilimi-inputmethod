@@ -51,6 +51,8 @@ class IlimiInputController: IMKInputController {
         }
         InputContext.shared.cleanUp()
         candidates.hide()
+        // 同步ascii模式狀態
+        checkIsCapslockOn()
         if let client = client(), client.bundleIdentifier() != Bundle.main.bundleIdentifier {
             setKeyLayout()
         }
@@ -288,5 +290,10 @@ extension IlimiInputController {
     override func inputControllerWillClose() {
         cancelComposition()
         super.inputControllerWillClose()
+    }
+    
+    func checkIsCapslockOn() {
+        let result = NSEvent.modifierFlags.intersection(.deviceIndependentFlagsMask).contains(.capsLock)
+        self.isASCIIMode = result
     }
 }
