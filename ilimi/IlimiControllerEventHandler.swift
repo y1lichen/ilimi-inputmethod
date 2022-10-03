@@ -31,6 +31,7 @@ extension IlimiInputController {
                 if self.isASCIIMode {
                     if !InputContext.shared.currentInput.isEmpty {
                         commitText(client: client(), text: InputContext.shared.currentInput)
+                        InputContext.shared.cleanUp()
                     }
                 }
             }
@@ -40,6 +41,7 @@ extension IlimiInputController {
         // Otherwise, copy & paste won't work
         // 不能直接pass所有含有modifier 否則方向鍵選字也會失效
         if event.type == .flagsChanged {
+            NSLog("test")
             return false
         }
         guard client() != nil else { return false }
