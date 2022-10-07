@@ -19,29 +19,18 @@ extension IlimiInputController {
             NSLog("Unable to handle NSEvent")
             return false
         }
-        // toggle ascii mode
-        if event.type == .flagsChanged && event.keyCode == 57 {
-            DispatchQueue.main.async { [self] in
-                let capsLockIsOn = event.modifierFlags.intersection(.deviceIndependentFlagsMask).contains(.capsLock)
-                // 在isASCIIMode改變時推播通知
-                if self.isASCIIMode != capsLockIsOn {
-                    NotifierController.notify(message: capsLockIsOn ? "英數模式" : "中文模式")
-                }
-                self.isASCIIMode = capsLockIsOn
-                if self.isASCIIMode {
-                    if !InputContext.shared.currentInput.isEmpty {
-                        commitText(client: client(), text: InputContext.shared.currentInput)
-                        InputContext.shared.cleanUp()
-                    }
-                }
-            }
+        // check if capslock is pressed
+        if checkIsCapslock(event: event) {
             return false
         }
         // don't handle the event with modifier
         // Otherwise, copy & paste won't work
         // 不能直接pass所有含有modifier 否則方向鍵選字也會失效
-        if event.type == .flagsChanged {
-            NSLog("test")
+        // 有時候不會偵測到flags changed，額外使用modifierFlags.contains避免快捷鍵被捕捉
+        if event.type == .flagsChanged || event.modifierFlags.contains(.command) ||
+            event.modifierFlags.contains(.control) || event.modifierFlags.contains(.function) ||
+            event.modifierFlags.contains(.option) {
+//            NSLog("flags change")
             return false
         }
         guard client() != nil else { return false }
@@ -118,6 +107,28 @@ extension IlimiInputController {
             }
         }
         InputContext.shared.cleanUp()
+        return false
+    }
+    
+    func checkIsCapslock(event: NSEvent) -> Bool {
+        // toggle ascii mode
+        if event.type == .flagsChanged && event.keyCode == 57 {
+            DispatchQueue.main.async { [self] in
+                let capsLockIsOn = event.modifierFlags.intersection(.deviceIndependentFlagsMask).contains(.capsLock)
+                // 在isASCIIMode改變時推播通知
+                if self.isASCIIMode != capsLockIsOn {
+                    NotifierController.notify(message: capsLockIsOn ? "英數模式" : "中文模式")
+                }
+                self.isASCIIMode = capsLockIsOn
+                if self.isASCIIMode {
+                    if !InputContext.shared.currentInput.isEmpty {
+                        commitText(client: client(), text: InputContext.shared.currentInput)
+                        InputContext.shared.cleanUp()
+                    }
+                }
+            }
+            return true
+        }
         return false
     }
     
