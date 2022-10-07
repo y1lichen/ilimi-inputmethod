@@ -27,8 +27,9 @@ extension IlimiInputController {
         // Otherwise, copy & paste won't work
         // 不能直接pass所有含有modifier 否則方向鍵選字也會失效
         // 有時候不會偵測到flags changed，額外使用modifierFlags.contains避免快捷鍵被捕捉
-        if event.type == .flagsChanged || event.modifierFlags.contains(.command) ||
-            event.modifierFlags.contains(.control) || event.modifierFlags.contains(.function) ||
+        if event.type == .flagsChanged ||
+            event.modifierFlags.contains(.command) ||
+            event.modifierFlags.contains(.control) ||
             event.modifierFlags.contains(.option) {
 //            NSLog("flags change")
             return false
@@ -136,9 +137,8 @@ extension IlimiInputController {
         // 如果按著shift則可直接輸出大寫字母
         if event.modifierFlags.contains(.shift) {
             return false
-        } else {
-            commitText(client: sender, text: text.lowercased())
         }
+        commitText(client: sender, text: text.lowercased())
         return true
     }
     
