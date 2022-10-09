@@ -121,6 +121,7 @@ extension IlimiInputController {
                     NotifierController.notify(message: capsLockIsOn ? "英數模式" : "中文模式")
                 }
                 self.isASCIIMode = capsLockIsOn
+                setKeyLayout()
                 if self.isASCIIMode {
                     if !InputContext.shared.currentInput.isEmpty {
                         commitText(client: client(), text: InputContext.shared.currentInput)

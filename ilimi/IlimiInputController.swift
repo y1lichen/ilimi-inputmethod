@@ -126,6 +126,10 @@ extension IlimiInputController {
 
     func setKeyLayout() {
         guard let client = client() else { return }
+        if isASCIIMode {
+            client.overrideKeyboard(withKeyboardNamed: "AlphanumericalKeyboardLayout")
+            return
+        }
         client.overrideKeyboard(withKeyboardNamed: "BasicKeyboardLayout")
     }
 
