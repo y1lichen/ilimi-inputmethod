@@ -124,6 +124,7 @@ extension IlimiInputController {
         return client.bundleIdentifier() ?? ""
     }
 
+    // 如果不setKeyLayout，在spotlight會無法輸入
     func setKeyLayout() {
         guard let client = client() else { return }
         if isASCIIMode {

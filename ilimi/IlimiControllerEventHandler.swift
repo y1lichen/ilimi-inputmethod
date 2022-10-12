@@ -96,7 +96,7 @@ extension IlimiInputController {
                     return true
                 }
                 // 加v、r、s等選字
-                if !(InputContext.shared.preInputPrefixSet.contains(InputContext.shared.currentInput)) && InputContext.shared.candidatesCount > 0 {
+                if !isZhuyinMode && !(InputContext.shared.preInputPrefixSet.contains(InputContext.shared.currentInput)) && InputContext.shared.candidatesCount > 0 {
                     if let id = assistantDict[inputStr] {
                         if selectCandidatesByNumAndCommit(client: sender, id: id) {
                             return true
