@@ -7,6 +7,12 @@
 
 import Foundation
 
+extension Bool {
+    fileprivate var state: NSControl.StateValue {
+        self ? .on : .off
+    }
+}
+
 extension IlimiInputController {
     @objc func reloadLiuJson() {
         DataInitilizer.shared.loadLiuJson()
@@ -30,6 +36,7 @@ extension IlimiInputController {
         let reloadJsonItem = NSMenuItem(title: "匯入liu.json", action: #selector(reloadLiuJson), keyEquivalent: "")
         let getZhuyinItem = NSMenuItem(title: "反查注音/查碼", action: #selector(toggleGetZhuyinPanel), keyEquivalent: "")
         let toggleTradToSimItem = NSMenuItem(title: "打繁出簡模式", action: #selector(toggleTradToSim), keyEquivalent: "")
+        toggleTradToSimItem.state = InputContext.shared.isTradToSim.state
         menu.addItem(openDataFolderItem)
         menu.addItem(reloadJsonItem)
         menu.addItem(NSMenuItem.separator())
