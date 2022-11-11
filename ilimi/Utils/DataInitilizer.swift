@@ -59,7 +59,7 @@ class DataInitilizer {
                 NSLog("pinyin.json laoded")
             }
         } catch {
-            NSLog("Error: " + String(describing: error))
+//            NSLog("Error: " + String(describing: error))
         }
     }
 
@@ -82,11 +82,16 @@ class DataInitilizer {
                     }
                     persistenceContainer.saveContext()
                     userDefaults.set(true, forKey: "hadReadLiuJson")
-                    NSLog("liu.json loaded")
+//                    NSLog("liu.json loaded")
                 }
             }
         } catch {
             appDelegate.pushInstantNotification(title: String(describing: error), subtitle: "", body: "", sound: true)
         }
+    }
+    
+    func reloadAllData() {
+        loadLiuJson()
+        loadPinyinJson()
     }
 }
