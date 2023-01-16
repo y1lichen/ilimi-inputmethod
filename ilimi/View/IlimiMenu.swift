@@ -29,6 +29,10 @@ extension IlimiInputController {
     @objc func toggleGetZhuyinPanel() {
         (NSApp.delegate as? AppDelegate)?.showQueryWindow()
     }
+    
+    @objc func toggleSettingView() {
+        (NSApp.delegate as? AppDelegate)?.showSettingsWindow()
+    }
 
     override func menu() -> NSMenu! {
         let menu = NSMenu(title: "Ilimi Menu")
@@ -43,6 +47,9 @@ extension IlimiInputController {
         menu.addItem(NSMenuItem.separator())
         menu.addItem(getZhuyinItem)
         menu.addItem(toggleTradToSimItem)
+        menu.addItem(NSMenuItem.separator())
+        let openSettingItem = NSMenuItem(title: "設定", action: #selector(toggleSettingView), keyEquivalent: "")
+        menu.addItem(openSettingItem)
         return menu
     }
 }

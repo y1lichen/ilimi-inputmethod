@@ -28,6 +28,7 @@ class NSManualApplication: NSApplication {
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
     var queryWindow: NSWindow? = nil
+    var settingsWindow: NSWindow? = nil
     var server = IMKServer()
     var candidatesWindow = IMKCandidates()
     let userNotificationCenter = UNUserNotificationCenter.current()
@@ -54,6 +55,30 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Insert code here to tear down your application
     }
 
+    // 設定視窗
+    func showSettingsWindow() {
+        if let settingsWindow = settingsWindow {
+            if settingsWindow.isVisible {
+                settingsWindow.makeKeyAndOrderFront(self)
+                settingsWindow.orderFrontRegardless()
+                return
+            }
+        }
+        settingsWindow = NSWindow(contentRect: NSMakeRect(0, 0, 400, 250),
+                             styleMask: [.closable, .resizable, .miniaturizable, .titled],
+                             backing: .buffered,
+                             defer: false)
+        settingsWindow?.toolbarStyle = NSWindow.ToolbarStyle.preference
+        NSToolbar.settingsViewToolBar.delegate = self
+        settingsWindow?.toolbar = NSToolbar.settingsViewToolBar
+        let settingsView = SettingsView()
+        settingsWindow?.contentView = NSHostingView(rootView: settingsView)
+        settingsWindow?.makeKeyAndOrderFront(self)
+        settingsWindow?.orderFrontRegardless()
+        settingsWindow?.isReleasedWhenClosed = false
+    }
+    
+    // 查碼視窗
     func showQueryWindow() {
         if let queryWindow = queryWindow {
             if queryWindow.isVisible {
