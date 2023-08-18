@@ -27,7 +27,8 @@ class IlimiInputController: IMKInputController {
         // 橫式候選字窗
         candidates = IMKCandidates(server: server, panelType: kIMKScrollingGridCandidatePanel)
         var attributes = candidates.attributes()
-        let font = NSFont.systemFont(ofSize: 22)
+        let fontSize = UserDefaults.standard.integer(forKey: "fontSize")
+        let font = NSFont.systemFont(ofSize: CGFloat(fontSize))
         attributes?[NSAttributedString.Key.font] = font
         // 若只設attributes無法調整字體大小，setFontSize方法使用bridging header暴露出來
         candidates.setFontSize(font.pointSize)

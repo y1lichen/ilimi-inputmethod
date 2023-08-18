@@ -9,12 +9,12 @@ import Foundation
 import SwiftUI
 
 struct GeneralSettingsView: View {
+    @AppStorage("fontSize") private var fontSize = 24
     let fontSizeValues = [14, 16, 18, 20, 22, 24, 28, 32]
-    @State var selectedFontSize = 24
     
     var body: some View {
         VStack {
-            Picker("字體大小", selection: $selectedFontSize) {
+            Picker("字體大小", selection: $fontSize) {
                 fontPickerContent()
             }
         }.frame(width: 250)

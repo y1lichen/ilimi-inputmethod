@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		D406664128E6C825001D1467 /* Notifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D406664028E6C825001D1467 /* Notifier.swift */; };
+		D42CD50D2971C27F0024DB11 /* SettingsViewToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42CD50C2971C27F0024DB11 /* SettingsViewToolbar.swift */; };
+		D42CD50F2971C3F70024DB11 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42CD50E2971C3F70024DB11 /* SettingsView.swift */; };
+		D42CD5112971C4500024DB11 /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42CD5102971C4500024DB11 /* GeneralSettingsView.swift */; };
 		D44CAD4E28C757C30046E5B6 /* InputContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44CAD4D28C757C30046E5B6 /* InputContext.swift */; };
 		D453523228DD8A970007BB09 /* IlimiControllerEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D453523128DD8A970007BB09 /* IlimiControllerEventHandler.swift */; };
 		D457523D28E3EFB4008FD744 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = D457523C28E3EFB4008FD744 /* Notification.swift */; };
@@ -26,6 +29,9 @@
 
 /* Begin PBXFileReference section */
 		D406664028E6C825001D1467 /* Notifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifier.swift; sourceTree = "<group>"; };
+		D42CD50C2971C27F0024DB11 /* SettingsViewToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewToolbar.swift; sourceTree = "<group>"; };
+		D42CD50E2971C3F70024DB11 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		D42CD5102971C4500024DB11 /* GeneralSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsView.swift; sourceTree = "<group>"; };
 		D44CAD4D28C757C30046E5B6 /* InputContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputContext.swift; sourceTree = "<group>"; };
 		D453523128DD8A970007BB09 /* IlimiControllerEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IlimiControllerEventHandler.swift; sourceTree = "<group>"; };
 		D457523C28E3EFB4008FD744 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
@@ -57,9 +63,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D447DFF6297140B2008C56C9 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				D42CD50E2971C3F70024DB11 /* SettingsView.swift */,
+				D42CD50C2971C27F0024DB11 /* SettingsViewToolbar.swift */,
+				D42CD5102971C4500024DB11 /* GeneralSettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		D4C45A2C28CBA773003DC3B0 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				D447DFF6297140B2008C56C9 /* Settings */,
 				D4C45A3128CBB00B003DC3B0 /* IlimiMenu.swift */,
 				D474F5C128D4430E00E9717F /* QueryView.swift */,
 				D406664028E6C825001D1467 /* Notifier.swift */,
@@ -194,6 +211,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D42CD50F2971C3F70024DB11 /* SettingsView.swift in Sources */,
 				D4FC14DD28C64A520081BCC0 /* AppDelegate.swift in Sources */,
 				D4FC14DF28C64A730081BCC0 /* IlimiInputController.swift in Sources */,
 				D453523228DD8A970007BB09 /* IlimiControllerEventHandler.swift in Sources */,
@@ -207,6 +225,8 @@
 				D4FC14E828C66A180081BCC0 /* PersistenceController.swift in Sources */,
 				D4B2B76A28C7A9A4006F3967 /* InputEngine.swift in Sources */,
 				D406664128E6C825001D1467 /* Notifier.swift in Sources */,
+				D42CD5112971C4500024DB11 /* GeneralSettingsView.swift in Sources */,
+				D42CD50D2971C27F0024DB11 /* SettingsViewToolbar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,6 +358,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ilimi/ilimi.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "/Library/Input Methods";
@@ -375,6 +396,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ilimi/ilimi.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "/Library/Input Methods";
