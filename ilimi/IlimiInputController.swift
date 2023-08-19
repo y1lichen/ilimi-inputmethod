@@ -151,10 +151,16 @@ extension IlimiInputController {
     }
 
     // 嘗試實作https://github.com/gureum/gureum/issues/843
+//    func ensureWindowLevel(client sender: Any!) {
+//        while candidates.windowLevel() <= client().windowLevel() {
+//            candidates.setWindowLevel(UInt64(max(0, client().windowLevel() + 1000)))
+//        }
+//    }
+    
+    // https://github.com/y1lichen/ilimi-inputmethod/issues/3
+    // 依照ShikiSuen見議
     func ensureWindowLevel(client sender: Any!) {
-        while candidates.windowLevel() <= client().windowLevel() {
-            candidates.setWindowLevel(UInt64(max(0, client().windowLevel() + 1000)))
-        }
+        candidates.setWindowLevel(UInt64(CGShieldingWindowLevel() + 2))
     }
 
     // 取得同音輸入模式的同音候選字
