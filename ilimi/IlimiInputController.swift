@@ -35,6 +35,8 @@ class IlimiInputController: IMKInputController {
         super.init(server: server, delegate: delegate, client: inputClient)
         activateServer(inputClient)
     }
+    
+
 
     override func activateServer(_ sender: Any!) {
         guard sender is IMKTextInput else {
@@ -156,7 +158,6 @@ extension IlimiInputController {
 //            candidates.setWindowLevel(UInt64(max(0, client().windowLevel() + 1000)))
 //        }
 //    }
-    
     // https://github.com/y1lichen/ilimi-inputmethod/issues/3
     // 依照ShikiSuen見議
     func ensureWindowLevel(client sender: Any!) {

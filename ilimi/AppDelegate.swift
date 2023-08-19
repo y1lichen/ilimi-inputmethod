@@ -61,6 +61,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if settingsWindow.isVisible {
                 settingsWindow.makeKeyAndOrderFront(self)
                 settingsWindow.orderFrontRegardless()
+                NSApp.activate(ignoringOtherApps: true)
                 return
             }
         }
@@ -76,6 +77,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         settingsWindow?.makeKeyAndOrderFront(self)
         settingsWindow?.orderFrontRegardless()
         settingsWindow?.isReleasedWhenClosed = false
+        NSApp.activate(ignoringOtherApps: true)
     }
     
     // 查碼視窗

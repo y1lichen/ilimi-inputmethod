@@ -16,6 +16,8 @@ struct GeneralSettingsView: View {
         VStack {
             Picker("字體大小", selection: $fontSize) {
                 fontPickerContent()
+            }.onChange(of: fontSize) { _ in
+                NSApp.terminate(self)
             }
         }.frame(width: 250)
     }
