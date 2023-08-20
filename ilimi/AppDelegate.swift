@@ -38,6 +38,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         server = IMKServer(name: Bundle.main.infoDictionary?["InputMethodConnectionName"] as? String, bundleIdentifier: Bundle.main.bundleIdentifier)
         candidatesWindow = IMKCandidates(server: server, panelType: kIMKSingleRowSteppingCandidatePanel, styleType: kIMKMain)
         DataInitilizer.shared.initDataWhenStart()
+        UserDefaults.standard.register(defaults: ["isHorizontalCandidatesPanel" : true])
         // notification
         userNotificationCenter.delegate = self
         requestNotificationAuthorization()

@@ -24,8 +24,10 @@ class IlimiInputController: IMKInputController {
     var isASCIIMode: Bool = false
 
     override init!(server: IMKServer!, delegate: Any!, client inputClient: Any!) {
-        // 橫式候選字窗
-        candidates = IMKCandidates(server: server, panelType: kIMKScrollingGridCandidatePanel)
+        // 候選字窗
+        let isHorizontalCandidates = UserDefaults.standard.bool(forKey: "isHorizontalCandidatesPanel")
+        candidates = IMKCandidates(server: server, panelType: isHorizontalCandidates
+                                   ? kIMKScrollingGridCandidatePanel : kIMKSingleColumnScrollingCandidatePanel)
         var attributes = candidates.attributes()
         let fontSize = UserDefaults.standard.integer(forKey: "fontSize")
         let font = NSFont.systemFont(ofSize: CGFloat(fontSize))
@@ -35,8 +37,6 @@ class IlimiInputController: IMKInputController {
         super.init(server: server, delegate: delegate, client: inputClient)
         activateServer(inputClient)
     }
-    
-
 
     override func activateServer(_ sender: Any!) {
         guard sender is IMKTextInput else {
@@ -98,7 +98,7 @@ extension IlimiInputController {
         isTypeByPronunciationMode = false
         isSecondCommitOfTypeByPronunciationMode = false
     }
-    
+
     // 輸入\進入同音輸入模式
     func checkIsInputByPronunciationMode(_ input: String) -> Bool {
         isTypeByPronunciationMode = (input == "\\")
@@ -109,7 +109,7 @@ extension IlimiInputController {
         }
         return false
     }
-    
+
     // 輸入';進入注音模式
     func checkIsZhuyinMode(_ input: String) -> Bool {
         isZhuyinMode = (input == "';")
@@ -294,9 +294,9 @@ extension IlimiInputController {
         cancelComposition()
         super.inputControllerWillClose()
     }
-    
+
     func checkIsCapslockOn() {
         let result = NSEvent.modifierFlags.intersection(.deviceIndependentFlagsMask).contains(.capsLock)
-        self.isASCIIMode = result
+        isASCIIMode = result
     }
 }
