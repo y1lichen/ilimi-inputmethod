@@ -33,6 +33,10 @@ extension IlimiInputController {
     @objc func toggleSettingView() {
         (NSApp.delegate as? AppDelegate)?.showSettingsWindow()
     }
+    
+    @objc func reloadApp() {
+        NSApp.terminate(self)
+    }
 
     override func menu() -> NSMenu! {
         let menu = NSMenu(title: "Ilimi Menu")
@@ -40,16 +44,18 @@ extension IlimiInputController {
         let reloadJsonItem = NSMenuItem(title: "匯入字檔", action: #selector(reloadJson), keyEquivalent: "")
         let getZhuyinItem = NSMenuItem(title: "反查注音/查碼", action: #selector(toggleGetZhuyinPanel), keyEquivalent: "")
         let toggleTradToSimItem = NSMenuItem(title: "打繁出簡模式", action: #selector(toggleTradToSim), keyEquivalent: "")
+        let openSettingItem = NSMenuItem(title: "設定", action: #selector(toggleSettingView), keyEquivalent: "")
+        let reloadAppItem = NSMenuItem(title: "重啟輸入法", action: #selector(reloadApp), keyEquivalent: "")
         // 開啟打繁出簡模式後，在MenuItem上顯示勾符號
         toggleTradToSimItem.state = InputContext.shared.isTradToSim.state
-        menu.addItem(openDataFolderItem)
-        menu.addItem(reloadJsonItem)
-        menu.addItem(NSMenuItem.separator())
         menu.addItem(getZhuyinItem)
         menu.addItem(toggleTradToSimItem)
         menu.addItem(NSMenuItem.separator())
-        let openSettingItem = NSMenuItem(title: "設定", action: #selector(toggleSettingView), keyEquivalent: "")
         menu.addItem(openSettingItem)
+        menu.addItem(openDataFolderItem)
+        menu.addItem(reloadJsonItem)
+        menu.addItem(NSMenuItem.separator())
+        menu.addItem(reloadAppItem)
         return menu
     }
 }
