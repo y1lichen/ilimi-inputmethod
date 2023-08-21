@@ -44,6 +44,12 @@
 
 ![同音輸入](https://github.com/y1lichen/ilimi-inputmethod/blob/main/media/demo04.gif)
 
+## 可自定義項目
+
+- 選字窗字體大小
+- 選字窗樣式（直式、橫式）
+- 是否在沒有候選字時限制輸入
+
 ## Reference
 
 本專案的IMK機制參考[vChewing威注音](https://vchewing.github.io/README.html)，該專案的源碼對IMK許多函式有清楚註解
