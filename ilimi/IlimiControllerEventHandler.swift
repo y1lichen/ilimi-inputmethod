@@ -70,7 +70,9 @@ extension IlimiInputController {
                     return capslockHandler(event: event, text: inputStr, client: sender)
                 }
                 // 字根最多只有5碼
-                if (InputContext.shared.currentInput.count >= 5 || !IlimiInputController.prefixHasCandidates) && InputContext.shared.currentInput.prefix(2) != ",," && InputContext.shared.currentInput.prefix(2) != "';" {
+                // 使用者可設定在沒有候選字時限制輸入
+                let limitInputWhenNoCandidate = UserDefaults.standard.bool(forKey: "limitInputWhenNoCandidate")
+                if limitInputWhenNoCandidate && (InputContext.shared.currentInput.count >= 5 || !IlimiInputController.prefixHasCandidates) && InputContext.shared.currentInput.prefix(2) != ",," && InputContext.shared.currentInput.prefix(2) != "';" {
                     NSSound.beep()
                     return true
                 }

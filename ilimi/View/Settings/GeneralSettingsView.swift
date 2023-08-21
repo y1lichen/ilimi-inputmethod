@@ -13,6 +13,8 @@ struct GeneralSettingsView: View {
     @AppStorage("fontSize") private var fontSize = 22
     // 預設橫排選字窗
     @AppStorage("isHorizontalCandidatesPanel") private var isHorizontalCandidatesPanel = true
+    // 預設不在沒有候選字時限制輸入
+    @AppStorage("limitInputWhenNoCandidate") private var limitInputWhenNoCandidate = false
     let fontSizeValues = [14, 16, 18, 20, 22, 24, 28, 32]
     
     func killApplicationToReload() {
@@ -33,6 +35,12 @@ struct GeneralSettingsView: View {
                 killApplicationToReload()
             }
             .pickerStyle(RadioGroupPickerStyle())
+            Picker("在沒有候選字時限制輸入", selection: $limitInputWhenNoCandidate) {
+                Text("是").tag(true)
+                Text("否").tag(false)
+            }
+            .pickerStyle(RadioGroupPickerStyle())
+            .horizontalRadioGroupLayout()
         }.frame(width: 250)
     }
 

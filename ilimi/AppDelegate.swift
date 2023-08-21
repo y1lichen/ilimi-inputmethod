@@ -38,7 +38,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         server = IMKServer(name: Bundle.main.infoDictionary?["InputMethodConnectionName"] as? String, bundleIdentifier: Bundle.main.bundleIdentifier)
         candidatesWindow = IMKCandidates(server: server, panelType: kIMKSingleRowSteppingCandidatePanel, styleType: kIMKMain)
         DataInitilizer.shared.initDataWhenStart()
+        // regist UserDefaluts
         UserDefaults.standard.register(defaults: ["isHorizontalCandidatesPanel" : true])
+        UserDefaults.standard.register(defaults: ["limitInputWhenNoCandidate" : false])
         // notification
         userNotificationCenter.delegate = self
         requestNotificationAuthorization()
