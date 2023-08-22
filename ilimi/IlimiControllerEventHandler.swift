@@ -6,13 +6,12 @@
 //
 
 extension IlimiInputController {
-    
     // IMK預設不會recognize flagsChanged事件
     override func recognizedEvents(_ sender: Any!) -> Int {
         let events: NSEvent.EventTypeMask = [.keyDown, .flagsChanged]
         return Int(events.rawValue)
     }
-    
+
     override func handle(_ event: NSEvent!, client sender: Any!) -> Bool {
         guard let event = event, sender is IMKTextInput else {
             cancelComposition()
@@ -22,6 +21,9 @@ extension IlimiInputController {
         // check if capslock is pressed
         if checkIsCapslock(event: event) {
             return false
+        }
+        if checkIsToggleFullWidthMode(event: event) {
+            return true
         }
         // don't handle the event with modifier
         // Otherwise, copy & paste won't work
@@ -35,8 +37,11 @@ extension IlimiInputController {
             return false
         }
         guard client() != nil else { return false }
-        
+
         if event.type == NSEvent.EventType.keyDown {
+            if handleFullWidthMode(event: event, client: sender) {
+                return true
+            }
             let inputStr = event.characters!
             let key = inputStr.first!
             if event.keyCode == kVK_Space {
@@ -45,7 +50,7 @@ extension IlimiInputController {
             // 選字窗出現時
             if candidates.isVisible() {
                 // 使用數字鍵選字
-                if (!isZhuyinMode && key.isNumber) || (isZhuyinMode && checkIsEndOfZhuyin(text: InputContext.shared.currentInput) && key.isNumber) {
+                if (!isZhuyinMode && key.isNumber) || (isZhuyinMode && checkIsEndOfZhuyin(text: InputContext.shared.getCurrentInput()) && key.isNumber) {
                     let keyValue = Int(key.hexDigitValue!)
                     return handleSelectCandidatesByNum(keyValue, client: sender)
                 }
@@ -58,8 +63,8 @@ extension IlimiInputController {
                 return escHandler()
             } else if event.keyCode == kVK_Delete {
                 return deleteHandler()
-            } else if event.keyCode == kVK_Return && InputContext.shared.currentInput.count > 0 {
-                commitText(client: sender, text: InputContext.shared.currentInput)
+            } else if event.keyCode == kVK_Return && InputContext.shared.getCurrentInput().count > 0 {
+                commitText(client: sender, text: InputContext.shared.getCurrentInput())
                 cancelComposition()
                 return true
             }
@@ -72,7 +77,7 @@ extension IlimiInputController {
                 // 字根最多只有5碼
                 // 使用者可設定在沒有候選字時限制輸入
                 let limitInputWhenNoCandidate = UserDefaults.standard.bool(forKey: "limitInputWhenNoCandidate")
-                if limitInputWhenNoCandidate && (InputContext.shared.currentInput.count >= 5 || !IlimiInputController.prefixHasCandidates) && InputContext.shared.currentInput.prefix(2) != ",," && InputContext.shared.currentInput.prefix(2) != "';" {
+                if limitInputWhenNoCandidate && (InputContext.shared.getCurrentInput().count >= 5 || !IlimiInputController.prefixHasCandidates) && InputContext.shared.getCurrentInput().prefix(2) != ",," && InputContext.shared.getCurrentInput().prefix(2) != "';" {
                     NSSound.beep()
                     return true
                 }
@@ -84,21 +89,21 @@ extension IlimiInputController {
                     }
                 }
                 // 加到composition
-                InputContext.shared.currentInput.append(inputStr)
+                InputContext.shared.appendCurrentInput(inputStr)
                 // \ -> 同音輸入模式
-                if !isTypeByPronunciationMode && checkIsInputByPronunciationMode(InputContext.shared.currentInput) {
+                if !isTypeByPronunciationMode && checkIsInputByPronunciationMode(InputContext.shared.getCurrentInput()) {
                     return true
                 }
                 // '; -> 注音模式
-                if !isZhuyinMode && checkIsZhuyinMode(InputContext.shared.currentInput) {
+                if !isZhuyinMode && checkIsZhuyinMode(InputContext.shared.getCurrentInput()) {
                     return true
                 }
                 // ,,CT -> 打繁出簡模式
-                if checkIsTradToSimToggle(input: InputContext.shared.currentInput) {
+                if checkIsTradToSimToggle(input: InputContext.shared.getCurrentInput()) {
                     return true
                 }
                 // 加v、r、s等選字
-                if !isZhuyinMode && !(InputContext.shared.preInputPrefixSet.contains(InputContext.shared.currentInput)) && InputContext.shared.candidatesCount > 0 {
+                if !isZhuyinMode && !(InputContext.shared.preInputPrefixSet.contains(InputContext.shared.getCurrentInput())) && InputContext.shared.candidatesCount > 0 {
                     if let id = assistantDict[inputStr] {
                         if selectCandidatesByNumAndCommit(client: sender, id: id) {
                             return true
@@ -112,7 +117,7 @@ extension IlimiInputController {
         InputContext.shared.cleanUp()
         return false
     }
-    
+
     func checkIsCapslock(event: NSEvent) -> Bool {
         // toggle ascii mode
         if event.type == .flagsChanged && event.keyCode == 57 {
@@ -125,8 +130,8 @@ extension IlimiInputController {
                 self.isASCIIMode = capsLockIsOn
                 setKeyLayout()
                 if self.isASCIIMode {
-                    if !InputContext.shared.currentInput.isEmpty {
-                        commitText(client: client(), text: InputContext.shared.currentInput)
+                    if !InputContext.shared.getCurrentInput().isEmpty {
+                        commitText(client: client(), text: InputContext.shared.getCurrentInput())
                         InputContext.shared.cleanUp()
                     }
                 }
@@ -135,7 +140,7 @@ extension IlimiInputController {
         }
         return false
     }
-    
+
     func capslockHandler(event: NSEvent, text: String, client sender: Any!) -> Bool {
         // 如果按著shift則可直接輸出大寫字母
         if event.modifierFlags.contains(.shift) {
@@ -144,33 +149,33 @@ extension IlimiInputController {
         commitText(client: sender, text: text.lowercased())
         return true
     }
-    
+
     func spcHandler(client sender: Any!) -> Bool {
         if InputContext.shared.candidatesCount > 0 {
             // commit the input
             commitCandidate(client: sender)
-        } else if InputContext.shared.currentInput.isEmpty {
+        } else if InputContext.shared.getCurrentInput().isEmpty {
             // do nothing if composed string isn't empty
             return false
         }
         return true
     }
-    
+
     func deleteHandler() -> Bool {
-        if InputContext.shared.currentInput.count > 0 {
-            InputContext.shared.currentInput.removeLast()
+        if InputContext.shared.getCurrentInput().count > 0 {
+            InputContext.shared.deleteLastOfCurrentInput()
             let range = NSMakeRange(NSNotFound, NSNotFound)
             // 如果是注音模式，則在composition清空時關閉注音模式。
-            if (isZhuyinMode || isTypeByPronunciationMode) && InputContext.shared.currentInput.count == 0 {
+            if (isZhuyinMode || isTypeByPronunciationMode) && InputContext.shared.getCurrentInput().count == 0 {
                 client().setMarkedText("", selectionRange: range, replacementRange: range)
                 isZhuyinMode = false
                 turnOffIsInputByPronunciationMode()
             }
-            if InputContext.shared.currentInput.count == 0 {
+            if InputContext.shared.getCurrentInput().count == 0 {
                 cancelComposition()
                 return true
             }
-            client().setMarkedText(InputContext.shared.currentInput, selectionRange: range, replacementRange: range)
+            client().setMarkedText(InputContext.shared.getCurrentInput(), selectionRange: range, replacementRange: range)
             updateCandidatesWindow()
             return true
         }
@@ -179,13 +184,13 @@ extension IlimiInputController {
 
     // 如果currentInput為空就直接pass esc事件，讓系統處理
     func escHandler() -> Bool {
-        if InputContext.shared.currentInput.count > 0 || isZhuyinMode || isTypeByPronunciationMode {
+        if InputContext.shared.getCurrentInput().count > 0 || isZhuyinMode || isTypeByPronunciationMode {
             cancelComposition()
             return true
         }
         return false
     }
-    
+
     func handleSelectCandidatesByNum(_ keyValue: Int, client sender: Any!) -> Bool {
         if keyValue > InputContext.shared.candidatesCount {
             return true
@@ -200,6 +205,26 @@ extension IlimiInputController {
             let selectedId = ((InputContext.shared.candidatesPageId - 1) * 5) + keyValue - 1
             return selectCandidatesByNumAndCommit(client: sender, id: selectedId)
         }
+    }
+
+    // 全形模式開關 shift+空白鍵
+    func checkIsToggleFullWidthMode(event: NSEvent) -> Bool {
+        if event.modifierFlags.intersection(.deviceIndependentFlagsMask) == .shift && event.keyCode == 49 {
+            isFullWidthMode.toggle()
+            NotifierController.notify(message: isFullWidthMode ? "全形模式" : "半形模式")
+            return true
+        }
+        return false
+    }
+    
+    func handleFullWidthMode(event: NSEvent, client sender: Any!) -> Bool {
+        if !isFullWidthMode {
+            return false
+        }
+        if let inputChar = event.characters?.first {
+            commitText(client: sender, text: String(inputChar).fullWidth)
+        }
+        return true
     }
 
     // 看起來不用特別分別對直式或橫式候選字窗做處理

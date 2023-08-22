@@ -17,6 +17,8 @@ class IlimiInputController: IMKInputController {
     // 同音輸入模式
     var isTypeByPronunciationMode = false
     var isSecondCommitOfTypeByPronunciationMode = false
+    // 全形模式
+    var isFullWidthMode = false
     //
     let puntuationSet: Set<Character> = [",", "'", ";", ".", "[", "]", "(", ")"]
     // 輔助選字的字典
@@ -225,7 +227,7 @@ extension IlimiInputController {
 
     func updateCandidatesWindow() {
         guard let client = client() else { return }
-        let comp = InputContext.shared.currentInput
+        let comp = InputContext.shared.getCurrentInput()
         if isZhuyinMode {
             client.setMarkedText(getZhuyinMarkedText(comp), selectionRange: notFoundRange, replacementRange: notFoundRange)
             getNewCandidatesByZhuyin(comp: comp, client: client)
@@ -246,7 +248,7 @@ extension IlimiInputController {
     }
 
     func commitCandidate(client sender: Any!) {
-        let comp = InputContext.shared.currentInput
+        let comp = InputContext.shared.getCurrentInput()
         let id = InputContext.shared.currentIndex
         if id < 0 || id >= InputContext.shared.candidatesCount {
             return
