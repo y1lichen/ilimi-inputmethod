@@ -202,6 +202,7 @@ extension IlimiInputController {
         }
     }
 
+    // 看起來不用特別分別對直式或橫式候選字窗做處理
     func handleCandidatesWindowNavigation(_ event: NSEvent, client sender: Any!) -> Bool {
         if let key = event.characters?.first {
             if key == "[" {
