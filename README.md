@@ -44,6 +44,10 @@
 
 ![同音輸入](https://github.com/y1lichen/ilimi-inputmethod/blob/main/media/demo04.gif)
 
+8. 全形模式
+
+輸入shift+空白鍵可以進入全形模式s 
+
 ## 可自定義項目
 
 - 選字窗字體大小
