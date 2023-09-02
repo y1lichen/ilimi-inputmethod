@@ -263,4 +263,9 @@ extension IlimiInputController {
         }
         return isArrow
     }
+    
+    func checkIsCapslockOn() {
+        let result = NSEvent.modifierFlags.intersection(.deviceIndependentFlagsMask).contains(.capsLock)
+        isASCIIMode = result
+    }
 }

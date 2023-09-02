@@ -102,17 +102,6 @@ extension IlimiInputController {
         isSecondCommitOfTypeByPronunciationMode = false
     }
 
-    // 輸入\進入同音輸入模式
-    func checkIsInputByPronunciationMode(_ input: String) -> Bool {
-        isTypeByPronunciationMode = (input == "\\")
-        if isTypeByPronunciationMode {
-            InputContext.shared.cleanUp()
-            client().setMarkedText("音", selectionRange: notFoundRange, replacementRange: notFoundRange)
-            return true
-        }
-        return false
-    }
-
     var clientBundleIdentifier: String {
         guard let client = client() else { return "" }
         return client.bundleIdentifier() ?? ""
@@ -148,23 +137,6 @@ extension IlimiInputController {
     // 依照ShikiSuen見議
     func ensureWindowLevel(client sender: Any!) {
         candidates.setWindowLevel(UInt64(CGShieldingWindowLevel() + 2))
-    }
-
-    // 取得同音輸入模式的同音候選字
-    func getNewCandidatesOfSamePronunciation(text: String, client sender: Any!) {
-        InputEngine.shared.getCandidatesByPronunciation(text)
-        if InputContext.shared.candidatesCount > 0 {
-            isSecondCommitOfTypeByPronunciationMode = true
-            candidates.update()
-            candidates.show()
-            ensureWindowLevel(client: sender)
-        } else {
-            // 沒有同音字時直接輸入該文字
-            client().insertText(text, replacementRange: NSMakeRange(0, 2))
-            turnOffIsInputByPronunciationMode()
-            InputContext.shared.cleanUp()
-            candidates.hide()
-        }
     }
 
     func getNewCandidates(comp: String, client sender: Any!) {
@@ -254,8 +226,4 @@ extension IlimiInputController {
         super.inputControllerWillClose()
     }
 
-    func checkIsCapslockOn() {
-        let result = NSEvent.modifierFlags.intersection(.deviceIndependentFlagsMask).contains(.capsLock)
-        isASCIIMode = result
-    }
 }
