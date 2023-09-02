@@ -217,16 +217,6 @@ extension IlimiInputController {
         return false
     }
     
-    func handleFullWidthMode(event: NSEvent, client sender: Any!) -> Bool {
-        if !isFullWidthMode {
-            return false
-        }
-        if let inputChar = event.characters?.first {
-            commitText(client: sender, text: String(inputChar).fullWidth)
-        }
-        return true
-    }
-
     // 看起來不用特別分別對直式或橫式候選字窗做處理
     func handleCandidatesWindowNavigation(_ event: NSEvent, client sender: Any!) -> Bool {
         if let key = event.characters?.first {

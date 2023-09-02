@@ -29,7 +29,7 @@ class IlimiInputController: IMKInputController {
         // 候選字窗
         let isHorizontalCandidates = UserDefaults.standard.bool(forKey: "isHorizontalCandidatesPanel")
         candidates = IMKCandidates(server: server, panelType: isHorizontalCandidates
-                                   ? kIMKScrollingGridCandidatePanel : kIMKSingleColumnScrollingCandidatePanel)
+            ? kIMKScrollingGridCandidatePanel : kIMKSingleColumnScrollingCandidatePanel)
         var attributes = candidates.attributes()
         let fontSize = UserDefaults.standard.integer(forKey: "fontSize")
         let font = NSFont.systemFont(ofSize: CGFloat(fontSize))
@@ -58,7 +58,7 @@ class IlimiInputController: IMKInputController {
         guard sender is IMKTextInput else {
             return
         }
-        self.cancelComposition()
+        cancelComposition()
         super.deactivateServer(sender)
     }
 
@@ -113,18 +113,6 @@ extension IlimiInputController {
         return false
     }
 
-    // 輸入';進入注音模式
-    func checkIsZhuyinMode(_ input: String) -> Bool {
-        isZhuyinMode = (input == "';")
-        if isZhuyinMode {
-            InputContext.shared.cleanUp()
-            candidates.hide()
-            client().setMarkedText("注", selectionRange: notFoundRange, replacementRange: notFoundRange)
-            return true
-        }
-        return false
-    }
-
     var clientBundleIdentifier: String {
         guard let client = client() else { return "" }
         return client.bundleIdentifier() ?? ""
@@ -148,11 +136,6 @@ extension IlimiInputController {
             return true
         }
         return false
-    }
-
-    // 把輸入碼轉成注音碼
-    func getZhuyinMarkedText(_ text: String) -> String {
-        return "注" + StringConverter.shared.keyToZhuyins(text)
     }
 
     // 嘗試實作https://github.com/gureum/gureum/issues/843
@@ -182,33 +165,6 @@ extension IlimiInputController {
             InputContext.shared.cleanUp()
             candidates.hide()
         }
-    }
-
-    // 取得注音輸入的候選字
-    func getNewCandidatesByZhuyin(comp: String, client sender: Any!) {
-        if comp.count > 0 {
-            InputEngine.shared.getCadidatesByZhuyin(comp)
-            if InputContext.shared.candidatesCount <= 0 {
-                candidates.hide()
-                return
-            }
-            candidates.update()
-            candidates.show()
-            ensureWindowLevel(client: sender)
-        } else {
-            candidates.hide()
-        }
-    }
-
-    // 注音輸入的最後一碼是聲調
-    func checkIsEndOfZhuyin(text: String) -> Bool {
-        if (text.last?.isLetter) != nil {
-            let num = Int(String(text.last!))
-            if num == 3 || num == 4 || num == 6 || num == 7 {
-                return true
-            }
-        }
-        return false
     }
 
     func getNewCandidates(comp: String, client sender: Any!) {

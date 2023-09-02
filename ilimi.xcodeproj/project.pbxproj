@@ -11,6 +11,8 @@
 		D42CD50D2971C27F0024DB11 /* SettingsViewToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42CD50C2971C27F0024DB11 /* SettingsViewToolbar.swift */; };
 		D42CD50F2971C3F70024DB11 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42CD50E2971C3F70024DB11 /* SettingsView.swift */; };
 		D42CD5112971C4500024DB11 /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42CD5102971C4500024DB11 /* GeneralSettingsView.swift */; };
+		D440E2A92AA39C960050D4F6 /* FullWidthMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D440E2A82AA39C960050D4F6 /* FullWidthMode.swift */; };
+		D440E2AC2AA39E400050D4F6 /* ZhuyinMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D440E2AB2AA39E400050D4F6 /* ZhuyinMode.swift */; };
 		D44CAD4E28C757C30046E5B6 /* InputContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44CAD4D28C757C30046E5B6 /* InputContext.swift */; };
 		D453523228DD8A970007BB09 /* IlimiControllerEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D453523128DD8A970007BB09 /* IlimiControllerEventHandler.swift */; };
 		D457523D28E3EFB4008FD744 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = D457523C28E3EFB4008FD744 /* Notification.swift */; };
@@ -25,6 +27,7 @@
 		D4FC14E328C667200081BCC0 /* DataInitilizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC14E228C667200081BCC0 /* DataInitilizer.swift */; };
 		D4FC14E628C668A90081BCC0 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D4FC14E428C668A90081BCC0 /* Model.xcdatamodeld */; };
 		D4FC14E828C66A180081BCC0 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC14E728C66A180081BCC0 /* PersistenceController.swift */; };
+		D4FFDFDE2A94F4C30010642E /* CharWidthConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FFDFDD2A94F4C30010642E /* CharWidthConverter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +35,8 @@
 		D42CD50C2971C27F0024DB11 /* SettingsViewToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewToolbar.swift; sourceTree = "<group>"; };
 		D42CD50E2971C3F70024DB11 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		D42CD5102971C4500024DB11 /* GeneralSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsView.swift; sourceTree = "<group>"; };
+		D440E2A82AA39C960050D4F6 /* FullWidthMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullWidthMode.swift; sourceTree = "<group>"; };
+		D440E2AB2AA39E400050D4F6 /* ZhuyinMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZhuyinMode.swift; sourceTree = "<group>"; };
 		D44CAD4D28C757C30046E5B6 /* InputContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputContext.swift; sourceTree = "<group>"; };
 		D453523128DD8A970007BB09 /* IlimiControllerEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IlimiControllerEventHandler.swift; sourceTree = "<group>"; };
 		D457523C28E3EFB4008FD744 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
@@ -50,6 +55,7 @@
 		D4FC14E228C667200081BCC0 /* DataInitilizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataInitilizer.swift; sourceTree = "<group>"; };
 		D4FC14E528C668A90081BCC0 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		D4FC14E728C66A180081BCC0 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
+		D4FFDFDD2A94F4C30010642E /* CharWidthConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharWidthConverter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +69,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D440E2A72AA39C6E0050D4F6 /* FullWidthMode */ = {
+			isa = PBXGroup;
+			children = (
+				D440E2A82AA39C960050D4F6 /* FullWidthMode.swift */,
+			);
+			path = FullWidthMode;
+			sourceTree = "<group>";
+		};
+		D440E2AA2AA39E2E0050D4F6 /* ZhuyinMode */ = {
+			isa = PBXGroup;
+			children = (
+				D440E2AB2AA39E400050D4F6 /* ZhuyinMode.swift */,
+			);
+			path = ZhuyinMode;
+			sourceTree = "<group>";
+		};
 		D447DFF6297140B2008C56C9 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -104,6 +126,7 @@
 		D4FC14CC28C649F70081BCC0 /* ilimi */ = {
 			isa = PBXGroup;
 			children = (
+				D4FFDFDC2A94F43A0010642E /* Extension */,
 				D4C45A2C28CBA773003DC3B0 /* View */,
 				D4FC14E128C666DE0081BCC0 /* Utils */,
 				D4FC14E028C64F400081BCC0 /* Info.plist */,
@@ -130,6 +153,8 @@
 		D4FC14E128C666DE0081BCC0 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				D440E2AA2AA39E2E0050D4F6 /* ZhuyinMode */,
+				D440E2A72AA39C6E0050D4F6 /* FullWidthMode */,
 				D4B2B76928C7A9A4006F3967 /* InputEngine.swift */,
 				D44CAD4D28C757C30046E5B6 /* InputContext.swift */,
 				D4FC14E228C667200081BCC0 /* DataInitilizer.swift */,
@@ -138,6 +163,14 @@
 				D457523C28E3EFB4008FD744 /* Notification.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		D4FFDFDC2A94F43A0010642E /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				D4FFDFDD2A94F4C30010642E /* CharWidthConverter.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -223,9 +256,12 @@
 				D457523D28E3EFB4008FD744 /* Notification.swift in Sources */,
 				D4FC14E628C668A90081BCC0 /* Model.xcdatamodeld in Sources */,
 				D4FC14E828C66A180081BCC0 /* PersistenceController.swift in Sources */,
+				D440E2A92AA39C960050D4F6 /* FullWidthMode.swift in Sources */,
+				D440E2AC2AA39E400050D4F6 /* ZhuyinMode.swift in Sources */,
 				D4B2B76A28C7A9A4006F3967 /* InputEngine.swift in Sources */,
 				D406664128E6C825001D1467 /* Notifier.swift in Sources */,
 				D42CD5112971C4500024DB11 /* GeneralSettingsView.swift in Sources */,
+				D4FFDFDE2A94F4C30010642E /* CharWidthConverter.swift in Sources */,
 				D42CD50D2971C27F0024DB11 /* SettingsViewToolbar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
