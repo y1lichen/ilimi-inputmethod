@@ -37,13 +37,14 @@ class IlimiInputController: IMKInputController {
         // 若只設attributes無法調整字體大小，setFontSize方法使用bridging header暴露出來
         candidates.setFontSize(font.pointSize)
         super.init(server: server, delegate: delegate, client: inputClient)
-        activateServer(inputClient)
+        activateServer(inputClient ?? client())
     }
 
     override func activateServer(_ sender: Any!) {
-        guard sender is IMKTextInput else {
-            return
-        }
+//        guard sender is IMKTextInput else {
+//            return
+//        }
+        super.activateServer(sender)
         InputContext.shared.cleanUp()
         candidates.hide()
         // 同步ascii模式狀態
@@ -57,8 +58,8 @@ class IlimiInputController: IMKInputController {
         guard sender is IMKTextInput else {
             return
         }
-        InputContext.shared.cleanUp()
-        candidates.hide()
+        self.cancelComposition()
+        super.deactivateServer(sender)
     }
 
     override func selectionRange() -> NSRange {

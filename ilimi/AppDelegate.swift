@@ -44,9 +44,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // notification
         userNotificationCenter.delegate = self
         requestNotificationAuthorization()
-        NSLog("connection tried")
+//        NSLog("connection tried")
     }
-    
+
     // request the authorization for pushing local notification
     func requestNotificationAuthorization() {
         userNotificationCenter.requestAuthorization(options: [.alert, .badge]) {
@@ -82,7 +82,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         settingsWindow?.isReleasedWhenClosed = false
         NSApp.activate(ignoringOtherApps: true)
     }
-    
+
     // 查碼視窗
     func showQueryWindow() {
         if let queryWindow = queryWindow {
