@@ -18,6 +18,7 @@ class InputContext {
             NotifierController.notify(message: isTradToSim ? "開啟打繁出簡" : "關閉打繁出簡")
         }
     }
+
     private var currentInput: String = ""
     var currentIndex: Int = 0
     var candidatesCount = 0
@@ -75,16 +76,21 @@ class InputContext {
     func isClosure(input: String) -> Bool {
         return (closureDict[input] != nil)
     }
-    
+
     func appendCurrentInput(_ inputStr: String) {
         currentInput.append(inputStr)
     }
-    
+
     func getCurrentInput() -> String {
         return currentInput
     }
-    
+
     func deleteLastOfCurrentInput() {
         currentInput.removeLast()
+    }
+
+    func setLastOfCurrentInput(_ char: String) {
+        let index = currentInput.index(currentInput.startIndex, offsetBy: currentInput.count - 1)
+        currentInput.replaceSubrange(index...index, with: char)
     }
 }

@@ -23,6 +23,9 @@ class IlimiInputController: IMKInputController {
     let puntuationSet: Set<Character> = [",", "'", ";", ".", "[", "]", "(", ")"]
     // 輔助選字的字典
     let assistantDict: [String: Int] = ["v": 1, "r": 2, "s": 3, "f": 4, "w": 5, "l": 6, "c": 7, "b": 8]
+    // 是否已輸入輔助選字
+    var isAssistSelectMode = false
+    // 英數模式
     var isASCIIMode: Bool = false
 
     override init!(server: IMKServer!, delegate: Any!, client inputClient: Any!) {
@@ -83,7 +86,7 @@ class IlimiInputController: IMKInputController {
     }
 
     override func cancelComposition() {
-        client().setMarkedText("", selectionRange: NSMakeRange(0, 0), replacementRange: notFoundRange)
+        setMarkedText("", selectionRange: NSMakeRange(0, 0))
         InputContext.shared.cleanUp()
         candidates.update()
         candidates.hide()
@@ -92,6 +95,7 @@ class IlimiInputController: IMKInputController {
         isZhuyinMode = false
         // 如果是同音輸入模式則關閉同音輸入模式
         turnOffIsInputByPronunciationMode()
+        isAssistSelectMode = false
         super.cancelComposition()
     }
 }
@@ -158,13 +162,13 @@ extension IlimiInputController {
         guard let client = client() else { return }
         let comp = InputContext.shared.getCurrentInput()
         if isZhuyinMode {
-            client.setMarkedText(getZhuyinMarkedText(comp), selectionRange: notFoundRange, replacementRange: notFoundRange)
+            setMarkedText(getZhuyinMarkedText(comp))
             getNewCandidatesByZhuyin(comp: comp, client: client)
         } else {
             if isTypeByPronunciationMode && !isSecondCommitOfTypeByPronunciationMode {
-                client.setMarkedText("音" + comp, selectionRange: notFoundRange, replacementRange: notFoundRange)
+                setMarkedText("音" + comp)
             } else {
-                client.setMarkedText(comp, selectionRange: notFoundRange, replacementRange: notFoundRange)
+                setMarkedText(comp)
             }
             getNewCandidates(comp: comp, client: client)
         }
@@ -195,7 +199,7 @@ extension IlimiInputController {
             turnOffIsInputByPronunciationMode()
         } else if isTypeByPronunciationMode {
             // 同音模式下，第一次選字候選字
-            client().setMarkedText("音" + candidate, selectionRange: notFoundRange, replacementRange: notFoundRange)
+            setMarkedText("音" + candidate)
             InputContext.shared.cleanUp()
             getNewCandidatesOfSamePronunciation(text: candidate, client: sender)
             return
@@ -208,6 +212,7 @@ extension IlimiInputController {
         }
         InputContext.shared.cleanUp()
         updateCandidatesWindow()
+        isAssistSelectMode = false
     }
 
     func selectCandidatesByNumAndCommit(client sender: Any!, id: Int) -> Bool {
@@ -226,4 +231,8 @@ extension IlimiInputController {
         super.inputControllerWillClose()
     }
 
+    func setMarkedText(_ markedText: String, selectionRange: NSRange = NSMakeRange(NSNotFound, NSNotFound), replacementRange: NSRange = NSMakeRange(NSNotFound, NSNotFound)) {
+        guard let client = client() else { return }
+        client.setMarkedText(markedText, selectionRange: selectionRange, replacementRange: replacementRange)
+    }
 }

@@ -88,6 +88,10 @@ extension IlimiInputController {
                         return true
                     }
                 }
+                // vrs等輔助選字
+                if handleAssistChar(inputStr, sender) {
+                    return true
+                }
                 // 加到composition
                 InputContext.shared.appendCurrentInput(inputStr)
                 // \ -> 同音輸入模式
@@ -102,19 +106,56 @@ extension IlimiInputController {
                 if checkIsTradToSimToggle(input: InputContext.shared.getCurrentInput()) {
                     return true
                 }
-                // 加v、r、s等選字
-                if !isZhuyinMode && !(InputContext.shared.preInputPrefixSet.contains(InputContext.shared.getCurrentInput())) && InputContext.shared.candidatesCount > 0 {
-                    if let id = assistantDict[inputStr] {
-                        if selectCandidatesByNumAndCommit(client: sender, id: id) {
-                            return true
-                        }
-                    }
-                }
                 updateCandidatesWindow()
                 return true
             }
         }
         InputContext.shared.cleanUp()
+        return false
+    }
+
+    // 加v、r、s等選字
+    func handleAssistChar(_ inputStr: String, _ sender: Any!) -> Bool {
+        if isAssistSelectMode && assistantDict[inputStr] == nil {
+            NSSound.beep()
+            return true
+        }
+        if !isZhuyinMode && !(InputContext.shared.preInputPrefixSet.contains(InputContext.shared.getCurrentInput() + inputStr)) && InputContext.shared.candidatesCount > 0 {
+            if let idx = assistantDict[inputStr] {
+                if idx >= InputContext.shared.candidatesCount {
+                    NSSound.beep()
+                    return true
+                }
+                let prevIdx = InputContext.shared.currentIndex
+                InputContext.shared.currentIndex = idx
+                if prevIdx < idx {
+                    for _ in prevIdx ... idx - 1 {
+                        candidates.moveRight(sender)
+                    }
+                } else if prevIdx > idx {
+                    for _ in idx ... prevIdx - 1 {
+                        candidates.moveLeft(sender)
+                    }
+                }
+                if isAssistSelectMode, let last = InputContext.shared.getCurrentInput().last {
+                    if String(last) == inputStr {
+                        NSSound.beep()
+                    } else {
+                        InputContext.shared.setLastOfCurrentInput(inputStr)
+                        setMarkedText(InputContext.shared.getCurrentInput())
+                    }
+                    return true
+                }
+                isAssistSelectMode = true
+                InputContext.shared.appendCurrentInput(inputStr)
+                setMarkedText(InputContext.shared.getCurrentInput())
+                return true
+                // 不直接輸出候選字
+//                        if selectCandidatesByNumAndCommit(client: sender, id: id) {
+//                            return true
+//                        }
+            }
+        }
         return false
     }
 
@@ -164,10 +205,9 @@ extension IlimiInputController {
     func deleteHandler() -> Bool {
         if InputContext.shared.getCurrentInput().count > 0 {
             InputContext.shared.deleteLastOfCurrentInput()
-            let range = NSMakeRange(NSNotFound, NSNotFound)
             // 如果是注音模式，則在composition清空時關閉注音模式。
             if (isZhuyinMode || isTypeByPronunciationMode) && InputContext.shared.getCurrentInput().count == 0 {
-                client().setMarkedText("", selectionRange: range, replacementRange: range)
+                setMarkedText("")
                 isZhuyinMode = false
                 turnOffIsInputByPronunciationMode()
             }
@@ -175,7 +215,7 @@ extension IlimiInputController {
                 cancelComposition()
                 return true
             }
-            client().setMarkedText(InputContext.shared.getCurrentInput(), selectionRange: range, replacementRange: range)
+            setMarkedText(InputContext.shared.getCurrentInput())
             updateCandidatesWindow()
             return true
         }
@@ -216,7 +256,7 @@ extension IlimiInputController {
         }
         return false
     }
-    
+
     // 看起來不用特別分別對直式或橫式候選字窗做處理
     func handleCandidatesWindowNavigation(_ event: NSEvent, client sender: Any!) -> Bool {
         if let key = event.characters?.first {
@@ -263,7 +303,7 @@ extension IlimiInputController {
         }
         return isArrow
     }
-    
+
     func checkIsCapslockOn() {
         let result = NSEvent.modifierFlags.intersection(.deviceIndependentFlagsMask).contains(.capsLock)
         isASCIIMode = result
