@@ -15,12 +15,15 @@ struct GeneralSettingsView: View {
     @AppStorage("isHorizontalCandidatesPanel") private var isHorizontalCandidatesPanel = true
     // 預設不在沒有候選字時限制輸入
     @AppStorage("limitInputWhenNoCandidate") private var limitInputWhenNoCandidate = false
+    // 靜音模式
+    @AppStorage("silentMode") private var silentMode = false
+
     let fontSizeValues = [14, 16, 18, 20, 22, 24, 28, 32]
-    
+
     func killApplicationToReload() {
         NSApp.terminate(self)
     }
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             Picker("字體大小", selection: $fontSize) {
@@ -36,6 +39,12 @@ struct GeneralSettingsView: View {
             }
             .pickerStyle(RadioGroupPickerStyle())
             Picker("在沒有候選字時限制輸入", selection: $limitInputWhenNoCandidate) {
+                Text("是").tag(true)
+                Text("否").tag(false)
+            }
+            .pickerStyle(RadioGroupPickerStyle())
+            .horizontalRadioGroupLayout()
+            Picker("靜音模式", selection: $silentMode) {
                 Text("是").tag(true)
                 Text("否").tag(false)
             }

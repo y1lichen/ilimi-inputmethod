@@ -33,14 +33,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var candidatesWindow = IMKCandidates()
     let userNotificationCenter = UNUserNotificationCenter.current()
 
+    func registUserDefaultsSetting() {
+        UserDefaults.standard.register(defaults: ["isHorizontalCandidatesPanel" : true])
+        UserDefaults.standard.register(defaults: ["limitInputWhenNoCandidate" : false])
+        UserDefaults.standard.register(defaults: ["silentMode": false])
+    }
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Insert code here to initialize your application
         server = IMKServer(name: Bundle.main.infoDictionary?["InputMethodConnectionName"] as? String, bundleIdentifier: Bundle.main.bundleIdentifier)
         candidatesWindow = IMKCandidates(server: server, panelType: kIMKSingleRowSteppingCandidatePanel, styleType: kIMKMain)
         DataInitilizer.shared.initDataWhenStart()
         // regist UserDefaluts
-        UserDefaults.standard.register(defaults: ["isHorizontalCandidatesPanel" : true])
-        UserDefaults.standard.register(defaults: ["limitInputWhenNoCandidate" : false])
+        registUserDefaultsSetting()
         // notification
         userNotificationCenter.delegate = self
         requestNotificationAuthorization()
