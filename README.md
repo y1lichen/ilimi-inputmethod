@@ -1,8 +1,10 @@
 # Ilimi 一粒米輸入法
 利用[InputMethodKit](https://developer.apple.com/documentation/inputmethodkit)開發的仿蝦米
 
-最低系統要求： macOS 12.0+
-最後更新：2023/09/05 16:39:10
+最低系統要求： macOS 12.0+ 
+
+最後更新：2023/09/05 16:39:10 
+
 ---
 
 一粒米輸入法的字根檔使用的是[肥米輸入法](https://github.com/shadowjohn/UCL_LIU)的字根檔
