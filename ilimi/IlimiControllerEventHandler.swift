@@ -78,7 +78,7 @@ extension IlimiInputController {
                 // 使用者可設定在沒有候選字時限制輸入
                 let limitInputWhenNoCandidate = UserDefaults.standard.bool(forKey: "limitInputWhenNoCandidate")
                 if limitInputWhenNoCandidate && (InputContext.shared.getCurrentInput().count >= 5 || !IlimiInputController.prefixHasCandidates) && InputContext.shared.getCurrentInput().prefix(2) != ",," && InputContext.shared.getCurrentInput().prefix(2) != "';" {
-                    NSSound.beep()
+                    beep()
                     return true
                 }
                 // 關閉括弧
@@ -117,13 +117,13 @@ extension IlimiInputController {
     // 加v、r、s等選字
     func handleAssistChar(_ inputStr: String, _ sender: Any!) -> Bool {
         if isAssistSelectMode && assistantDict[inputStr] == nil {
-            NSSound.beep()
+            beep()
             return true
         }
         if !isZhuyinMode && !(InputContext.shared.preInputPrefixSet.contains(InputContext.shared.getCurrentInput() + inputStr)) && InputContext.shared.candidatesCount > 0 {
             if let idx = assistantDict[inputStr] {
                 if idx >= InputContext.shared.candidatesCount {
-                    NSSound.beep()
+                    beep()
                     return true
                 }
                 let prevIdx = InputContext.shared.currentIndex
@@ -139,7 +139,7 @@ extension IlimiInputController {
                 }
                 if isAssistSelectMode, let last = InputContext.shared.getCurrentInput().last {
                     if String(last) == inputStr {
-                        NSSound.beep()
+                        beep()
                     } else {
                         InputContext.shared.setLastOfCurrentInput(inputStr)
                         setMarkedText(InputContext.shared.getCurrentInput())
