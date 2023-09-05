@@ -205,6 +205,11 @@ extension IlimiInputController {
     func deleteHandler() -> Bool {
         if InputContext.shared.getCurrentInput().count > 0 {
             InputContext.shared.deleteLastOfCurrentInput()
+            // 關閉輔助選字模式
+            if isAssistSelectMode {
+                InputContext.shared.currentIndex = 0
+                isAssistSelectMode = false
+            }
             // 如果是注音模式，則在composition清空時關閉注音模式。
             if (isZhuyinMode || isTypeByPronunciationMode) && InputContext.shared.getCurrentInput().count == 0 {
                 setMarkedText("")
