@@ -21,6 +21,7 @@
 		D4B2B76A28C7A9A4006F3967 /* InputEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B2B76928C7A9A4006F3967 /* InputEngine.swift */; };
 		D4C45A3228CBB00B003DC3B0 /* IlimiMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C45A3128CBB00B003DC3B0 /* IlimiMenu.swift */; };
 		D4C45A3428CDF702003DC3B0 /* StringConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C45A3328CDF702003DC3B0 /* StringConverter.swift */; };
+		D4D3D8802AA71F13008DC811 /* Beep.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D3D87F2AA71F13008DC811 /* Beep.swift */; };
 		D4FC14D228C649F80081BCC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4FC14D128C649F80081BCC0 /* Assets.xcassets */; };
 		D4FC14D528C649F80081BCC0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4FC14D428C649F80081BCC0 /* Preview Assets.xcassets */; };
 		D4FC14DD28C64A520081BCC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC14DC28C64A520081BCC0 /* AppDelegate.swift */; };
@@ -47,6 +48,7 @@
 		D4C45A2B28CB9B07003DC3B0 /* ilimi-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ilimi-Bridging-Header.h"; sourceTree = "<group>"; };
 		D4C45A3128CBB00B003DC3B0 /* IlimiMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IlimiMenu.swift; sourceTree = "<group>"; };
 		D4C45A3328CDF702003DC3B0 /* StringConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringConverter.swift; sourceTree = "<group>"; };
+		D4D3D87F2AA71F13008DC811 /* Beep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Beep.swift; sourceTree = "<group>"; };
 		D4FC14CA28C649F70081BCC0 /* ilimi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ilimi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4FC14D128C649F80081BCC0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D4FC14D428C649F80081BCC0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 				D4FC14E728C66A180081BCC0 /* PersistenceController.swift */,
 				D4C45A3328CDF702003DC3B0 /* StringConverter.swift */,
 				D457523C28E3EFB4008FD744 /* Notification.swift */,
+				D4D3D87F2AA71F13008DC811 /* Beep.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -259,6 +262,7 @@
 				D4FC14DD28C64A520081BCC0 /* AppDelegate.swift in Sources */,
 				D4FC14DF28C64A730081BCC0 /* IlimiInputController.swift in Sources */,
 				D453523228DD8A970007BB09 /* IlimiControllerEventHandler.swift in Sources */,
+				D4D3D8802AA71F13008DC811 /* Beep.swift in Sources */,
 				D474F5C228D4430E00E9717F /* QueryView.swift in Sources */,
 				D44CAD4E28C757C30046E5B6 /* InputContext.swift in Sources */,
 				D4C45A3228CBB00B003DC3B0 /* IlimiMenu.swift in Sources */,

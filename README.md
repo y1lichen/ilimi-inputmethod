@@ -2,6 +2,7 @@
 利用[InputMethodKit](https://developer.apple.com/documentation/inputmethodkit)開發的仿蝦米
 
 最低系統要求： macOS 12.0+
+最後更新：2023/09/05 16:39:10
 ---
 
 一粒米輸入法的字根檔使用的是[肥米輸入法](https://github.com/shadowjohn/UCL_LIU)的字根檔
@@ -53,6 +54,7 @@
 - 選字窗字體大小
 - 選字窗樣式（直式、橫式）
 - 是否在沒有候選字時限制輸入（在沒候選字時按下enter可以直接輸入英文字母）
+- 靜音模式（在輸入錯誤時發出beep）
 
 ## Reference
 
