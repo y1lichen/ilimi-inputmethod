@@ -73,16 +73,24 @@ class IlimiInputController: IMKInputController {
         return InputContext.shared.candidates
     }
 
+    func findCandidateIndex(_ candidateString: NSAttributedString!) -> Int {
+        return InputContext.shared.candidates.firstIndex(of: candidateString.string) ?? -1
+    }
+    
     override func candidateSelected(_ candidateString: NSAttributedString!) {
-        let id = InputContext.shared.candidates.firstIndex(of: candidateString.string) ?? -1
+        let id = findCandidateIndex(candidateString)
         NSLog("id: \(id), candidate: \(candidateString.string)")
         InputContext.shared.currentIndex = id
         commitCandidate(client: client())
     }
-
+    
     // 參考威注音 不實作該函式
     // 詳見https://github.com/vChewing/vChewing-macOS/blob/main/Source/Modules/ControllerModules/ctlInputMethod_Core.swift
+    //
+    // 現在看起來沒問題了，實作函式 2023/09/06 17:44:54
     override func candidateSelectionChanged(_ candidateString: NSAttributedString!) {
+        let id = findCandidateIndex(candidateString)
+        InputContext.shared.currentIndex = id
     }
 
     override func cancelComposition() {

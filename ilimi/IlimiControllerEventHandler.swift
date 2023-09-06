@@ -277,31 +277,31 @@ extension IlimiInputController {
         var isArrow = false
         if event.keyCode == kVK_RightArrow {
             if InputContext.shared.currentIndex < InputContext.shared.candidatesCount - 1 {
-                InputContext.shared.currentIndex += 1
+//                InputContext.shared.currentIndex += 1
                 candidates.moveRight(sender)
             }
             isArrow = true
         } else if event.keyCode == kVK_LeftArrow {
             if InputContext.shared.currentIndex > 0 {
-                InputContext.shared.currentIndex -= 1
+//                InputContext.shared.currentIndex -= 1
                 candidates.moveLeft(sender)
             }
             isArrow = true
         } else if event.keyCode == kVK_UpArrow {
             candidates.moveUp(sender)
             if InputContext.shared.candidatesPageId > 0 {
-                if InputContext.shared.candidatesPageId > 1 {
-                    InputContext.shared.currentIndex -= 5
-                }
+//                if InputContext.shared.candidatesPageId > 1 {
+//                    InputContext.shared.currentIndex -= 5
+//                }
                 InputContext.shared.candidatesPageId -= 1
             }
             isArrow = true
         } else if event.keyCode == kVK_DownArrow {
             candidates.moveDown(sender)
             if InputContext.shared.candidatesPageId < InputContext.shared.candidatesPagesCount {
-                if InputContext.shared.candidatesPageId > 0 {
-                    InputContext.shared.currentIndex += 5
-                }
+//                if InputContext.shared.candidatesPageId > 0 {
+//                    InputContext.shared.currentIndex += 5
+//                }
                 InputContext.shared.candidatesPageId += 1
             }
             isArrow = true
