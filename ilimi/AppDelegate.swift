@@ -29,8 +29,8 @@ class NSManualApplication: NSApplication {
 class AppDelegate: NSObject, NSApplicationDelegate {
     var queryWindow: NSWindow? = nil
     var settingsWindow: NSWindow? = nil
-    var server = IMKServer()
-    var candidatesWindow = IMKCandidates()
+    let server = IMKServer(name: Bundle.main.infoDictionary?["InputMethodConnectionName"] as? String, bundleIdentifier: Bundle.main.bundleIdentifier)
+    
     let userNotificationCenter = UNUserNotificationCenter.current()
 
     func registUserDefaultsSetting() {
@@ -40,8 +40,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Insert code here to initialize your application
-        server = IMKServer(name: Bundle.main.infoDictionary?["InputMethodConnectionName"] as? String, bundleIdentifier: Bundle.main.bundleIdentifier)
-        candidatesWindow = IMKCandidates(server: server, panelType: kIMKSingleRowSteppingCandidatePanel, styleType: kIMKMain)
         DataInitilizer.shared.initDataWhenStart()
         // regist UserDefaluts
         registUserDefaultsSetting()

@@ -48,20 +48,22 @@ class IlimiInputController: IMKInputController {
 //            return
 //        }
         super.activateServer(sender)
-        InputContext.shared.cleanUp()
-        candidates.hide()
+        DispatchQueue.main.async { [self] in
+            InputContext.shared.cleanUp()
+            candidates.hide()
+        }
         // 同步ascii模式狀態
         checkIsCapslockOn()
-        if let client = client(), client.bundleIdentifier() != Bundle.main.bundleIdentifier {
-            setKeyLayout()
-        }
+        setKeyLayout()
     }
 
     override func deactivateServer(_ sender: Any!) {
-        guard sender is IMKTextInput else {
-            return
+//        guard sender is IMKTextInput else {
+//            return
+//        }
+        DispatchQueue.main.async { [self] in
+            cancelComposition()
         }
-        cancelComposition()
         super.deactivateServer(sender)
     }
 
@@ -91,6 +93,13 @@ class IlimiInputController: IMKInputController {
     override func candidateSelectionChanged(_ candidateString: NSAttributedString!) {
         let id = findCandidateIndex(candidateString)
         InputContext.shared.currentIndex = id
+    }
+    
+    // 依照威注音註解，此函式可能因IMK的bug而不會被執行
+    // https://github.com/vChewing/vChewing-macOS/blob/main/Source/Modules/ControllerModules/ctlInputMethod_Core.swift
+    override func inputControllerWillClose() {
+        cancelComposition()
+        super.inputControllerWillClose()
     }
 
     override func cancelComposition() {
@@ -230,13 +239,6 @@ extension IlimiInputController {
             return true
         }
         return false
-    }
-
-    // 依照威注音註解，此函式可能因IMK的bug而不會被執行
-    // https://github.com/vChewing/vChewing-macOS/blob/main/Source/Modules/ControllerModules/ctlInputMethod_Core.swift
-    override func inputControllerWillClose() {
-        cancelComposition()
-        super.inputControllerWillClose()
     }
 
     func setMarkedText(_ markedText: String, selectionRange: NSRange = NSMakeRange(NSNotFound, NSNotFound), replacementRange: NSRange = NSMakeRange(NSNotFound, NSNotFound)) {

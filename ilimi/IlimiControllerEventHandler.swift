@@ -8,6 +8,7 @@
 extension IlimiInputController {
     // IMK預設不會recognize flagsChanged事件
     override func recognizedEvents(_ sender: Any!) -> Int {
+//        let isCurrentApp = clientBundleIdentifier == Bundle.main.bundleIdentifier
         let events: NSEvent.EventTypeMask = [.keyDown, .flagsChanged]
         return Int(events.rawValue)
     }
@@ -37,7 +38,7 @@ extension IlimiInputController {
             return false
         }
         guard client() != nil else { return false }
-
+        
         if event.type == NSEvent.EventType.keyDown {
             if handleFullWidthMode(event: event, client: sender) {
                 return true
