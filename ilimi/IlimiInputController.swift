@@ -23,10 +23,10 @@ class IlimiInputController: IMKInputController {
     let puntuationSet: Set<Character> = [",", "'", ";", ".", "[", "]", "(", ")"]
     // 輔助選字的字典
     let assistantDict: [String: Int] = ["v": 1, "r": 2, "s": 3, "f": 4, "w": 5, "l": 6, "c": 7, "b": 8]
-    // 是否已輸入輔助選字
-    var isAssistSelectMode = false
     // 英數模式
     var isASCIIMode: Bool = false
+    // 輔助選字的字元和位置
+    var assistSelectChar = (chr: "", pos: -1)
 
     override init!(server: IMKServer!, delegate: Any!, client inputClient: Any!) {
         // 候選字窗
@@ -112,12 +112,16 @@ class IlimiInputController: IMKInputController {
         isZhuyinMode = false
         // 如果是同音輸入模式則關閉同音輸入模式
         turnOffIsInputByPronunciationMode()
-        isAssistSelectMode = false
+        clearAssistSelectChar()
         super.cancelComposition()
     }
 }
 
 extension IlimiInputController {
+    
+    func clearAssistSelectChar() {
+        assistSelectChar = ("", -1)
+    }
     func turnOffIsInputByPronunciationMode() {
         isTypeByPronunciationMode = false
         isSecondCommitOfTypeByPronunciationMode = false
@@ -228,8 +232,8 @@ extension IlimiInputController {
             }
         }
         InputContext.shared.cleanUp()
+        clearAssistSelectChar()
         updateCandidatesWindow()
-        isAssistSelectMode = false
     }
 
     func selectCandidatesByNumAndCommit(client sender: Any!, id: Int) -> Bool {

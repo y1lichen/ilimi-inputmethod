@@ -38,7 +38,7 @@ extension IlimiInputController {
             return false
         }
         guard client() != nil else { return false }
-        
+
         if event.type == NSEvent.EventType.keyDown {
             if handleFullWidthMode(event: event, client: sender) {
                 return true
@@ -116,13 +116,16 @@ extension IlimiInputController {
     }
 
     // 加v、r、s等選字
+    // 釐清輔助選字機制
+    // 參考https://liuzmd1.pixnet.net/blog/3
+    // 如果加輔助字根有候選字，輔助字根無效
     func handleAssistChar(_ inputStr: String, _ sender: Any!) -> Bool {
-        if isAssistSelectMode && assistantDict[inputStr] == nil {
-            beep()
-            return true
-        }
-        if !isZhuyinMode && !(InputContext.shared.preInputPrefixSet.contains(InputContext.shared.getCurrentInput() + inputStr)) && InputContext.shared.candidatesCount > 0 {
+        if !isZhuyinMode &&
+            assistSelectChar.chr.isEmpty &&
+            !(InputContext.shared.preInputPrefixSet.contains(InputContext.shared.getCurrentInput() + inputStr)) &&
+            InputContext.shared.candidatesCount > 0 {
             if let idx = assistantDict[inputStr] {
+                assistSelectChar = (chr: inputStr, pos: InputContext.shared.getCurrentInput().count)
                 if idx >= InputContext.shared.candidatesCount {
                     beep()
                     return true
@@ -138,23 +141,13 @@ extension IlimiInputController {
                         candidates.moveLeft(sender)
                     }
                 }
-                if isAssistSelectMode, let last = InputContext.shared.getCurrentInput().last {
-                    if String(last) == inputStr {
-                        beep()
-                    } else {
-                        InputContext.shared.setLastOfCurrentInput(inputStr)
-                        setMarkedText(InputContext.shared.getCurrentInput())
-                    }
-                    return true
-                }
-                isAssistSelectMode = true
                 InputContext.shared.appendCurrentInput(inputStr)
                 setMarkedText(InputContext.shared.getCurrentInput())
                 return true
                 // 不直接輸出候選字
-//                        if selectCandidatesByNumAndCommit(client: sender, id: id) {
-//                            return true
-//                        }
+//              if selectCandidatesByNumAndCommit(client: sender, id: id) {
+//                  return true
+//              }
             }
         }
         return false
@@ -206,16 +199,16 @@ extension IlimiInputController {
     func deleteHandler() -> Bool {
         if InputContext.shared.getCurrentInput().count > 0 {
             InputContext.shared.deleteLastOfCurrentInput()
-            // 關閉輔助選字模式
-            if isAssistSelectMode {
-                InputContext.shared.currentIndex = 0
-                isAssistSelectMode = false
-            }
             // 如果是注音模式，則在composition清空時關閉注音模式。
             if (isZhuyinMode || isTypeByPronunciationMode) && InputContext.shared.getCurrentInput().count == 0 {
                 setMarkedText("")
                 isZhuyinMode = false
                 turnOffIsInputByPronunciationMode()
+            }
+            // 處理輔助選字
+            if !assistSelectChar.chr.isEmpty
+                && InputContext.shared.getCurrentInput().count == assistSelectChar.pos {
+                clearAssistSelectChar()
             }
             if InputContext.shared.getCurrentInput().count == 0 {
                 cancelComposition()

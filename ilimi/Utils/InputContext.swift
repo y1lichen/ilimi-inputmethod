@@ -88,9 +88,4 @@ class InputContext {
     func deleteLastOfCurrentInput() {
         currentInput.removeLast()
     }
-
-    func setLastOfCurrentInput(_ char: String) {
-        let index = currentInput.index(currentInput.startIndex, offsetBy: currentInput.count - 1)
-        currentInput.replaceSubrange(index...index, with: char)
-    }
 }
