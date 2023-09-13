@@ -53,8 +53,12 @@ class IlimiInputController: IMKInputController {
             candidates.hide()
         }
         // 同步ascii模式狀態
-        checkIsCapslockOn()
-        setKeyLayout()
+        DispatchQueue.main.async { [self] in
+            checkIsCapslockOn()
+        }
+        DispatchQueue.main.async { [self] in
+            setKeyLayout()
+        }
     }
 
     override func deactivateServer(_ sender: Any!) {
@@ -78,14 +82,14 @@ class IlimiInputController: IMKInputController {
     func findCandidateIndex(_ candidateString: NSAttributedString!) -> Int {
         return InputContext.shared.candidates.firstIndex(of: candidateString.string) ?? -1
     }
-    
+
     override func candidateSelected(_ candidateString: NSAttributedString!) {
         let id = findCandidateIndex(candidateString)
         NSLog("id: \(id), candidate: \(candidateString.string)")
         InputContext.shared.currentIndex = id
         commitCandidate(client: client())
     }
-    
+
     // 參考威注音 不實作該函式
     // 詳見https://github.com/vChewing/vChewing-macOS/blob/main/Source/Modules/ControllerModules/ctlInputMethod_Core.swift
     //
@@ -94,7 +98,7 @@ class IlimiInputController: IMKInputController {
         let id = findCandidateIndex(candidateString)
         InputContext.shared.currentIndex = id
     }
-    
+
     // 依照威注音註解，此函式可能因IMK的bug而不會被執行
     // https://github.com/vChewing/vChewing-macOS/blob/main/Source/Modules/ControllerModules/ctlInputMethod_Core.swift
     override func inputControllerWillClose() {
@@ -118,7 +122,7 @@ class IlimiInputController: IMKInputController {
 }
 
 extension IlimiInputController {
-    
+
     func clearAssistSelectChar() {
         assistSelectChar = ("", -1)
     }
