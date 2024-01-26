@@ -10,7 +10,20 @@
 一粒米輸入法的字根檔使用的是[肥米輸入法](https://github.com/shadowjohn/UCL_LIU)的字根檔
 ⚠️ 因尚未釐清嘸蝦米版權問題，如同肥米輸入法，一粒米輸入法暫不直接發布字根檔。
 待一粒米輸入法開發至一階段後會研究這問題，並研擬字根檔的發布方式。
-目前若需要字根檔可發信至 *y1lichen@icloud.com* 或是依照[肥米輸入法](https://github.com/shadowjohn/UCL_LIU)的說明，生成liu.json檔案
+目前若需要字根檔可發信至 *y1lichen@icloud.com* 或是依照[肥米輸入法](https://github.com/shadowjohn/UCL_LIU)的說明，生成liu.json檔案。未來一粒米輸入法會提供使用.cin檔。 
+
+## 安裝說明 
+
+目前尚無時間研究如何撰寫.pkg檔。
+目前repo內提供build.sh，使用方式如下
+```
+git clone https://github.com/y1lichen/ilimi-inputmethod.git
+cd ilimi-inputmethod
+chmod +x ./build.sh
+./build.sh
+``` 
+或是(https://github.com/y1lichen/ilimi-inputmethod/releases)[下載一粒米輸入法app壓縮檔]，解壓縮後放到資料庫目錄中的Input Methods目錄中（~/Library/Input Methods）。
+
 
 ## 功能（未完成、仍持續新增）
 
