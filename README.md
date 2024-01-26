@@ -22,7 +22,7 @@ cd ilimi-inputmethod
 chmod +x ./build.sh
 ./build.sh
 ``` 
-或是(https://github.com/y1lichen/ilimi-inputmethod/releases)[下載一粒米輸入法app壓縮檔]，解壓縮後放到資料庫目錄中的Input Methods目錄中（~/Library/Input Methods）。
+或是[下載一粒米輸入法app壓縮檔](https://github.com/y1lichen/ilimi-inputmethod/releases)，解壓縮後放到資料庫目錄中的Input Methods目錄中（~/Library/Input Methods）。
 
 
 ## 功能（未完成、仍持續新增）
