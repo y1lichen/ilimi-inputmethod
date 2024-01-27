@@ -13,14 +13,22 @@ class DataInitilizer {
     let appDelegate = NSApplication.shared.delegate as! AppDelegate
 
     let persistenceContainer = PersistenceController.shared
-    let liuPath = NSHomeDirectory() + "/liu.json"
+    let liuJsonPath = NSHomeDirectory() + "/liu.json"
+    let liuCinPath = NSHomeDirectory() + "/liu.cin"
     let pinyinPath = NSHomeDirectory() + "/pinyin.json"
     let userDefaults = UserDefaults.standard
 
     func initDataWhenStart() {
         let hadReadLiu = userDefaults.object(forKey: "hadReadLiuJson") as? Bool ?? false
         if !hadReadLiu {
-            loadLiuJson()
+            // 暫時優先使用json字檔，未來仍可優先使用cin字檔
+            if (checkFileExist(liuJsonPath)) {
+                loadLiuJson()
+            } else if (checkFileExist(liuCinPath)) {
+                CinReader.shared.readCin()
+            } else {
+                NotifierController.notify(message: "字檔並不存在！", stay: true)
+            }
         }
         let hadReadPinyin = userDefaults.object(forKey: "hadReadPinyinJson") as? Bool ?? false
         if !hadReadPinyin {
@@ -66,7 +74,7 @@ class DataInitilizer {
     func loadLiuJson() {
         cleanAllData("Phrase")
         do {
-            let data = try Data(contentsOf: URL(fileURLWithPath: liuPath))
+            let data = try Data(contentsOf: URL(fileURLWithPath: liuJsonPath))
             if let json = try JSONSerialization.jsonObject(with: data) as? [String: Any] {
                 if let chardefs = json["chardefs"] as? [String: [String]] {
                     let res = chardefs.sorted(by: { $0.0 < $1.0 })
@@ -88,10 +96,23 @@ class DataInitilizer {
         } catch {
             appDelegate.pushInstantNotification(title: String(describing: error), subtitle: "", body: "", sound: true)
         }
+        NotifierController.notify(message: "成功匯入liu.json", stay: true)
     }
     
     func reloadAllData() {
-        loadLiuJson()
+        if (checkFileExist(liuJsonPath)) {
+            loadLiuJson()
+        } else if (checkFileExist(liuCinPath)) {
+            CinReader.shared.readCin()
+        } else {
+            NotifierController.notify(message: "字檔並不存在！", stay: true)
+        }
         loadPinyinJson()
+    }
+}
+
+extension DataInitilizer {
+    func checkFileExist(_ fileName: String) -> Bool {
+        return FileManager.default.fileExists(atPath: fileName)
     }
 }

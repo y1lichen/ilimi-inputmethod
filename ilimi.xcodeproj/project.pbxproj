@@ -14,6 +14,7 @@
 		D440E2A92AA39C960050D4F6 /* FullWidthMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D440E2A82AA39C960050D4F6 /* FullWidthMode.swift */; };
 		D440E2AC2AA39E400050D4F6 /* ZhuyinMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D440E2AB2AA39E400050D4F6 /* ZhuyinMode.swift */; };
 		D440E2AF2AA3A0460050D4F6 /* SamePronunciationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D440E2AE2AA3A0460050D4F6 /* SamePronunciationMode.swift */; };
+		D4494F882B65133C00B9BAFC /* CinReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4494F872B65133C00B9BAFC /* CinReader.swift */; };
 		D44CAD4E28C757C30046E5B6 /* InputContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44CAD4D28C757C30046E5B6 /* InputContext.swift */; };
 		D453523228DD8A970007BB09 /* IlimiControllerEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D453523128DD8A970007BB09 /* IlimiControllerEventHandler.swift */; };
 		D457523D28E3EFB4008FD744 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = D457523C28E3EFB4008FD744 /* Notification.swift */; };
@@ -40,6 +41,7 @@
 		D440E2A82AA39C960050D4F6 /* FullWidthMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullWidthMode.swift; sourceTree = "<group>"; };
 		D440E2AB2AA39E400050D4F6 /* ZhuyinMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZhuyinMode.swift; sourceTree = "<group>"; };
 		D440E2AE2AA3A0460050D4F6 /* SamePronunciationMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SamePronunciationMode.swift; sourceTree = "<group>"; };
+		D4494F872B65133C00B9BAFC /* CinReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CinReader.swift; sourceTree = "<group>"; };
 		D44CAD4D28C757C30046E5B6 /* InputContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputContext.swift; sourceTree = "<group>"; };
 		D453523128DD8A970007BB09 /* IlimiControllerEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IlimiControllerEventHandler.swift; sourceTree = "<group>"; };
 		D457523C28E3EFB4008FD744 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 		D4FC14E128C666DE0081BCC0 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				D4494F872B65133C00B9BAFC /* CinReader.swift */,
 				D440E2AD2AA3A0160050D4F6 /* SamePronunciationMode */,
 				D440E2AA2AA39E2E0050D4F6 /* ZhuyinMode */,
 				D440E2A72AA39C6E0050D4F6 /* FullWidthMode */,
@@ -215,7 +218,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1340;
-				LastUpgradeCheck = 1400;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					D4FC14C928C649F70081BCC0 = {
 						CreatedOnToolsVersion = 13.4.1;
@@ -279,6 +282,7 @@
 				D42CD5112971C4500024DB11 /* GeneralSettingsView.swift in Sources */,
 				D4FFDFDE2A94F4C30010642E /* CharWidthConverter.swift in Sources */,
 				D42CD50D2971C27F0024DB11 /* SettingsViewToolbar.swift in Sources */,
+				D4494F882B65133C00B9BAFC /* CinReader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,6 +326,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -343,7 +348,7 @@
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SYMROOT = "/Library/Input Methods/";
+				SYMROOT = "/Users/chenli/Library/Input Methods/";
 			};
 			name = Debug;
 		};
@@ -384,6 +389,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -398,7 +404,7 @@
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SYMROOT = "/Library/Input Methods/";
+				SYMROOT = "/Users/chenli/Library/Input Methods/";
 			};
 			name = Release;
 		};
@@ -413,7 +419,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CONFIGURATION_BUILD_DIR = "/Library/Input Methods";
+				CONFIGURATION_BUILD_DIR = "/Users/chenli/Library/Input Methods";
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"ilimi/Preview Content\"";
@@ -437,7 +443,7 @@
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "$(SRCROOT)/$(PROJECT_NAME)/ilimi-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				SYMROOT = "/Library/Input Methods/";
+				SYMROOT = "/Users/chenli/Library/Input Methods/";
 			};
 			name = Debug;
 		};
@@ -452,7 +458,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CONFIGURATION_BUILD_DIR = "/Library/Input Methods";
+				CONFIGURATION_BUILD_DIR = "/Users/chenli/Library/Input Methods";
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"ilimi/Preview Content\"";
@@ -475,7 +481,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "$(SRCROOT)/$(PROJECT_NAME)/ilimi-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				SYMROOT = "/Library/Input Methods/";
+				SYMROOT = "/Users/chenli/Library/Input Methods/";
 			};
 			name = Release;
 		};
