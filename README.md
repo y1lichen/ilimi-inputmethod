@@ -10,7 +10,7 @@
 一粒米輸入法的字根檔使用的是[肥米輸入法](https://github.com/shadowjohn/UCL_LIU)的字根檔
 ⚠️ 因尚未釐清嘸蝦米版權問題，如同肥米輸入法，一粒米輸入法暫不直接發布字根檔。 
 一粒米輸入法支援*使用liu.cin字檔*，或是肥米輸入法的liu.json。
-目前若需要字根檔可發信至 **y1lichen@icloud.com** 或是依照[肥米輸入法](https://github.com/shadowjohn/UCL_LIU)的說明，生成liu.json檔案。
+目前若需要字根檔可發信至  **y1lichen@icloud.com**  或是依照[肥米輸入法](https://github.com/shadowjohn/UCL_LIU)的說明，生成liu.json檔案。
 
 ## 安裝說明 
 
