@@ -147,8 +147,8 @@ extension IlimiInputController {
     }
 
     // 輸入,,CT進入打繁出簡模式
-    func checkIsTradToSimToggle(input: String) -> Bool {
-        if input == ",,CT" {
+    func checkIsTradToSimToggle(_ input: String) -> Bool {
+        if input == ",,ct" {
             InputContext.shared.isTradToSim.toggle()
             cancelComposition()
             return true

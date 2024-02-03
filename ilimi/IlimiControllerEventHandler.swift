@@ -104,7 +104,7 @@ extension IlimiInputController {
                     return true
                 }
                 // ,,CT -> 打繁出簡模式
-                if checkIsTradToSimToggle(input: InputContext.shared.getCurrentInput()) {
+                if checkIsTradToSimToggle(InputContext.shared.getCurrentInput()) {
                     return true
                 }
                 updateCandidatesWindow()
