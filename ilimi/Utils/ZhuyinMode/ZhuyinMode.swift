@@ -13,6 +13,12 @@ extension IlimiInputController {
 
     // 輸入';進入注音模式
     func checkIsZhuyinMode(_ input: String) -> Bool {
+        let hadReadPinyin = UserDefaults.standard.object(forKey: "hadReadPinyinJson") as? Bool ?? false
+        if (!hadReadPinyin) {
+            // 沒有注音檔的話提示使用者
+            NotifierController.notify(message: "請下載並匯入注音檔", stay: true)
+            return false
+        }
         isZhuyinMode = (input == "';")
         if isZhuyinMode {
             InputContext.shared.cleanUp()
