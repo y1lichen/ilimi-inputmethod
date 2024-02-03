@@ -1,5 +1,5 @@
 # Ilimi 一粒米輸入法
-利用[InputMethodKit](https://developer.apple.com/documentation/inputmethodkit)開發的仿蝦米
+要什麼工具就DIY，於是我……利用[InputMethodKit](https://developer.apple.com/documentation/inputmethodkit)開發的仿蝦米
 
 最低系統要求： macOS 12.0+ 
 
