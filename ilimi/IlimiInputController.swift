@@ -148,6 +148,13 @@ extension IlimiInputController {
 
     // 輸入,,CT進入打繁出簡模式
     func checkIsTradToSimToggle(_ input: String) -> Bool {
+        // 輸入,,t可關閉打繁出簡
+        if input == ",,t" {
+            InputContext.shared.isTradToSim = false
+            cancelComposition()
+            return true
+        }
+        // 輸入,,ct可開啟/關閉打繁出簡
         if input == ",,ct" {
             InputContext.shared.isTradToSim.toggle()
             cancelComposition()
