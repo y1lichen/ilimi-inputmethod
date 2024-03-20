@@ -19,7 +19,7 @@ struct InputEngine {
         ]
         do {
             let response = try PersistenceController.shared.container.viewContext.fetch(request)
-            let candidates: [String] = response.map { $0.value }
+            let candidates: [String] = response.compactMap { $0.value }
             InputContext.shared.candidates = candidates
         } catch {
             NSLog(error.localizedDescription)
@@ -38,8 +38,8 @@ struct InputEngine {
             var inputStrSet: Set<String> = []
             for r in response {
                 let value: String = r.value(forKey: "value") as! String
-                if r.key.count > text.count {
-                    inputStrSet.insert(String(r.key.prefix(text.count + 1)))
+                if let rKey = r.key, rKey.count > text.count {
+                    inputStrSet.insert(String(rKey.prefix(text.count + 1)))
                 }
                 if candidatesSet.contains(value) {
                     continue
@@ -64,8 +64,8 @@ struct InputEngine {
                 request.predicate = NSPredicate(format: "key == %@", zhuyin)
                 let response = try PersistenceController.shared.container.viewContext.fetch(request)
                 for item in response {
-                    if item.value != text {
-                        result.append(item.value)
+                    if let itemValue = item.value, itemValue != text {
+                        result.append(itemValue)
                     }
                 }
             }
@@ -81,7 +81,7 @@ struct InputEngine {
         request.predicate = NSPredicate(format: "value == %@", text)
         do {
             let response = try PersistenceController.shared.container.viewContext.fetch(request)
-            let res = response.map { $0.key }
+            let res = response.compactMap { $0.key }
             return res
         } catch {
             NSLog(error.localizedDescription)

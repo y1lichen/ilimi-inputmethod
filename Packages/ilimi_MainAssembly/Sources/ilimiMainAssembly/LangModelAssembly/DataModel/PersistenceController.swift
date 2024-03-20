@@ -11,9 +11,9 @@ struct PersistenceController {
     // MARK: Lifecycle
 
     init(inMemory: Bool = false) {
-        self.container = NSPersistentContainer(
-            name: "Model", managedObjectModel: DataSputnik.shared.objModel
-        )
+        let modelURL = Bundle.module.url(forResource: "Model", withExtension: "momd")!
+        let model = NSManagedObjectModel(contentsOf: modelURL)!
+        self.container = NSPersistentContainer(name: "Model", managedObjectModel: model)
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         }
@@ -44,7 +44,11 @@ struct PersistenceController {
     }
 
     func writeData(_ key: String, _ value: String, _ priority: Int64) {
-        let model = NSEntityDescription.insertNewObject(forEntityName: "Phrase", into: container.viewContext) as! Phrase
+        let model = NSEntityDescription.insertNewObject(
+            forEntityName: "Phrase",
+            into: container.viewContext
+        )
+        guard let model = model as? Phrase else { return }
         model.key_priority = priority
         model.key = key
         model.value = value

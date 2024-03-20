@@ -21,14 +21,7 @@ class DataInitializer {
     func initDataWhenStart() {
         let hadReadLiu = userDefaults.object(forKey: "hadReadLiuJson") as? Bool ?? false
         if !hadReadLiu {
-            // 暫時優先使用json字檔，未來仍可優先使用cin字檔
-            if checkFileExist(liuJsonPath) {
-                loadLiuJson()
-            } else if checkFileExist(liuCinPath) {
-                CinReader.shared.readCin()
-            } else {
-                NotifierController.notify(message: "字檔並不存在！", stay: true)
-            }
+            loadLiuData()
         }
         let hadReadPinyin = userDefaults.object(forKey: "hadReadPinyinJson") as? Bool ?? false
         if !hadReadPinyin {
@@ -52,6 +45,17 @@ class DataInitializer {
         NSLog("Core Data cleaned")
     }
 
+    func loadLiuData() {
+      // 暫時優先使用json字檔，未來仍可優先使用cin字檔
+      if checkFileExist(liuJsonPath) {
+          loadLiuJson()
+      } else if checkFileExist(liuCinPath) {
+          CinReader.shared.readCin()
+      } else {
+          NotifierController.notify(message: "字檔並不存在！", stay: true)
+      }
+    }
+
     func loadPinyinJson() {
         cleanAllData("Zhuin")
         do {
@@ -64,12 +68,11 @@ class DataInitializer {
                             forEntityName: "Zhuin",
                             into: persistenceContainer.container.viewContext
                         )
-                        if let model = model as? Zhuin {
-                            model.key = key
-                            model.value = v
-                            model.key_priority = count
-                            count += 1
-                        }
+                        guard let model = model as? Zhuin else { continue }
+                        model.key = key
+                        model.value = v
+                        model.key_priority = count
+                        count += 1
                     }
                 }
                 persistenceContainer.saveContext()
@@ -77,7 +80,7 @@ class DataInitializer {
                 NSLog("pinyin.json laoded")
             }
         } catch {
-//            NSLog("Error: " + String(describing: error))
+            NSLog("Error: " + String(describing: error))
         }
     }
 
@@ -95,17 +98,16 @@ class DataInitializer {
                                 forEntityName: "Phrase",
                                 into: persistenceContainer.container.viewContext
                             )
-                            if let model = model as? Phrase {
-                                model.key_priority = count
-                                model.key = key
-                                model.value = v
-                                count += 1
-                            }
+                            guard let model = model as? Phrase else { continue }
+                            model.key_priority = count
+                            model.key = key
+                            model.value = v
+                            count += 1
                         }
                     }
                     persistenceContainer.saveContext()
                     userDefaults.set(true, forKey: "hadReadLiuJson")
-//                    NSLog("liu.json loaded")
+                    NSLog("liu.json loaded")
                 }
             }
         } catch {

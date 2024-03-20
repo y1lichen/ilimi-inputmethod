@@ -64,7 +64,8 @@ class CinReader {
         let model = NSEntityDescription.insertNewObject(
             forEntityName: "Phrase",
             into: persistenceContainer.container.viewContext
-        ) as! Phrase
+        )
+        guard let model = model as? Phrase else { return }
         model.key_priority = priority
         model.key = key
         model.value = value

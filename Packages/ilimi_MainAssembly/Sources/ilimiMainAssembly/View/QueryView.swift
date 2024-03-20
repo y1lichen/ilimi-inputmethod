@@ -57,14 +57,16 @@ struct QueryView: View {
             let responseForKey = try PersistenceController.shared.container.viewContext.fetch(requestForKey)
             var keys = ""
             for phrase in responseForKey {
-                keys += phrase.key
+                guard let phraseKey = phrase.key else { continue }
+                keys += phraseKey
                 keys += " "
             }
             res.inputCode = keys
             let responseForZhuyin = try PersistenceController.shared.container.viewContext.fetch(requestForZhuyin)
             var zhuyins = ""
             for zhuyin in responseForZhuyin {
-                zhuyins += StringConverter.shared.keyToZhuyins(zhuyin.key)
+                guard let zhuyinKey = zhuyin.key else { continue }
+                zhuyins += StringConverter.shared.keyToZhuyins(zhuyinKey)
                 zhuyins += " "
             }
             res.zhuyin = zhuyins

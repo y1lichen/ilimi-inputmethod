@@ -24,7 +24,9 @@ let package = Package(
         .target(
             name: "ilimiMainAssembly",
             dependencies: ["IMKCandidatesImpl"],
-            resources: []
+            resources: [
+                .process("Resources/Model.xcdatamodeld"),
+            ]
         ),
         .target(
             name: "IMKCandidatesImpl",
