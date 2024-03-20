@@ -48,14 +48,14 @@ class DataInitializer {
     }
 
     func loadLiuData() {
-      // 暫時優先使用json字檔，未來仍可優先使用cin字檔
-      if checkFileExist(liuJsonPath) {
-          loadLiuJson()
-      } else if checkFileExist(liuCinPath) {
-          CinReader.shared.readCin()
-      } else {
-          NotifierController.notify(message: "字檔並不存在！", stay: true)
-      }
+        // 暫時優先使用json字檔，未來仍可優先使用cin字檔
+        if checkFileExist(liuJsonPath) {
+            loadLiuJson()
+        } else if checkFileExist(liuCinPath) {
+            CinReader.shared.readCin()
+        } else {
+            NotifierController.notify(message: "字檔並不存在！", stay: true)
+        }
     }
 
     func loadPinyinJson() {
