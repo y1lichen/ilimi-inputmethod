@@ -10,11 +10,12 @@ import Foundation
 
 class DataInitializer {
     static let shared = DataInitializer()
-
-    let persistenceContainer = PersistenceController.shared
-    let liuJsonPath = NSHomeDirectory() + "/liu.json"
-    let liuCinPath = NSHomeDirectory() + "/liu.cin"
-    let pinyinPath = NSHomeDirectory() + "/pinyin.json"
+	static let appSupportDir = NSHomeDirectory()+"/Library/Application Support/ilimi"
+    
+	let persistenceContainer = PersistenceController.shared
+    let liuJsonPath = appSupportDir + "/liu.json"
+    let liuCinPath = appSupportDir + "/liu.cin"
+    let pinyinPath = appSupportDir + "/pinyin.json"
     let userDefaults = UserDefaults.standard
 
     func initDataWhenStart() {

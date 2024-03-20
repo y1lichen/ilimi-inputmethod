@@ -24,7 +24,7 @@ extension IlimiInputController {
 
     @objc
     func openDataFolder() {
-        NSWorkspace.shared.open(URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true))
+        NSWorkspace.shared.open(URL(fileURLWithPath: NSHomeDirectory()+"/Library/Application Support/ilimi", isDirectory: true))
     }
 
     @objc
