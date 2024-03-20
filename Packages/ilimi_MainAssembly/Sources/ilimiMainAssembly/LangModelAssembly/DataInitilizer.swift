@@ -10,9 +10,11 @@ import Foundation
 
 class DataInitializer {
     static let shared = DataInitializer()
-	static let appSupportDir = NSHomeDirectory()+"/Library/Application Support/ilimi"
-    
-	let persistenceContainer = PersistenceController.shared
+    static let appSupportURL = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+        .appendingPathComponent("ilimi")
+    static let appSupportDir = appSupportURL.path
+
+    let persistenceContainer = PersistenceController.shared
     let liuJsonPath = appSupportDir + "/liu.json"
     let liuCinPath = appSupportDir + "/liu.cin"
     let pinyinPath = appSupportDir + "/pinyin.json"
@@ -137,5 +139,15 @@ extension DataInitializer {
     func checkFileExist(_ fileName: String) -> Bool {
         print("[ilimi] Checking file existence: " + fileName)
         return FileManager.default.fileExists(atPath: fileName)
+    }
+}
+
+extension String {
+    fileprivate var expandingTildeInPath: String {
+        (self as NSString).expandingTildeInPath
+    }
+
+    fileprivate var ensuringTrailingSlash: String {
+        !hasSuffix("/") ? (self + "/") : self
     }
 }
