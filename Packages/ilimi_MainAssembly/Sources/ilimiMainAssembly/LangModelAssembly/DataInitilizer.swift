@@ -141,13 +141,3 @@ extension DataInitializer {
         return FileManager.default.fileExists(atPath: fileName)
     }
 }
-
-extension String {
-    fileprivate var expandingTildeInPath: String {
-        (self as NSString).expandingTildeInPath
-    }
-
-    fileprivate var ensuringTrailingSlash: String {
-        !hasSuffix("/") ? (self + "/") : self
-    }
-}
