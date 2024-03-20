@@ -3,128 +3,134 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D406664128E6C825001D1467 /* Notifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D406664028E6C825001D1467 /* Notifier.swift */; };
-		D42CD50D2971C27F0024DB11 /* SettingsViewToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42CD50C2971C27F0024DB11 /* SettingsViewToolbar.swift */; };
-		D42CD50F2971C3F70024DB11 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42CD50E2971C3F70024DB11 /* SettingsView.swift */; };
-		D42CD5112971C4500024DB11 /* GeneralSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42CD5102971C4500024DB11 /* GeneralSettingsView.swift */; };
-		D440E2A92AA39C960050D4F6 /* FullWidthMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D440E2A82AA39C960050D4F6 /* FullWidthMode.swift */; };
-		D440E2AC2AA39E400050D4F6 /* ZhuyinMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D440E2AB2AA39E400050D4F6 /* ZhuyinMode.swift */; };
-		D440E2AF2AA3A0460050D4F6 /* SamePronunciationMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D440E2AE2AA3A0460050D4F6 /* SamePronunciationMode.swift */; };
-		D4494F882B65133C00B9BAFC /* CinReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4494F872B65133C00B9BAFC /* CinReader.swift */; };
-		D44CAD4E28C757C30046E5B6 /* InputContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44CAD4D28C757C30046E5B6 /* InputContext.swift */; };
-		D453523228DD8A970007BB09 /* IlimiControllerEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D453523128DD8A970007BB09 /* IlimiControllerEventHandler.swift */; };
-		D457523D28E3EFB4008FD744 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = D457523C28E3EFB4008FD744 /* Notification.swift */; };
-		D474F5C228D4430E00E9717F /* QueryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D474F5C128D4430E00E9717F /* QueryView.swift */; };
-		D4B2B76A28C7A9A4006F3967 /* InputEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B2B76928C7A9A4006F3967 /* InputEngine.swift */; };
-		D4C45A3228CBB00B003DC3B0 /* IlimiMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C45A3128CBB00B003DC3B0 /* IlimiMenu.swift */; };
-		D4C45A3428CDF702003DC3B0 /* StringConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C45A3328CDF702003DC3B0 /* StringConverter.swift */; };
-		D4D3D8802AA71F13008DC811 /* Beep.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D3D87F2AA71F13008DC811 /* Beep.swift */; };
+		5B0B21702BAAE4B00032E5C8 /* ilimiInstallerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0B216F2BAAE4B00032E5C8 /* ilimiInstallerApp.swift */; };
+		5B0B21722BAAE4B00032E5C8 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0B21712BAAE4B00032E5C8 /* MainView.swift */; };
+		5B0B21742BAAE4B10032E5C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B0B21732BAAE4B10032E5C8 /* Assets.xcassets */; };
+		5B0B21772BAAE4B10032E5C8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B0B21762BAAE4B10032E5C8 /* Preview Assets.xcassets */; };
+		5B0B217D2BAAE5800032E5C8 /* RelocationDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0B217C2BAAE5800032E5C8 /* RelocationDetector.swift */; };
+		5B0B217F2BAAE5DE0032E5C8 /* InstallerShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0B217E2BAAE5DE0032E5C8 /* InstallerShared.swift */; };
+		5B0B21812BAAE5F40032E5C8 /* MainViewImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0B21802BAAE5F40032E5C8 /* MainViewImpl.swift */; };
+		5B0B21832BAAE7C60032E5C8 /* ilimi.app in Resources */ = {isa = PBXBuildFile; fileRef = D4FC14CA28C649F70081BCC0 /* ilimi.app */; };
+		5B21EC2F2BAAE826009C5A70 /* vChewing_IMKUtils_IlimiImpl in Frameworks */ = {isa = PBXBuildFile; productRef = 5B21EC2E2BAAE826009C5A70 /* vChewing_IMKUtils_IlimiImpl */; };
+		5B6F60552BAAD809005E004E /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6F60542BAAD809005E004E /* main.swift */; };
+		5BBE16DB2BAAE30B00D06857 /* ilimiMainAssembly in Frameworks */ = {isa = PBXBuildFile; productRef = 5BBE16DA2BAAE30B00D06857 /* ilimiMainAssembly */; };
+		5BD3C31C2BAAEB2000CF8AF5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5BD3C31A2BAAEB2000CF8AF5 /* Localizable.strings */; };
+		5BD3C3252BAAEE8600CF8AF5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5BD3C3232BAAEE8600CF8AF5 /* InfoPlist.strings */; };
+		5BD3C3352BAAF2F400CF8AF5 /* vChewing_IMKUtils_IlimiImpl in Frameworks */ = {isa = PBXBuildFile; productRef = 5BD3C3342BAAF2F400CF8AF5 /* vChewing_IMKUtils_IlimiImpl */; };
 		D4FC14D228C649F80081BCC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4FC14D128C649F80081BCC0 /* Assets.xcassets */; };
 		D4FC14D528C649F80081BCC0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4FC14D428C649F80081BCC0 /* Preview Assets.xcassets */; };
-		D4FC14DD28C64A520081BCC0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC14DC28C64A520081BCC0 /* AppDelegate.swift */; };
-		D4FC14DF28C64A730081BCC0 /* IlimiInputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC14DE28C64A730081BCC0 /* IlimiInputController.swift */; };
-		D4FC14E328C667200081BCC0 /* DataInitilizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC14E228C667200081BCC0 /* DataInitilizer.swift */; };
-		D4FC14E628C668A90081BCC0 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D4FC14E428C668A90081BCC0 /* Model.xcdatamodeld */; };
-		D4FC14E828C66A180081BCC0 /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FC14E728C66A180081BCC0 /* PersistenceController.swift */; };
-		D4FFDFDE2A94F4C30010642E /* CharWidthConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FFDFDD2A94F4C30010642E /* CharWidthConverter.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		5B0B21842BAAE7C60032E5C8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D4FC14C228C649F70081BCC0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D4FC14C928C649F70081BCC0;
+			remoteInfo = ilimi;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
-		D406664028E6C825001D1467 /* Notifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifier.swift; sourceTree = "<group>"; };
-		D42CD50C2971C27F0024DB11 /* SettingsViewToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewToolbar.swift; sourceTree = "<group>"; };
-		D42CD50E2971C3F70024DB11 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		D42CD5102971C4500024DB11 /* GeneralSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsView.swift; sourceTree = "<group>"; };
-		D440E2A82AA39C960050D4F6 /* FullWidthMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullWidthMode.swift; sourceTree = "<group>"; };
-		D440E2AB2AA39E400050D4F6 /* ZhuyinMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZhuyinMode.swift; sourceTree = "<group>"; };
-		D440E2AE2AA3A0460050D4F6 /* SamePronunciationMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SamePronunciationMode.swift; sourceTree = "<group>"; };
-		D4494F872B65133C00B9BAFC /* CinReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CinReader.swift; sourceTree = "<group>"; };
-		D44CAD4D28C757C30046E5B6 /* InputContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputContext.swift; sourceTree = "<group>"; };
-		D453523128DD8A970007BB09 /* IlimiControllerEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IlimiControllerEventHandler.swift; sourceTree = "<group>"; };
-		D457523C28E3EFB4008FD744 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
-		D474F5C128D4430E00E9717F /* QueryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueryView.swift; sourceTree = "<group>"; };
-		D4B2B76928C7A9A4006F3967 /* InputEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputEngine.swift; sourceTree = "<group>"; };
-		D4C45A2B28CB9B07003DC3B0 /* ilimi-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ilimi-Bridging-Header.h"; sourceTree = "<group>"; };
-		D4C45A3128CBB00B003DC3B0 /* IlimiMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IlimiMenu.swift; sourceTree = "<group>"; };
-		D4C45A3328CDF702003DC3B0 /* StringConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringConverter.swift; sourceTree = "<group>"; };
-		D4D3D87F2AA71F13008DC811 /* Beep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Beep.swift; sourceTree = "<group>"; };
+		5B0B21562BAAE36E0032E5C8 /* vChewing_IMKUtils_IlimiImpl */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = vChewing_IMKUtils_IlimiImpl; sourceTree = "<group>"; };
+		5B0B216D2BAAE4B00032E5C8 /* ilimiInstaller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ilimiInstaller.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B0B216F2BAAE4B00032E5C8 /* ilimiInstallerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ilimiInstallerApp.swift; sourceTree = "<group>"; };
+		5B0B21712BAAE4B00032E5C8 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		5B0B21732BAAE4B10032E5C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5B0B21762BAAE4B10032E5C8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		5B0B21782BAAE4B10032E5C8 /* ilimiInstaller.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ilimiInstaller.entitlements; sourceTree = "<group>"; };
+		5B0B217C2BAAE5800032E5C8 /* RelocationDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelocationDetector.swift; sourceTree = "<group>"; };
+		5B0B217E2BAAE5DE0032E5C8 /* InstallerShared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallerShared.swift; sourceTree = "<group>"; };
+		5B0B21802BAAE5F40032E5C8 /* MainViewImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewImpl.swift; sourceTree = "<group>"; };
+		5B6F60542BAAD809005E004E /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		5BBE16D92BAAE2EE00D06857 /* ilimi_MainAssembly */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ilimi_MainAssembly; sourceTree = "<group>"; };
+		5BD3C31B2BAAEB2000CF8AF5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5BD3C3202BAAEC6700CF8AF5 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		5BD3C3242BAAEE8600CF8AF5 /* en */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		5BD3C3262BAAEE8D00CF8AF5 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		5BD3C3322BAAF15500CF8AF5 /* Installer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Installer-Info.plist"; sourceTree = "<group>"; };
 		D4FC14CA28C649F70081BCC0 /* ilimi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ilimi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4FC14D128C649F80081BCC0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D4FC14D428C649F80081BCC0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D4FC14D628C649F80081BCC0 /* ilimi.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ilimi.entitlements; sourceTree = "<group>"; };
-		D4FC14DC28C64A520081BCC0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D4FC14DE28C64A730081BCC0 /* IlimiInputController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IlimiInputController.swift; sourceTree = "<group>"; };
 		D4FC14E028C64F400081BCC0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		D4FC14E228C667200081BCC0 /* DataInitilizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataInitilizer.swift; sourceTree = "<group>"; };
-		D4FC14E528C668A90081BCC0 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		D4FC14E728C66A180081BCC0 /* PersistenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceController.swift; sourceTree = "<group>"; };
-		D4FFDFDD2A94F4C30010642E /* CharWidthConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharWidthConverter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		5B0B216A2BAAE4B00032E5C8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5B21EC2F2BAAE826009C5A70 /* vChewing_IMKUtils_IlimiImpl in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D4FC14C728C649F70081BCC0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BD3C3352BAAF2F400CF8AF5 /* vChewing_IMKUtils_IlimiImpl in Frameworks */,
+				5BBE16DB2BAAE30B00D06857 /* ilimiMainAssembly in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D440E2A72AA39C6E0050D4F6 /* FullWidthMode */ = {
+		5B0B216E2BAAE4B00032E5C8 /* ilimiInstaller */ = {
 			isa = PBXGroup;
 			children = (
-				D440E2A82AA39C960050D4F6 /* FullWidthMode.swift */,
+				5BD3C3322BAAF15500CF8AF5 /* Installer-Info.plist */,
+				5B0B216F2BAAE4B00032E5C8 /* ilimiInstallerApp.swift */,
+				5B0B217E2BAAE5DE0032E5C8 /* InstallerShared.swift */,
+				5B0B21712BAAE4B00032E5C8 /* MainView.swift */,
+				5B0B21802BAAE5F40032E5C8 /* MainViewImpl.swift */,
+				5B0B217C2BAAE5800032E5C8 /* RelocationDetector.swift */,
+				5B0B21732BAAE4B10032E5C8 /* Assets.xcassets */,
+				5B0B21782BAAE4B10032E5C8 /* ilimiInstaller.entitlements */,
+				5B0B21752BAAE4B10032E5C8 /* Preview Content */,
+				5BD3C31A2BAAEB2000CF8AF5 /* Localizable.strings */,
+				5BD3C3232BAAEE8600CF8AF5 /* InfoPlist.strings */,
 			);
-			path = FullWidthMode;
+			path = ilimiInstaller;
 			sourceTree = "<group>";
 		};
-		D440E2AA2AA39E2E0050D4F6 /* ZhuyinMode */ = {
+		5B0B21752BAAE4B10032E5C8 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				D440E2AB2AA39E400050D4F6 /* ZhuyinMode.swift */,
+				5B0B21762BAAE4B10032E5C8 /* Preview Assets.xcassets */,
 			);
-			path = ZhuyinMode;
+			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		D440E2AD2AA3A0160050D4F6 /* SamePronunciationMode */ = {
+		5B6F604F2BAAC9FB005E004E /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				D440E2AE2AA3A0460050D4F6 /* SamePronunciationMode.swift */,
+				5BBE16D92BAAE2EE00D06857 /* ilimi_MainAssembly */,
+				5B0B21562BAAE36E0032E5C8 /* vChewing_IMKUtils_IlimiImpl */,
 			);
-			path = SamePronunciationMode;
+			path = Packages;
 			sourceTree = "<group>";
 		};
-		D447DFF6297140B2008C56C9 /* Settings */ = {
+		5B6F60562BAADEF4005E004E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D42CD50E2971C3F70024DB11 /* SettingsView.swift */,
-				D42CD50C2971C27F0024DB11 /* SettingsViewToolbar.swift */,
-				D42CD5102971C4500024DB11 /* GeneralSettingsView.swift */,
 			);
-			path = Settings;
-			sourceTree = "<group>";
-		};
-		D4C45A2C28CBA773003DC3B0 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				D447DFF6297140B2008C56C9 /* Settings */,
-				D4C45A3128CBB00B003DC3B0 /* IlimiMenu.swift */,
-				D474F5C128D4430E00E9717F /* QueryView.swift */,
-				D406664028E6C825001D1467 /* Notifier.swift */,
-			);
-			path = View;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		D4FC14C128C649F70081BCC0 = {
 			isa = PBXGroup;
 			children = (
+				5B6F604F2BAAC9FB005E004E /* Packages */,
 				D4FC14CC28C649F70081BCC0 /* ilimi */,
+				5B0B216E2BAAE4B00032E5C8 /* ilimiInstaller */,
 				D4FC14CB28C649F70081BCC0 /* Products */,
+				5B6F60562BAADEF4005E004E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 			usesTabs = 0;
@@ -133,6 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				D4FC14CA28C649F70081BCC0 /* ilimi.app */,
+				5B0B216D2BAAE4B00032E5C8 /* ilimiInstaller.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -140,18 +147,11 @@
 		D4FC14CC28C649F70081BCC0 /* ilimi */ = {
 			isa = PBXGroup;
 			children = (
-				D4FFDFDC2A94F43A0010642E /* Extension */,
-				D4C45A2C28CBA773003DC3B0 /* View */,
-				D4FC14E128C666DE0081BCC0 /* Utils */,
 				D4FC14E028C64F400081BCC0 /* Info.plist */,
 				D4FC14D128C649F80081BCC0 /* Assets.xcassets */,
 				D4FC14D628C649F80081BCC0 /* ilimi.entitlements */,
 				D4FC14D328C649F80081BCC0 /* Preview Content */,
-				D4FC14DC28C64A520081BCC0 /* AppDelegate.swift */,
-				D4FC14DE28C64A730081BCC0 /* IlimiInputController.swift */,
-				D4FC14E428C668A90081BCC0 /* Model.xcdatamodeld */,
-				D4C45A2B28CB9B07003DC3B0 /* ilimi-Bridging-Header.h */,
-				D453523128DD8A970007BB09 /* IlimiControllerEventHandler.swift */,
+				5B6F60542BAAD809005E004E /* main.swift */,
 			);
 			path = ilimi;
 			sourceTree = "<group>";
@@ -164,35 +164,30 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		D4FC14E128C666DE0081BCC0 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				D4494F872B65133C00B9BAFC /* CinReader.swift */,
-				D440E2AD2AA3A0160050D4F6 /* SamePronunciationMode */,
-				D440E2AA2AA39E2E0050D4F6 /* ZhuyinMode */,
-				D440E2A72AA39C6E0050D4F6 /* FullWidthMode */,
-				D4B2B76928C7A9A4006F3967 /* InputEngine.swift */,
-				D44CAD4D28C757C30046E5B6 /* InputContext.swift */,
-				D4FC14E228C667200081BCC0 /* DataInitilizer.swift */,
-				D4FC14E728C66A180081BCC0 /* PersistenceController.swift */,
-				D4C45A3328CDF702003DC3B0 /* StringConverter.swift */,
-				D457523C28E3EFB4008FD744 /* Notification.swift */,
-				D4D3D87F2AA71F13008DC811 /* Beep.swift */,
-			);
-			path = Utils;
-			sourceTree = "<group>";
-		};
-		D4FFDFDC2A94F43A0010642E /* Extension */ = {
-			isa = PBXGroup;
-			children = (
-				D4FFDFDD2A94F4C30010642E /* CharWidthConverter.swift */,
-			);
-			path = Extension;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		5B0B216C2BAAE4B00032E5C8 /* ilimiInstaller */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5B0B217B2BAAE4B10032E5C8 /* Build configuration list for PBXNativeTarget "ilimiInstaller" */;
+			buildPhases = (
+				5B0B21692BAAE4B00032E5C8 /* Sources */,
+				5B0B216A2BAAE4B00032E5C8 /* Frameworks */,
+				5B0B216B2BAAE4B00032E5C8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5B0B21852BAAE7C60032E5C8 /* PBXTargetDependency */,
+			);
+			name = ilimiInstaller;
+			packageProductDependencies = (
+				5B21EC2E2BAAE826009C5A70 /* vChewing_IMKUtils_IlimiImpl */,
+			);
+			productName = ilimiInstaller;
+			productReference = 5B0B216D2BAAE4B00032E5C8 /* ilimiInstaller.app */;
+			productType = "com.apple.product-type.application";
+		};
 		D4FC14C928C649F70081BCC0 /* ilimi */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D4FC14D928C649F80081BCC0 /* Build configuration list for PBXNativeTarget "ilimi" */;
@@ -206,6 +201,10 @@
 			dependencies = (
 			);
 			name = ilimi;
+			packageProductDependencies = (
+				5BBE16DA2BAAE30B00D06857 /* ilimiMainAssembly */,
+				5BD3C3342BAAF2F400CF8AF5 /* vChewing_IMKUtils_IlimiImpl */,
+			);
 			productName = ilimi;
 			productReference = D4FC14CA28C649F70081BCC0 /* ilimi.app */;
 			productType = "com.apple.product-type.application";
@@ -217,9 +216,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1340;
-				LastUpgradeCheck = 1500;
+				LastSwiftUpdateCheck = 1530;
+				LastUpgradeCheck = 1530;
 				TargetAttributes = {
+					5B0B216C2BAAE4B00032E5C8 = {
+						CreatedOnToolsVersion = 15.3;
+					};
 					D4FC14C928C649F70081BCC0 = {
 						CreatedOnToolsVersion = 13.4.1;
 						LastSwiftMigration = 1340;
@@ -232,19 +234,37 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"zh-Hant",
 				Base,
 			);
 			mainGroup = D4FC14C128C649F70081BCC0;
+			packageReferences = (
+				5B6F60512BAACACA005E004E /* XCLocalSwiftPackageReference "Packages/ilimi_MainAssembly" */,
+				5B0B21572BAAE37F0032E5C8 /* XCLocalSwiftPackageReference "Packages/vChewing_IMKUtils_IlimiImpl" */,
+			);
 			productRefGroup = D4FC14CB28C649F70081BCC0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				D4FC14C928C649F70081BCC0 /* ilimi */,
+				5B0B216C2BAAE4B00032E5C8 /* ilimiInstaller */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		5B0B216B2BAAE4B00032E5C8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5BD3C3252BAAEE8600CF8AF5 /* InfoPlist.strings in Resources */,
+				5B0B21772BAAE4B10032E5C8 /* Preview Assets.xcassets in Resources */,
+				5BD3C31C2BAAEB2000CF8AF5 /* Localizable.strings in Resources */,
+				5B0B21742BAAE4B10032E5C8 /* Assets.xcassets in Resources */,
+				5B0B21832BAAE7C60032E5C8 /* ilimi.app in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D4FC14C828C649F70081BCC0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -257,38 +277,129 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		5B0B21692BAAE4B00032E5C8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5B0B21722BAAE4B00032E5C8 /* MainView.swift in Sources */,
+				5B0B217F2BAAE5DE0032E5C8 /* InstallerShared.swift in Sources */,
+				5B0B21702BAAE4B00032E5C8 /* ilimiInstallerApp.swift in Sources */,
+				5B0B217D2BAAE5800032E5C8 /* RelocationDetector.swift in Sources */,
+				5B0B21812BAAE5F40032E5C8 /* MainViewImpl.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D4FC14C628C649F70081BCC0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D42CD50F2971C3F70024DB11 /* SettingsView.swift in Sources */,
-				D4FC14DD28C64A520081BCC0 /* AppDelegate.swift in Sources */,
-				D4FC14DF28C64A730081BCC0 /* IlimiInputController.swift in Sources */,
-				D453523228DD8A970007BB09 /* IlimiControllerEventHandler.swift in Sources */,
-				D4D3D8802AA71F13008DC811 /* Beep.swift in Sources */,
-				D474F5C228D4430E00E9717F /* QueryView.swift in Sources */,
-				D44CAD4E28C757C30046E5B6 /* InputContext.swift in Sources */,
-				D4C45A3228CBB00B003DC3B0 /* IlimiMenu.swift in Sources */,
-				D4FC14E328C667200081BCC0 /* DataInitilizer.swift in Sources */,
-				D4C45A3428CDF702003DC3B0 /* StringConverter.swift in Sources */,
-				D457523D28E3EFB4008FD744 /* Notification.swift in Sources */,
-				D4FC14E628C668A90081BCC0 /* Model.xcdatamodeld in Sources */,
-				D4FC14E828C66A180081BCC0 /* PersistenceController.swift in Sources */,
-				D440E2A92AA39C960050D4F6 /* FullWidthMode.swift in Sources */,
-				D440E2AC2AA39E400050D4F6 /* ZhuyinMode.swift in Sources */,
-				D440E2AF2AA3A0460050D4F6 /* SamePronunciationMode.swift in Sources */,
-				D4B2B76A28C7A9A4006F3967 /* InputEngine.swift in Sources */,
-				D406664128E6C825001D1467 /* Notifier.swift in Sources */,
-				D42CD5112971C4500024DB11 /* GeneralSettingsView.swift in Sources */,
-				D4FFDFDE2A94F4C30010642E /* CharWidthConverter.swift in Sources */,
-				D42CD50D2971C27F0024DB11 /* SettingsViewToolbar.swift in Sources */,
-				D4494F882B65133C00B9BAFC /* CinReader.swift in Sources */,
+				5B6F60552BAAD809005E004E /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		5B0B21852BAAE7C60032E5C8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D4FC14C928C649F70081BCC0 /* ilimi */;
+			targetProxy = 5B0B21842BAAE7C60032E5C8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		5BD3C31A2BAAEB2000CF8AF5 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5BD3C31B2BAAEB2000CF8AF5 /* en */,
+				5BD3C3202BAAEC6700CF8AF5 /* zh-Hant */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		5BD3C3232BAAEE8600CF8AF5 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5BD3C3242BAAEE8600CF8AF5 /* en */,
+				5BD3C3262BAAEE8D00CF8AF5 /* zh-Hant */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
+		5B0B21792BAAE4B10032E5C8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = ilimiInstaller/ilimiInstaller.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_ASSET_PATHS = "\"ilimiInstaller/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ilimiInstaller/Installer-Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "(c) 2022 and onwards The ilimi-IME Project (3-Clause BSD license).";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jefferson.ilimiInstaller;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		5B0B217A2BAAE4B10032E5C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_ENTITLEMENTS = ilimiInstaller/ilimiInstaller.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_ASSET_PATHS = "\"ilimiInstaller/Preview Content\"";
+				ENABLE_PREVIEWS = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ilimiInstaller/Installer-Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "(c) 2022 and onwards The ilimi-IME Project (3-Clause BSD license).";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jefferson.ilimiInstaller;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		D4FC14D728C649F80081BCC0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -321,9 +432,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
-				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -348,7 +457,6 @@
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SYMROOT = "/Users/chenli/Library/Input Methods/";
 			};
 			name = Debug;
 		};
@@ -384,9 +492,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -404,7 +510,6 @@
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SYMROOT = "/Users/chenli/Library/Input Methods/";
 			};
 			name = Release;
 		};
@@ -416,20 +521,21 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ilimi/ilimi.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CONFIGURATION_BUILD_DIR = "/Users/chenli/Library/Input Methods";
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"ilimi/Preview Content\"";
-				DEVELOPMENT_TEAM = SH6X4V52X3;
-				ENABLE_HARDENED_RUNTIME = YES;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ilimi/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSPrincipalClass = ilimi.NSManualApplication;
+				INFOPLIST_KEY_LSBackgroundOnly = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "(c) 2022 and onwards The ilimi-IME Project (3-Clause BSD license).";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -440,10 +546,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "$(SRCROOT)/$(PROJECT_NAME)/ilimi-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				SYMROOT = "/Users/chenli/Library/Input Methods/";
 			};
 			name = Debug;
 		};
@@ -455,20 +559,21 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = ilimi/ilimi.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CONFIGURATION_BUILD_DIR = "/Users/chenli/Library/Input Methods";
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"ilimi/Preview Content\"";
-				DEVELOPMENT_TEAM = SH6X4V52X3;
-				ENABLE_HARDENED_RUNTIME = YES;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ilimi/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				INFOPLIST_KEY_NSPrincipalClass = ilimi.NSManualApplication;
+				INFOPLIST_KEY_LSBackgroundOnly = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "(c) 2022 and onwards The ilimi-IME Project (3-Clause BSD license).";
+				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -479,15 +584,22 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = "$(SRCROOT)/$(PROJECT_NAME)/ilimi-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				SYMROOT = "/Users/chenli/Library/Input Methods/";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5B0B217B2BAAE4B10032E5C8 /* Build configuration list for PBXNativeTarget "ilimiInstaller" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5B0B21792BAAE4B10032E5C8 /* Debug */,
+				5B0B217A2BAAE4B10032E5C8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D4FC14C528C649F70081BCC0 /* Build configuration list for PBXProject "ilimi" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -508,18 +620,31 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCVersionGroup section */
-		D4FC14E428C668A90081BCC0 /* Model.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				D4FC14E528C668A90081BCC0 /* Model.xcdatamodel */,
-			);
-			currentVersion = D4FC14E528C668A90081BCC0 /* Model.xcdatamodel */;
-			path = Model.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
+/* Begin XCLocalSwiftPackageReference section */
+		5B0B21572BAAE37F0032E5C8 /* XCLocalSwiftPackageReference "Packages/vChewing_IMKUtils_IlimiImpl" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/vChewing_IMKUtils_IlimiImpl;
 		};
-/* End XCVersionGroup section */
+		5B6F60512BAACACA005E004E /* XCLocalSwiftPackageReference "Packages/ilimi_MainAssembly" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/ilimi_MainAssembly;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5B21EC2E2BAAE826009C5A70 /* vChewing_IMKUtils_IlimiImpl */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = vChewing_IMKUtils_IlimiImpl;
+		};
+		5BBE16DA2BAAE30B00D06857 /* ilimiMainAssembly */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ilimiMainAssembly;
+		};
+		5BD3C3342BAAF2F400CF8AF5 /* vChewing_IMKUtils_IlimiImpl */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = vChewing_IMKUtils_IlimiImpl;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D4FC14C228C649F70081BCC0 /* Project object */;
 }
