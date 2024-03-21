@@ -19,5 +19,9 @@ let package = Package(
             name: "IMKUtils",
             dependencies: []
         ),
+        .testTarget(
+            name: "IMKUtilsTests",
+            dependencies: ["IMKUtils"]
+        ),
     ]
 )
