@@ -99,7 +99,7 @@ class FakeClient: NSObject, IMKTextInput {
     }
 
     func bundleIdentifier() -> String {
-        "org.atelierInmu.vChewing.MainAssembly.UnitTests.MockedClient"
+        "com.jefferson.ilimi.MainAssembly.UnitTests.MockedClient"
     }
 
     func windowLevel() -> CGWindowLevel {

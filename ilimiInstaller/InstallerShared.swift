@@ -11,7 +11,7 @@ public let kTargetBinPhraseEditor = "ilimiPhraseEditor"
 public let kTargetType = "app"
 public let kTargetBundle = "ilimi.app"
 public let kTargetBundleWithComponents = "Library/Input%20Methods/ilimi.app"
-public let kTISInputSourceID = "org.atelierInmu.inputmethod.ilimi"
+public let kTISInputSourceID = "com.jefferson.inputmethod.ilimi"
 
 let imeURLInstalled = realHomeDir.appendingPathComponent("Library/Input Methods/ilimi.app")
 
