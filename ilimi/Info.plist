@@ -2,42 +2,96 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>tsInputModeMenuIconFileKey</key>
-	<string>MenuIcon-ILIMI.tiff</string>
-	<key>tsInputMethodIconFileKey</key>
-	<string>MenuIcon-ILIMI.tiff</string>
-	<key>tsInputModePaletteIconFileKey</key>
-	<string>MenuIcon-ILIMI.tiff</string>
-	<key>TISIconIsTemplate</key>
-	<true/>
-	<key>TISInputSourceID</key>
-	<string>com.jefferson.inputmethod.ilimi</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(MARKETING_VERSION)</string>
+	<key>CFBundleSignature</key>
+	<string>LIMI</string>
+	<key>CFBundleSupportedPlatforms</key>
+	<array>
+		<string>MacOSX</string>
+	</array>
+	<key>CFBundleVersion</key>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>CFEULAContent</key>
+	<string>License texts used in the customized about window.</string>
 	<key>InputMethodConnectionName</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)_Connection</string>
-	<key>TISIntendedLanguage</key>
-	<string>zh-Hant</string>
 	<key>InputMethodServerControllerClass</key>
+	<string>IlimiInputController</string>
+	<key>InputMethodServerDataSourceClass</key>
 	<string>IlimiInputController</string>
 	<key>InputMethodServerDelegateClass</key>
 	<string>IlimiInputController</string>
-	<key>TISParticipatesInTouchBar</key>
-	<false/>
-	<key>tsInputMethodCharacterRepertoireKey</key>
-	<array>
-		<string>Hant</string>
-	</array>
+	<key>InputMethodServerPreferencesWindowControllerClass</key>
+	<string>Preferences</string>
+	<key>InputMethodSessionController</key>
+	<string>IlimiInputController</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.utilities</string>
+	<key>LSHasLocalizedDisplayName</key>
+	<true/>
+	<key>LSMinimumSystemVersion</key>
+	<string>${MACOSX_DEPLOYMENT_TARGET}</string>
 	<key>LSUIElement</key>
 	<true/>
-	<key>tsInputModeScriptKey</key>
-	<string>smUnicode</string>
-	<key>tsInputModePrimaryInScriptKey</key>
+	<key>NSHumanReadableCopyright</key>
+	<string>(c) 2022 and onwards The ilimi-IME Project (3-Clause BSD license).</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+	<key>NSRequiresAquaSystemAppearance</key>
+	<string>No</string>
+	<key>NSSupportsSuddenTermination</key>
 	<false/>
+	<key>TICapsLockLanguageSwitchCapable</key>
+	<true/>
+	<key>TISIconIsTemplate</key>
+	<true/>
 	<key>TISIconLabels</key>
 	<dict>
 		<key>Primary</key>
 		<string>粒米</string>
 	</dict>
-	<key>TICapsLockLanguageSwitchCapable</key>
+	<key>TISInputSourceID</key>
+	<string>com.jefferson.inputmethod.ilimi</string>
+	<key>TISIntendedLanguage</key>
+	<string>zh-Hant</string>
+	<key>TISParticipatesInTouchBar</key>
+	<false/>
+	<key>tsInputMethodCharacterRepertoireKey</key>
+	<array>
+		<string>Hant</string>
+		<string>Hans</string>
+		<string>Hani</string>
+		<string>Hanb</string>
+		<string>Han</string>
+	</array>
+	<key>tsInputMethodIconFileKey</key>
+	<string>MenuIcon-ILIMI.png</string>
+	<key>tsInputModeIsVisibleKey</key>
 	<true/>
+	<key>tsInputModeMenuIconFileKey</key>
+	<string>MenuIcon-ILIMI.png</string>
+	<key>tsInputModePaletteIconFileKey</key>
+	<string>MenuIcon-ILIMI.png</string>
+	<key>tsInputModePrimaryInScriptKey</key>
+	<false/>
+	<key>tsInputModeScriptKey</key>
+	<string>smUnicode</string>
+	<key>tsVisibleInputModeOrderedArrayKey</key>
+	<array>
+		<string>com.jefferson.inputmethod.ilimi</string>
+	</array>
 </dict>
 </plist>
