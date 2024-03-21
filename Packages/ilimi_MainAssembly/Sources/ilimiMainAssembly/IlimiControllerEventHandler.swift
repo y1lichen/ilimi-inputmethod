@@ -2,6 +2,7 @@
 // ====================
 // This code is released under the 3-Clause BSD license (SPDX-License-Identifier: BSD-3-Clause)
 
+import IMKUtils
 import InputMethodKit
 
 extension IlimiInputController {
@@ -13,7 +14,7 @@ extension IlimiInputController {
     }
 
     override public func handle(_ event: NSEvent!, client sender: Any!) -> Bool {
-        guard let event = event, sender is IMKTextInput else {
+        guard var event = event, sender is IMKTextInput else {
             cancelComposition()
             NSLog("Unable to handle NSEvent")
             return false
@@ -39,6 +40,23 @@ extension IlimiInputController {
         guard client() != nil else { return false }
 
         if event.type == NSEvent.EventType.keyDown {
+            reinitalization: if let queriedKeyMapPair = LatinKeyboardMappings.qwertyHant.mapTable[event.keyCode] {
+                // 這段可以確保 event 裡面處理的一般內容都是 ASCII 英數。
+                switch event.commonKeyModifierFlags {
+                case .shift:
+                    event = event.reinitiate(
+                        characters: queriedKeyMapPair.1,
+                        charactersIgnoringModifiers: queriedKeyMapPair.0
+                    ) ?? event
+
+                case []:
+                    event = event.reinitiate(
+                        characters: queriedKeyMapPair.0,
+                        charactersIgnoringModifiers: queriedKeyMapPair.0
+                    ) ?? event
+                default: break reinitalization
+                }
+            }
             if handleFullWidthMode(event: event, client: sender) {
                 return true
             }

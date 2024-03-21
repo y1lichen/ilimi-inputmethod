@@ -9,6 +9,7 @@
 import Foundation
 
 public enum LatinKeyboardMappings: String, CaseIterable {
+    case qwertyHant = "com.apple.keylayout.TraditionalPinyinKeyboard"
     case qwerty = "com.apple.keylayout.ABC"
     case qwertyBritish = "com.apple.keylayout.British"
     case qwertyUS = "com.apple.keylayout.US" // 10.9 - 10.12
@@ -24,7 +25,7 @@ public enum LatinKeyboardMappings: String, CaseIterable {
 
     public var mapTable: [UInt16: (String, String)] {
         switch self {
-        case .qwerty, .qwertyUS, .qwertyBritish: return Self.dictQwerty
+        case .qwerty, .qwertyHant, .qwertyUS, .qwertyBritish: return Self.dictQwerty
         case .azerty, .azertyFrench: return Self.dictAzerty
         case .qwertz, .qwertzGerman: return Self.dictQwertz
         case .colemak: return Self.dictColemak

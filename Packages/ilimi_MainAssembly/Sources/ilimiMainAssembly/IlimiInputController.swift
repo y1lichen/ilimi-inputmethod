@@ -4,6 +4,7 @@
 
 import Cocoa
 import IMKCandidatesImpl
+import IMKUtils
 import InputMethodKit
 
 // MARK: - IlimiInputController
@@ -150,11 +151,13 @@ extension IlimiInputController {
     // 如果不setKeyLayout，在spotlight會無法輸入
     func setKeyLayout() {
         guard let client = client() else { return }
-        if isASCIIMode {
-            client.overrideKeyboard(withKeyboardNamed: "AlphanumericalKeyboardLayout")
-            return
+        Task {
+            client.overrideKeyboard(
+                withKeyboardNamed: CapsLockToggler.isOn
+                    ? "com.apple.keylayout.ZhuyinBopomofo"
+                    : LatinKeyboardMappings.qwertyHant.rawValue
+            )
         }
-        client.overrideKeyboard(withKeyboardNamed: "BasicKeyboardLayout")
     }
 
     // 輸入,,CT進入打繁出簡模式
