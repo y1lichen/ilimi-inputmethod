@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B00C78F2BAC3C3900F28D71 /* MenuIcon-ILIMI@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B00C78D2BAC3C3900F28D71 /* MenuIcon-ILIMI@2x.png */; };
+		5B00C7902BAC3C3900F28D71 /* MenuIcon-ILIMI.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B00C78E2BAC3C3900F28D71 /* MenuIcon-ILIMI.png */; };
 		5B0B21702BAAE4B00032E5C8 /* ilimiInstallerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0B216F2BAAE4B00032E5C8 /* ilimiInstallerApp.swift */; };
 		5B0B21722BAAE4B00032E5C8 /* MainViewImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0B21712BAAE4B00032E5C8 /* MainViewImpl.swift */; };
 		5B0B21742BAAE4B10032E5C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B0B21732BAAE4B10032E5C8 /* Assets.xcassets */; };
@@ -37,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5B00C78D2BAC3C3900F28D71 /* MenuIcon-ILIMI@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MenuIcon-ILIMI@2x.png"; sourceTree = "<group>"; };
+		5B00C78E2BAC3C3900F28D71 /* MenuIcon-ILIMI.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "MenuIcon-ILIMI.png"; sourceTree = "<group>"; };
 		5B0B21562BAAE36E0032E5C8 /* vChewing_IMKUtils_IlimiImpl */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = vChewing_IMKUtils_IlimiImpl; sourceTree = "<group>"; };
 		5B0B216D2BAAE4B00032E5C8 /* ilimiInstaller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ilimiInstaller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B0B216F2BAAE4B00032E5C8 /* ilimiInstallerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ilimiInstallerApp.swift; sourceTree = "<group>"; };
@@ -83,6 +87,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5B00C78A2BAC3C1300F28D71 /* MenuIcons */ = {
+			isa = PBXGroup;
+			children = (
+				5B00C78E2BAC3C3900F28D71 /* MenuIcon-ILIMI.png */,
+				5B00C78D2BAC3C3900F28D71 /* MenuIcon-ILIMI@2x.png */,
+			);
+			path = MenuIcons;
+			sourceTree = "<group>";
+		};
 		5B0B216E2BAAE4B00032E5C8 /* ilimiInstaller */ = {
 			isa = PBXGroup;
 			children = (
@@ -149,6 +162,7 @@
 		D4FC14CC28C649F70081BCC0 /* ilimi */ = {
 			isa = PBXGroup;
 			children = (
+				5B00C78A2BAC3C1300F28D71 /* MenuIcons */,
 				5BC0EDB02BAC2F5D00F810D4 /* IlimiKeyboard.keylayout */,
 				D4FC14E028C64F400081BCC0 /* Info.plist */,
 				D4FC14D128C649F80081BCC0 /* Assets.xcassets */,
@@ -273,6 +287,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4FC14D528C649F80081BCC0 /* Preview Assets.xcassets in Resources */,
+				5B00C7902BAC3C3900F28D71 /* MenuIcon-ILIMI.png in Resources */,
+				5B00C78F2BAC3C3900F28D71 /* MenuIcon-ILIMI@2x.png in Resources */,
 				5BC0EDB12BAC2F5D00F810D4 /* IlimiKeyboard.keylayout in Resources */,
 				D4FC14D228C649F80081BCC0 /* Assets.xcassets in Resources */,
 			);

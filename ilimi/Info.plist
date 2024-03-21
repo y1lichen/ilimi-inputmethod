@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>tsInputModeMenuIconFileKey</key>
+	<string>MenuIcon-ILIMI.tiff</string>
+	<key>tsInputModePaletteIconFileKey</key>
+	<string>MenuIcon-ILIMI.tiff</string>
+	<key>TISIconIsTemplate</key>
+	<true/>
 	<key>TISInputSourceID</key>
 	<string>com.jefferson.inputmethod.ilimi</string>
 	<key>InputMethodConnectionName</key>
