@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		5B0B21702BAAE4B00032E5C8 /* ilimiInstallerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0B216F2BAAE4B00032E5C8 /* ilimiInstallerApp.swift */; };
-		5B0B21722BAAE4B00032E5C8 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0B21712BAAE4B00032E5C8 /* MainView.swift */; };
+		5B0B21722BAAE4B00032E5C8 /* MainViewImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0B21712BAAE4B00032E5C8 /* MainViewImpl.swift */; };
 		5B0B21742BAAE4B10032E5C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B0B21732BAAE4B10032E5C8 /* Assets.xcassets */; };
 		5B0B21772BAAE4B10032E5C8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B0B21762BAAE4B10032E5C8 /* Preview Assets.xcassets */; };
 		5B0B217D2BAAE5800032E5C8 /* RelocationDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0B217C2BAAE5800032E5C8 /* RelocationDetector.swift */; };
 		5B0B217F2BAAE5DE0032E5C8 /* InstallerShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0B217E2BAAE5DE0032E5C8 /* InstallerShared.swift */; };
-		5B0B21812BAAE5F40032E5C8 /* MainViewImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0B21802BAAE5F40032E5C8 /* MainViewImpl.swift */; };
+		5B0B21812BAAE5F40032E5C8 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0B21802BAAE5F40032E5C8 /* MainView.swift */; };
 		5B0B21832BAAE7C60032E5C8 /* ilimi.app in Resources */ = {isa = PBXBuildFile; fileRef = D4FC14CA28C649F70081BCC0 /* ilimi.app */; };
 		5B21EC2F2BAAE826009C5A70 /* vChewing_IMKUtils_IlimiImpl in Frameworks */ = {isa = PBXBuildFile; productRef = 5B21EC2E2BAAE826009C5A70 /* vChewing_IMKUtils_IlimiImpl */; };
 		5B6F60552BAAD809005E004E /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6F60542BAAD809005E004E /* main.swift */; };
@@ -40,13 +40,13 @@
 		5B0B21562BAAE36E0032E5C8 /* vChewing_IMKUtils_IlimiImpl */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = vChewing_IMKUtils_IlimiImpl; sourceTree = "<group>"; };
 		5B0B216D2BAAE4B00032E5C8 /* ilimiInstaller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ilimiInstaller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B0B216F2BAAE4B00032E5C8 /* ilimiInstallerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ilimiInstallerApp.swift; sourceTree = "<group>"; };
-		5B0B21712BAAE4B00032E5C8 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		5B0B21712BAAE4B00032E5C8 /* MainViewImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewImpl.swift; sourceTree = "<group>"; };
 		5B0B21732BAAE4B10032E5C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5B0B21762BAAE4B10032E5C8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		5B0B21782BAAE4B10032E5C8 /* ilimiInstaller.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ilimiInstaller.entitlements; sourceTree = "<group>"; };
 		5B0B217C2BAAE5800032E5C8 /* RelocationDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelocationDetector.swift; sourceTree = "<group>"; };
 		5B0B217E2BAAE5DE0032E5C8 /* InstallerShared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallerShared.swift; sourceTree = "<group>"; };
-		5B0B21802BAAE5F40032E5C8 /* MainViewImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewImpl.swift; sourceTree = "<group>"; };
+		5B0B21802BAAE5F40032E5C8 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		5B6F60542BAAD809005E004E /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		5BBE16D92BAAE2EE00D06857 /* ilimi_MainAssembly */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ilimi_MainAssembly; sourceTree = "<group>"; };
 		5BC0EDB02BAC2F5D00F810D4 /* IlimiKeyboard.keylayout */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = IlimiKeyboard.keylayout; sourceTree = "<group>"; };
@@ -89,8 +89,8 @@
 				5BD3C3322BAAF15500CF8AF5 /* Installer-Info.plist */,
 				5B0B216F2BAAE4B00032E5C8 /* ilimiInstallerApp.swift */,
 				5B0B217E2BAAE5DE0032E5C8 /* InstallerShared.swift */,
-				5B0B21712BAAE4B00032E5C8 /* MainView.swift */,
-				5B0B21802BAAE5F40032E5C8 /* MainViewImpl.swift */,
+				5B0B21802BAAE5F40032E5C8 /* MainView.swift */,
+				5B0B21712BAAE4B00032E5C8 /* MainViewImpl.swift */,
 				5B0B217C2BAAE5800032E5C8 /* RelocationDetector.swift */,
 				5B0B21732BAAE4B10032E5C8 /* Assets.xcassets */,
 				5B0B21782BAAE4B10032E5C8 /* ilimiInstaller.entitlements */,
@@ -285,11 +285,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B0B21722BAAE4B00032E5C8 /* MainView.swift in Sources */,
+				5B0B21722BAAE4B00032E5C8 /* MainViewImpl.swift in Sources */,
 				5B0B217F2BAAE5DE0032E5C8 /* InstallerShared.swift in Sources */,
 				5B0B21702BAAE4B00032E5C8 /* ilimiInstallerApp.swift in Sources */,
 				5B0B217D2BAAE5800032E5C8 /* RelocationDetector.swift in Sources */,
-				5B0B21812BAAE5F40032E5C8 /* MainViewImpl.swift in Sources */,
+				5B0B21812BAAE5F40032E5C8 /* MainView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

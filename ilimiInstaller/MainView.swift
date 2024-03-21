@@ -3,131 +3,154 @@
 // This code is released under the 3-Clause BSD license (SPDX-License-Identifier: BSD-3-Clause)
 
 import AppKit
-import IMKUtils
-import InputMethodKit
+import SwiftUI
 
-public extension MainView {
-    func removeThenInstallInputMethod() {
-        let shouldWaitForTranslocationRemoval = Reloc.isAppBundleTranslocated(atPath: kTargetPartialPath)
+public struct MainView: View {
+    static let strCopyrightLabel = Bundle.main.localizedInfoDictionary?["NSHumanReadableCopyright"] as? String ?? "BAD_COPYRIGHT_LABEL"
 
-        // 將既存輸入法扔到垃圾桶內
-        do {
-            let sourceDir = kDestinationPartial
-            let fileManager = FileManager.default
-            let fileURLString = sourceDir + "/" + kTargetBundle
-            let fileURL = URL(fileURLWithPath: fileURLString)
+    @State var pendingSheetPresenting = false
+    @State var isShowingAlertForFailedInstallation = false
+    @State var isShowingAlertForMissingPostInstall = false
+    @State var isShowingPostInstallNotification = false
+    @State var currentAlertContent: AlertType = .nothing
+    @State var isCancelButtonEnabled = true
+    @State var isAgreeButtonEnabled = true
+    @State var isPreviousVersionNotFullyDeactivated = false
+    @State var isTranslocationFinished: Bool?
+    @State var isUpgrading = false
 
-            // 檢查檔案是否存在
-            if fileManager.fileExists(atPath: fileURLString) {
-                // 塞入垃圾桶
-                try fileManager.trashItem(at: fileURL, resultingItemURL: nil)
-            } else {
-                NSLog("File does not exist")
+    var translocationRemovalStartTime: Date?
+
+    @State var timeRemaining = 60
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+
+    public init() {
+        if FileManager.default.fileExists(atPath: kTargetPartialPath) {
+            let currentBundle = Bundle(path: kTargetPartialPath)
+            let shortVersion = currentBundle?.infoDictionary?["CFBundleShortVersionString"] as? String
+            let currentVersion = currentBundle?.infoDictionary?[kCFBundleVersionKey as String] as? String
+            if shortVersion != nil, let currentVersion = currentVersion,
+               currentVersion.compare(installingVersion, options: .numeric) == .orderedAscending
+            {
+                isUpgrading = true
             }
-        } catch let error as NSError {
-            NSLog("An error took place: \(error)")
-        }
-
-        let killTask = Process()
-        killTask.launchPath = "/usr/bin/killall"
-        killTask.arguments = [kTargetBin]
-        killTask.launch()
-        killTask.waitUntilExit()
-
-        let killTask2 = Process()
-        killTask2.launchPath = "/usr/bin/killall"
-        killTask2.arguments = [kTargetBinPhraseEditor]
-        killTask2.launch()
-        killTask2.waitUntilExit()
-
-        if shouldWaitForTranslocationRemoval {
-            pendingSheetPresenting = true
-        } else {
-            installInputMethod(
-                previousExists: false, previousVersionNotFullyDeactivatedWarning: false
-            )
         }
     }
 
-    func installInputMethod(
-        previousExists _: Bool, previousVersionNotFullyDeactivatedWarning warning: Bool
-    ) {
-        guard
-            let targetBundle = Bundle.main.path(forResource: kTargetBin, ofType: kTargetType)
-        else {
-            return
-        }
-        let cpTask = Process()
-        cpTask.launchPath = "/bin/cp"
-        print(kDestinationPartial)
-        cpTask.arguments = [
-            "-R", targetBundle, kDestinationPartial,
-        ]
-        cpTask.launch()
-        cpTask.waitUntilExit()
-
-        if cpTask.terminationStatus != 0 {
-            isShowingAlertForFailedInstallation = true
-            NSApp.terminateWithDelay()
-        }
-
-        _ = try? NSApp.shell("/usr/bin/xattr -drs com.apple.quarantine \(kTargetPartialPath)")
-
-        guard let theBundle = Bundle(url: imeURLInstalled),
-              let imeIdentifier = theBundle.bundleIdentifier
-        else {
-            NSApp.terminateWithDelay()
-            return
-        }
-
-        let imeBundleURL = theBundle.bundleURL
-
-        if allRegisteredInstancesOfThisInputMethod.isEmpty {
-            NSLog("Registering input source \(imeIdentifier) at \(imeBundleURL.absoluteString).")
-            let status = (TISRegisterInputSource(imeBundleURL as CFURL) == noErr)
-            if !status {
-                isShowingAlertForMissingPostInstall = true
-                NSApp.terminateWithDelay()
+    public var body: some View {
+        GroupBox {
+            VStack(alignment: .leading, spacing: 6) {
+                VStack(alignment: .leading) {
+                    HStack(alignment: .center) {
+                        if let icon = NSImage(named: "IconSansMargin") {
+                            Image(nsImage: icon).resizable().frame(width: 90, height: 90)
+                        }
+                        VStack(alignment: .leading) {
+                            HStack {
+                                Text("i18n:installer.APP_NAME").fontWeight(.heavy).lineLimit(1)
+                                Text("v\(versionString) Build \(installingVersion)").lineLimit(1)
+                            }.fixedSize()
+                            Text(Self.strCopyrightLabel).font(.custom("Tahoma", size: 11))
+                            Text("i18n:installer.DEV_CREW").font(.custom("Tahoma", size: 11)).padding([.vertical], 2)
+                        }
+                    }
+                    GroupBox(label: Text("i18n:installer.LICENSE_TITLE")) {
+                        ScrollView(.vertical, showsIndicators: true) {
+                            HStack {
+                                Text(eulaContent).textSelection(.enabled)
+                                    .frame(maxWidth: 455)
+                                    .font(.custom("Tahoma", size: 11))
+                                Spacer()
+                            }
+                        }.padding(4).frame(height: 128)
+                    }
+                    Text("i18n:installer.EULA_PROMPT_NOTICE").bold().padding(.bottom, 2)
+                }
+                Divider()
+                HStack(alignment: .top) {
+                    Text("i18n:installer.REPO_URL_TEXT")
+                        .font(.custom("Tahoma", size: 11))
+                        .opacity(0.5)
+                        .frame(maxWidth: .infinity)
+                    VStack(spacing: 4) {
+                        Button { installationButtonClicked() } label: {
+                            Text(isUpgrading ? "i18n:installer.DO_APP_UPGRADE" : "i18n:installer.ACCEPT_INSTALLATION")
+                                .bold().frame(width: 114)
+                        }
+                        .keyboardShortcut(.defaultAction)
+                        .disabled(!isCancelButtonEnabled)
+                        Button(role: .cancel) { NSApp.terminateWithDelay() } label: {
+                            Text("i18n:installer.CANCEL_INSTALLATION").frame(width: 114)
+                        }
+                        .keyboardShortcut(.cancelAction)
+                        .disabled(!isAgreeButtonEnabled)
+                    }.fixedSize(horizontal: true, vertical: true)
+                }
+                Spacer()
             }
-
-            if allRegisteredInstancesOfThisInputMethod.isEmpty {
-                let message = String(
-                    format: NSLocalizedString(
-                        "Cannot find input source %@ after registration.", comment: ""
-                    ) + "(#D41J0U8U)",
-                    imeIdentifier
-                )
-                NSLog(message)
-            }
+            .font(.custom("Tahoma", size: 12))
+            .padding(4)
         }
-
-        var mainInputSourceEnabled = false
-
-        allRegisteredInstancesOfThisInputMethod.forEach { neta in
-            let isActivated = neta.isActivated
-            defer {
-                // 如果使用者在升級安裝或再次安裝之前已經有啟用威注音任一簡繁模式的話，則標記安裝成功。
-                // 這樣可以尊重某些使用者「僅使用簡體中文」或「僅使用繁體中文」的習慣。
-                mainInputSourceEnabled = mainInputSourceEnabled || isActivated
-            }
-            if isActivated { return }
-            // WARNING: macOS 12 may return false positives, hence forced activation.
-            if neta.activate() {
-                NSLog("Input method enabled: \(imeIdentifier)")
-            } else {
-                NSLog("Failed to enable input method: \(imeIdentifier)")
-            }
+        // ALERTS
+        .alert(AlertType.installationFailed.title, isPresented: $isShowingAlertForFailedInstallation) {
+            Button(role: .cancel) { NSApp.terminateWithDelay() } label: { Text("Cancel") }
+        } message: {
+            Text(AlertType.installationFailed.message)
         }
-
-        // Alert Panel
-        if warning {
-            currentAlertContent = .postInstallAttention
-        } else if !mainInputSourceEnabled {
-            currentAlertContent = .postInstallWarning
-        } else {
-            currentAlertContent = .postInstallOK
+        .alert(AlertType.missingAfterRegistration.title, isPresented: $isShowingAlertForMissingPostInstall) {
+            Button(role: .cancel) { NSApp.terminateWithDelay() } label: { Text("Abort") }
+        } message: {
+            Text(AlertType.missingAfterRegistration.message)
         }
-        isShowingPostInstallNotification = true
-        NSApp.terminateWithDelay()
+        .alert(currentAlertContent.title, isPresented: $isShowingPostInstallNotification) {
+            Button(role: .cancel) { NSApp.terminateWithDelay() } label: {
+                Text(currentAlertContent == .postInstallWarning ? "Continue" : "OK")
+            }
+        } message: {
+            Text(currentAlertContent.message)
+        }
+        // SHEET FOR STOPPING THE OLD VERSION
+        .sheet(isPresented: $pendingSheetPresenting) {
+            // TODO: Tasks after sheet gets closed by `dismiss()`.
+        } content: {
+            Text("i18n:installer.STOPPING_THE_OLD_VERSION").frame(width: 407, height: 144)
+                .onReceive(timer) { _ in
+                    if timeRemaining > 0 {
+                        if Reloc.isAppBundleTranslocated(atPath: kTargetPartialPath) == false {
+                            pendingSheetPresenting = false
+                            isTranslocationFinished = true
+                            installInputMethod(
+                                previousExists: true,
+                                previousVersionNotFullyDeactivatedWarning: false
+                            )
+                        }
+                        timeRemaining -= 1
+                    } else {
+                        pendingSheetPresenting = false
+                        isTranslocationFinished = false
+                        installInputMethod(
+                            previousExists: true,
+                            previousVersionNotFullyDeactivatedWarning: true
+                        )
+                    }
+                }
+        }
+        // OTHER
+        .padding(12)
+        .frame(width: 533, alignment: .topLeading)
+        .navigationTitle(mainWindowTitle)
+        .fixedSize()
+        .foregroundStyle(Color(nsColor: NSColor.textColor))
+        .background(Color(nsColor: NSColor.windowBackgroundColor))
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+        .frame(minWidth: 533, idealWidth: 533, maxWidth: 533,
+               minHeight: 386, idealHeight: 386, maxHeight: 386,
+               alignment: .top)
+    }
+
+    func installationButtonClicked() {
+        isCancelButtonEnabled = false
+        isAgreeButtonEnabled = false
+        removeThenInstallInputMethod()
     }
 }
