@@ -1,9 +1,6 @@
-//
-//  ilimi-Bridging-Header.h
-//  ilimi
-//
-//  Created by 陳奕利 on 2022/9/10.
-//
+// (c) 2022 and onwards The ilimi-IME Project (3-Clause BSD license).
+// ====================
+// This code is released under the 3-Clause BSD license (SPDX-License-Identifier: BSD-3-Clause)
 
 #ifndef ilimi_Bridging_Header_h
 #define ilimi_Bridging_Header_h
