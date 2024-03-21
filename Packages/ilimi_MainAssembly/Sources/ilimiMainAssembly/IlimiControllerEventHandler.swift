@@ -161,12 +161,10 @@ extension IlimiInputController {
         // toggle ascii mode
         if event.type == .flagsChanged, event.keyCode == 57 {
             DispatchQueue.main.async { [self] in
-                let capsLockIsOn = event.modifierFlags.intersection(.deviceIndependentFlagsMask).contains(.capsLock)
+                let shouldNotifyCpLkState = CapsLockToggler.isOn
+                self.isASCIIMode = event.modifierFlags.intersection(.deviceIndependentFlagsMask).contains(.capsLock)
                 // 在isASCIIMode改變時推播通知
-                if self.isASCIIMode != capsLockIsOn {
-                    NotifierController.notify(message: capsLockIsOn ? "英數模式" : "中文模式")
-                }
-                self.isASCIIMode = capsLockIsOn
+                NotifierController.notify(message: shouldNotifyCpLkState ? "英數模式" : "中文模式")
                 setKeyLayout()
                 if self.isASCIIMode {
                     if !InputContext.shared.getCurrentInput().isEmpty {
