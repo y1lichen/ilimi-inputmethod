@@ -20,5 +20,16 @@
 	</array>
 	<key>LSUIElement</key>
 	<true/>
+	<key>tsInputModeScriptKey</key>
+	<string>smUnicode</string>
+	<key>tsInputModePrimaryInScriptKey</key>
+	<false/>
+	<key>TISIconLabels</key>
+	<dict>
+		<key>Primary</key>
+		<string>粒米</string>
+	</dict>
+	<key>TICapsLockLanguageSwitchCapable</key>
+	<true/>
 </dict>
 </plist>
