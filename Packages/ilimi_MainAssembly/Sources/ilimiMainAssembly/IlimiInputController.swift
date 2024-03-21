@@ -153,9 +153,7 @@ extension IlimiInputController {
         guard let client = client() else { return }
         Task {
             client.overrideKeyboard(
-                withKeyboardNamed: CapsLockToggler.isOn
-                    ? "com.apple.keylayout.ZhuyinBopomofo"
-                    : LatinKeyboardMappings.qwertyHant.rawValue
+                withKeyboardNamed: LatinKeyboardMappings.qwertyIlimi.rawValue
             )
         }
     }

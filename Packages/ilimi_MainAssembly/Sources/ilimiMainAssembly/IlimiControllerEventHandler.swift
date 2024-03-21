@@ -40,7 +40,7 @@ extension IlimiInputController {
         guard client() != nil else { return false }
 
         if event.type == NSEvent.EventType.keyDown {
-            reinitalization: if let queriedKeyMapPair = LatinKeyboardMappings.qwertyHant.mapTable[event.keyCode] {
+            reinitalization: if let queriedKeyMapPair = LatinKeyboardMappings.qwertyIlimi.mapTable[event.keyCode] {
                 // 這段可以確保 event 裡面處理的一般內容都是 ASCII 英數。
                 switch event.commonKeyModifierFlags {
                 case .shift:

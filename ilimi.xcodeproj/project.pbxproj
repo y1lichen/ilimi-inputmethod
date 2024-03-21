@@ -18,6 +18,7 @@
 		5B21EC2F2BAAE826009C5A70 /* vChewing_IMKUtils_IlimiImpl in Frameworks */ = {isa = PBXBuildFile; productRef = 5B21EC2E2BAAE826009C5A70 /* vChewing_IMKUtils_IlimiImpl */; };
 		5B6F60552BAAD809005E004E /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6F60542BAAD809005E004E /* main.swift */; };
 		5BBE16DB2BAAE30B00D06857 /* ilimiMainAssembly in Frameworks */ = {isa = PBXBuildFile; productRef = 5BBE16DA2BAAE30B00D06857 /* ilimiMainAssembly */; };
+		5BC0EDB12BAC2F5D00F810D4 /* IlimiKeyboard.keylayout in Resources */ = {isa = PBXBuildFile; fileRef = 5BC0EDB02BAC2F5D00F810D4 /* IlimiKeyboard.keylayout */; };
 		5BD3C31C2BAAEB2000CF8AF5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5BD3C31A2BAAEB2000CF8AF5 /* Localizable.strings */; };
 		5BD3C3252BAAEE8600CF8AF5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5BD3C3232BAAEE8600CF8AF5 /* InfoPlist.strings */; };
 		5BD3C3352BAAF2F400CF8AF5 /* vChewing_IMKUtils_IlimiImpl in Frameworks */ = {isa = PBXBuildFile; productRef = 5BD3C3342BAAF2F400CF8AF5 /* vChewing_IMKUtils_IlimiImpl */; };
@@ -48,6 +49,7 @@
 		5B0B21802BAAE5F40032E5C8 /* MainViewImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewImpl.swift; sourceTree = "<group>"; };
 		5B6F60542BAAD809005E004E /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		5BBE16D92BAAE2EE00D06857 /* ilimi_MainAssembly */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ilimi_MainAssembly; sourceTree = "<group>"; };
+		5BC0EDB02BAC2F5D00F810D4 /* IlimiKeyboard.keylayout */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = IlimiKeyboard.keylayout; sourceTree = "<group>"; };
 		5BD3C31B2BAAEB2000CF8AF5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5BD3C3202BAAEC6700CF8AF5 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		5BD3C3242BAAEE8600CF8AF5 /* en */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 		D4FC14CC28C649F70081BCC0 /* ilimi */ = {
 			isa = PBXGroup;
 			children = (
+				5BC0EDB02BAC2F5D00F810D4 /* IlimiKeyboard.keylayout */,
 				D4FC14E028C64F400081BCC0 /* Info.plist */,
 				D4FC14D128C649F80081BCC0 /* Assets.xcassets */,
 				D4FC14D628C649F80081BCC0 /* ilimi.entitlements */,
@@ -270,6 +273,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4FC14D528C649F80081BCC0 /* Preview Assets.xcassets in Resources */,
+				5BC0EDB12BAC2F5D00F810D4 /* IlimiKeyboard.keylayout in Resources */,
 				D4FC14D228C649F80081BCC0 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
