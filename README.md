@@ -1,7 +1,7 @@
 # Ilimi 一粒米輸入法
 要什麼工具就DIY，於是我……利用[InputMethodKit](https://developer.apple.com/documentation/inputmethodkit)開發的仿蝦米
 
-最低系統要求： macOS 12.0+ 
+最低系統要求： macOS 12.0+ Monterey.
 
 ---
 
@@ -13,15 +13,22 @@
 ## 安裝說明 
 
 目前尚無時間研究如何撰寫.pkg檔。
-目前repo內提供build.sh，使用方式如下
+
+建置方式有二：
+1. 點開 Xcode 專案，將建置目標選為「ilimiInstaller」，然後 Archive 再匯出即可。
+	- **這個過程還允許同時完成 CodeSign + Notarization 步驟，非常方便。**
+	- 直接建置的話，Xcode 預設的建置目錄藏得比較深，但改了這個目錄的話會讓 SPM 無法正常建置，就很堵爛。
+2. 目前repo內提供build.sh，使用方式如下：
 ```
 git clone https://github.com/y1lichen/ilimi-inputmethod.git
 cd ilimi-inputmethod
 chmod +x ./build.sh
 ./build.sh
 ``` 
-或是[下載一粒米輸入法app壓縮檔](https://github.com/y1lichen/ilimi-inputmethod/releases)，解壓縮後放到資源庫目錄中的Input Methods目錄中（~/Library/Input Methods），並重新開機。
 
+無論如何，您都可以[下載一粒米輸入法app壓縮檔](https://github.com/y1lichen/ilimi-inputmethod/releases)：
+1. 如果解包之後發現是安裝程式的話，直接運行安裝即可；
+2. 如果解包之後發現不是安裝程式的話，那就是輸入法本體。屆時，請將該本體程式手動置於當前使用者的資源庫目錄中的Input Methods目錄中（~/Library/Input Methods），並重新開機。
 
 ## 功能（未完成、仍持續新增）
 
@@ -71,11 +78,11 @@ chmod +x ./build.sh
 
 ## Reference
 
-本專案的IMK機制參考[vChewing威注音](https://vchewing.github.io/README.html)，該專案的源碼對IMK許多函式有清楚註解
+本專案的IMK機制參考 2.x 版本的[vChewing威注音](https://vchewing.github.io/README.html)，該專案的源碼對IMK許多函式有清楚註解
 
 [https://mzp.hatenablog.com/entry/2017/09/17/220320](https://mzp.hatenablog.com/entry/2017/09/17/220320)
 [https://arika.org/2022/04/02/macos-inputmethodkit/](https://arika.org/2022/04/02/macos-inputmethodkit/)
- 
+
 ---
 
 打繁出簡模式的「繁體字轉簡體字」程式碼是由[GBig](https://github.com/RockfordWei/GBig)修改而來，利用dictionary加速查找速度。
