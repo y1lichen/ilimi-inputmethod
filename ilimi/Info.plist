@@ -4,6 +4,8 @@
 <dict>
 	<key>tsInputModeMenuIconFileKey</key>
 	<string>MenuIcon-ILIMI.tiff</string>
+	<key>tsInputMethodIconFileKey</key>
+	<string>MenuIcon-ILIMI.tiff</string>
 	<key>tsInputModePaletteIconFileKey</key>
 	<string>MenuIcon-ILIMI.tiff</string>
 	<key>TISIconIsTemplate</key>
