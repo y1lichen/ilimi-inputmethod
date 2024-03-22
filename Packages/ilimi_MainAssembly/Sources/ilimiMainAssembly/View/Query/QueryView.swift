@@ -74,5 +74,5 @@ struct QueryView: View {
             NSLog(error.localizedDescription)
         }
         return res
-    }
+	}
 }

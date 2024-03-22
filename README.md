@@ -8,16 +8,13 @@
 一粒米輸入法的字根檔使用的是[肥米輸入法](https://github.com/shadowjohn/UCL_LIU)的字根檔
 ⚠️ 因尚未釐清嘸蝦米版權問題，如同肥米輸入法，一粒米輸入法暫不直接發布字根檔。 
 一粒米輸入法支援**使用liu.cin字檔**，或是肥米輸入法的liu.json。
-目前若需要字根檔可發信至  *y1lichen@icloud.com*  或是依照[肥米輸入法](https://github.com/shadowjohn/UCL_LIU)的說明，生成liu.json檔案。
+可使用各版本之liu.cin，也可發信至  *y1lichen@icloud.com*  或是依照[肥米輸入法](https://github.com/shadowjohn/UCL_LIU)的說明生成liu.json檔案。
 
 ## 安裝說明 
 
-目前尚無時間研究如何撰寫.pkg檔。
-
 建置方式有二：
-1. 點開 Xcode 專案，將建置目標選為「ilimiInstaller」，然後 Archive 再匯出即可。
-	- **這個過程還允許同時完成 CodeSign + Notarization 步驟，非常方便。**
-	- 直接建置的話，Xcode 預設的建置目錄藏得比較深，但改了這個目錄的話會讓 SPM 無法正常建置，就很堵爛。
+1. 感謝**威注音作者ShikiSuen**的協作，一粒米已有installer可供下載。
+下載並執行完installer後請從「系統偏好設定」 > 「鍵盤」 > 「輸入方式」分頁加入輸入法。
 2. 目前repo內提供build.sh，使用方式如下：
 ```
 git clone https://github.com/y1lichen/ilimi-inputmethod.git
@@ -25,10 +22,6 @@ cd ilimi-inputmethod
 chmod +x ./build.sh
 ./build.sh
 ``` 
-
-無論如何，您都可以[下載一粒米輸入法app壓縮檔](https://github.com/y1lichen/ilimi-inputmethod/releases)：
-1. 如果解包之後發現是安裝程式的話，直接運行安裝即可；
-2. 如果解包之後發現不是安裝程式的話，那就是輸入法本體。屆時，請將該本體程式手動置於當前使用者的資源庫目錄中的Input Methods目錄中（~/Library/Input Methods），並重新開機。
 
 ## 功能（未完成、仍持續新增）
 
