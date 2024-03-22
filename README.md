@@ -15,7 +15,18 @@
 建置方式有二：
 1. 感謝**威注音作者ShikiSuen**的協作，一粒米已有installer可供下載。
 下載並執行完installer後請從「系統偏好設定」 > 「鍵盤」 > 「輸入方式」分頁加入輸入法。
-2. 目前repo內提供build.sh，使用方式如下：
+2. 目前repo內提供build.sh，使用方式如下： public init() {
+    super.init(
+      window: .init(
+        contentRect: CGRect(x: 401, y: 295, width: 770, height: 335),
+        styleMask: [.titled, .closable, .miniaturizable],
+        backing: .buffered,
+        defer: true
+      )
+    )
+    viewController.loadView()
+  }
+
 ```
 git clone https://github.com/y1lichen/ilimi-inputmethod.git
 cd ilimi-inputmethod
