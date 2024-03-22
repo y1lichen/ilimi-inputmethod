@@ -28,6 +28,11 @@ struct InputEngine {
 
     // 取的以嘸蝦米輸入的候選字
     func getCandidates(_ text: String) {
+		// 輸入碼太長的話就不用查詢，節省資源
+		if text.count >= 6 {
+			InputContext.shared.preInputPrefixSet = []
+			InputContext.shared.candidates = []
+		}
         let request = NSFetchRequest<Phrase>(entityName: "Phrase")
         request.predicate = NSPredicate(format: "key BEGINSWITH %@", text)
         request.sortDescriptors = [NSSortDescriptor(key: "key_priority", ascending: true)]
