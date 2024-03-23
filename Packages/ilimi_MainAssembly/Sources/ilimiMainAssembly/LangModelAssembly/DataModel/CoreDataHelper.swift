@@ -77,4 +77,22 @@ class CoreDataHelper {
 		}
 		return result
 	}
+	
+	// 利用注音取得文字
+	static func getCharByZhuyin(_ text: String) -> [String] {
+		let request = NSFetchRequest<Zhuin>(entityName: "Zhuin")
+		request.predicate = NSPredicate(format: "key BEGINSWITH %@", text)
+		var result: [String] = []
+		request.sortDescriptors = [
+			NSSortDescriptor(key: "key.length", ascending: true),
+			NSSortDescriptor(key: "key_priority", ascending: true),
+		]
+		do {
+			let response = try PersistenceController.shared.container.viewContext.fetch(request)
+			result = response.compactMap { $0.value }
+		} catch {
+			NSLog(error.localizedDescription)
+		}
+		return result
+	}
 }

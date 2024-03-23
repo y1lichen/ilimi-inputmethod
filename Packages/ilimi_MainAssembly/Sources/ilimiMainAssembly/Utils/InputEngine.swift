@@ -11,19 +11,7 @@ struct InputEngine {
 	
 	// 取得以注音輸入的候選字
 	func getCadidatesByZhuyin(_ text: String) {
-		let request = NSFetchRequest<Zhuin>(entityName: "Zhuin")
-		request.predicate = NSPredicate(format: "key BEGINSWITH %@", text)
-		request.sortDescriptors = [
-			NSSortDescriptor(key: "key.length", ascending: true),
-			NSSortDescriptor(key: "key_priority", ascending: true),
-		]
-		do {
-			let response = try PersistenceController.shared.container.viewContext.fetch(request)
-			let candidates: [String] = response.compactMap { $0.value }
-			InputContext.shared.candidates = candidates
-		} catch {
-			NSLog(error.localizedDescription)
-		}
+		InputContext.shared.candidates = CoreDataHelper.getCharByZhuyin(text)
 	}
 	
 	// 取的以嘸蝦米輸入的候選字
@@ -63,6 +51,5 @@ struct InputEngine {
 	func getCandidatesByPronunciation(_ text: String) {
 		InputContext.shared.candidates = CoreDataHelper.getCharWithSamePronunciation(text)
 	}
-	
 	
 }

@@ -13,6 +13,7 @@ final class ilimiMainAssemblyTests: XCTestCase {
         print("Found \(sharedInputContext.candidates.count) candidates.")
     }
 	
+	// 測試同音輸入
 	func testFindCharWithSamePronunciation() throws {
 		DataInitializer.shared.initDataWhenStart()
 		DataInitializer.shared.loadLiuData()
