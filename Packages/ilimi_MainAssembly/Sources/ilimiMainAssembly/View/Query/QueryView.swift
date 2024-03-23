@@ -49,30 +49,8 @@ struct QueryView: View {
 
     func handler(_ text: String) -> QueryResult {
         var res = QueryResult(char: text, zhuyin: "", inputCode: "")
-        let requestForKey = NSFetchRequest<Phrase>(entityName: "Phrase")
-        requestForKey.predicate = NSPredicate(format: "value == %@", text)
-        let requestForZhuyin = NSFetchRequest<Zhuin>(entityName: "Zhuin")
-        requestForZhuyin.predicate = NSPredicate(format: "value == %@", text)
-        do {
-            let responseForKey = try PersistenceController.shared.container.viewContext.fetch(requestForKey)
-            var keys = ""
-            for phrase in responseForKey {
-                guard let phraseKey = phrase.key else { continue }
-                keys += phraseKey
-                keys += " "
-            }
-            res.inputCode = keys
-            let responseForZhuyin = try PersistenceController.shared.container.viewContext.fetch(requestForZhuyin)
-            var zhuyins = ""
-            for zhuyin in responseForZhuyin {
-                guard let zhuyinKey = zhuyin.key else { continue }
-                zhuyins += StringConverter.shared.keyToZhuyins(zhuyinKey)
-                zhuyins += " "
-            }
-            res.zhuyin = zhuyins
-        } catch {
-            NSLog(error.localizedDescription)
-        }
+		res.inputCode = CoreDataHelper.getKeyOfChar(text).joined(separator: " ")
+		res.zhuyin = CoreDataHelper.getZhuyinOfChar(text).joined(separator: " ")
         return res
 	}
 }
