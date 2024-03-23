@@ -15,6 +15,9 @@ struct GeneralSettingsView: View {
     // 預設不在沒有候選字時限制輸入
     @AppStorage("limitInputWhenNoCandidate")
     private var limitInputWhenNoCandidate = false
+	// 預設使用注音輸入後提示拆碼
+	@AppStorage("showLiuKeyAfterZhuyin")
+	private var showLiuKeyAfterZhuyin = true
     // 靜音模式
     @AppStorage("silentMode")
     private var silentMode = false
@@ -45,6 +48,12 @@ struct GeneralSettingsView: View {
             }
             .pickerStyle(RadioGroupPickerStyle())
             .horizontalRadioGroupLayout()
+			Picker("使用注音輸入後提示拆碼", selection: $showLiuKeyAfterZhuyin) {
+				Text("是").tag(true)
+				Text("否").tag(false)
+			}
+			.pickerStyle(RadioGroupPickerStyle())
+			.horizontalRadioGroupLayout()
             Picker("靜音模式", selection: $silentMode) {
                 Text("是").tag(true)
                 Text("否").tag(false)

@@ -45,6 +45,7 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
     func registUserDefaultsSetting() {
         UserDefaults.standard.register(defaults: ["isHorizontalCandidatesPanel": true])
         UserDefaults.standard.register(defaults: ["limitInputWhenNoCandidate": false])
+		UserDefaults.standard.register(defaults: ["showLiuKeyAfterZhuyin": true])
         UserDefaults.standard.register(defaults: ["silentMode": false])
     }
 
