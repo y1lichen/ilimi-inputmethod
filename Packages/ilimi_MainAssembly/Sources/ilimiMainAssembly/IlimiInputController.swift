@@ -236,6 +236,9 @@ extension IlimiInputController {
         }
         if isZhuyinMode {
             client().insertText(candidate, replacementRange: NSRange(location: 0, length: comp.count + 1))
+			// 以通知窗顯示蝦米拆碼
+			let keys = CoreDataHelper.getKeyOfChar(candidate)
+			NotifierController.notify(message: candidate + ":" + keys.joined(separator: " "), stay: true)
             isZhuyinMode = false
         } else if isSecondCommitOfTypeByPronunciationMode {
             // 同音模式下，第二次選定候選字
