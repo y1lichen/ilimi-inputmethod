@@ -1,7 +1,7 @@
 # Ilimi 一粒米輸入法
 要什麼工具就DIY，於是我……利用[InputMethodKit](https://developer.apple.com/documentation/inputmethodkit)開發的仿蝦米
 
-最低系統要求： macOS 12.0+ Monterey.
+最低系統要求： macOS 13.0+ Monterey.
 
 ---
 
@@ -69,6 +69,7 @@ chmod +x ./build.sh
 - 選字窗字體大小
 - 選字窗樣式（直式、橫式）
 - 是否在沒有候選字時限制輸入（在沒候選字時按下enter可以直接輸入英文字母）
+- 是否在使用注音輸入後提示拆碼
 - 靜音模式（在輸入錯誤時發出beep）
 
 ## Reference
