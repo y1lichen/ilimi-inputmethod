@@ -49,8 +49,8 @@ struct QueryView: View {
 
     func handler(_ text: String) -> QueryResult {
         var res = QueryResult(char: text, zhuyin: "", inputCode: "")
-		res.inputCode = CoreDataHelper.getKeyOfChar(text).joined(separator: " ")
-		res.zhuyin = CoreDataHelper.getZhuyinOfChar(text).joined(separator: " ")
+        res.inputCode = CoreDataHelper.getKeyOfChar(text).joined(separator: " ")
+        res.zhuyin = CoreDataHelper.getZhuyinOfChar(text).joined(separator: " ")
         return res
-	}
+    }
 }
