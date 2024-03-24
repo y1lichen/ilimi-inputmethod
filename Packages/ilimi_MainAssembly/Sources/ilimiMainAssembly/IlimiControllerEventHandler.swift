@@ -196,7 +196,7 @@ extension IlimiInputController {
         return false
     }
 
-	// ascii mode處理開啟capslock的情況
+    // ascii mode處理開啟capslock的情況
     func capslockHandler(event: NSEvent, text: String, client sender: Any!) -> Bool {
         // 如果按著shift則可直接輸出大寫字母
         if event.modifierFlags.contains(.shift) {

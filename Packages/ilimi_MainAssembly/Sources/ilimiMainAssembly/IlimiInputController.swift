@@ -234,15 +234,15 @@ extension IlimiInputController {
         if InputContext.shared.isTradToSim {
             candidate = StringConverter.shared.simplify(candidate)
         }
-		if isZhuyinMode {
-			client().insertText(candidate, replacementRange: NSRange(location: 0, length: comp.count + 1))
-			isZhuyinMode = false
-			// 以通知窗顯示蝦米拆碼
-			let showTips = UserDefaults.standard.bool(forKey: "showLiuKeyAfterZhuyin")
-			if showTips {
-				let keys = CoreDataHelper.getKeyOfChar(candidate)
-				NotifierController.notify(message: candidate + "：" + keys.joined(separator: " "), stay: true)
-			}
+        if isZhuyinMode {
+            client().insertText(candidate, replacementRange: NSRange(location: 0, length: comp.count + 1))
+            isZhuyinMode = false
+            // 以通知窗顯示蝦米拆碼
+            let showTips = UserDefaults.standard.bool(forKey: "showLiuKeyAfterZhuyin")
+            if showTips {
+                let keys = CoreDataHelper.getKeyOfChar(candidate)
+                NotifierController.notify(message: candidate + "：" + keys.joined(separator: " "), stay: true)
+            }
         } else if isSecondCommitOfTypeByPronunciationMode {
             // 同音模式下，第二次選定候選字
             client().insertText(candidate, replacementRange: NSRange(location: 0, length: 2))
