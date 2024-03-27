@@ -41,7 +41,8 @@ extension IlimiInputController {
     func reloadApp() {
         NSApp.terminate(self)
     }
-
+	
+	// 在輸入法上的menu
     override public func menu() -> NSMenu! {
         let menu = NSMenu(title: "Ilimi Menu")
         let openDataFolderItem = NSMenuItem(title: "開啟使用者設定目錄", action: #selector(openDataFolder), keyEquivalent: "")

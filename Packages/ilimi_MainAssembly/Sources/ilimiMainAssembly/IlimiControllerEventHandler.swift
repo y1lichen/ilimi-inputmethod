@@ -125,8 +125,8 @@ extension IlimiInputController {
                 if !isZhuyinMode, checkIsZhuyinMode(InputContext.shared.getCurrentInput()) {
                     return true
                 }
-                // ,,CT -> 打繁出簡模式
-                if checkIsTradToSimToggle(InputContext.shared.getCurrentInput()) {
+                // 檢查快捷
+                if ckeckIsShortcut(InputContext.shared.getCurrentInput()) {
                     return true
                 }
                 updateCandidatesWindow()
