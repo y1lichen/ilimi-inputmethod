@@ -29,6 +29,8 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
         // notification
         userNotificationCenter.delegate = self
         requestNotificationAuthorization()
+		// 用程式碼方法補上MainMenu.xib
+		NSApplication.shared.mainMenu = MainMenu()
 //        NSLog("connection tried")
     }
 
