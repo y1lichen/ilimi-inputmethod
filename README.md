@@ -54,6 +54,8 @@ chmod +x ./build.sh
  
 6. 反查注音、輸入碼
 
+輸入**,,q**可快速開啟反查注音/查碼畫面
+
 ![反查](https://github.com/y1lichen/ilimi-inputmethod/blob/main/media/demo03.gif)
 
 7. 同音輸入
