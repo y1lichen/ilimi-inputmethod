@@ -11,8 +11,15 @@ import AppKit
 class MainMenu: NSMenu {
 	override init(title: String) {
 		super.init(title: title)
+		let fileMenu = NSMenuItem()
+		fileMenu.submenu = NSMenu(title: "File")
+		// cmd+關閉視窗
+		fileMenu.submenu?.items = [
+			NSMenuItem(title: "Close window", action: #selector(NSApplication.shared.keyWindow?.close), keyEquivalent: "w"),
+		]
 		let editMenu = NSMenuItem()
 		editMenu.submenu = NSMenu(title: "Edit")
+		// 剪貼板熱鍵
 		editMenu.submenu?.items = [
 			NSMenuItem(title: "Undo", action: #selector(UndoManager.undo), keyEquivalent: "z"),
 			NSMenuItem(title: "Redo", action: #selector(UndoManager.redo), keyEquivalent: "Z"),
@@ -25,7 +32,7 @@ class MainMenu: NSMenu {
 			NSMenuItem.separator(),
 			NSMenuItem(title: "Duplicate", action: #selector(NSApplication.copy), keyEquivalent: "d"),
 		]
-		items = [editMenu]
+		items = [fileMenu, editMenu]
 	}
 	
 	required init(coder: NSCoder) {
