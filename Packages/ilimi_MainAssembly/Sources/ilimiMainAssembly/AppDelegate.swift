@@ -59,9 +59,15 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     // 設定視窗
-    func showSettingsWindow() {
+	func showSettingsWindow(_ tabIndex: Int = 0) {
         if let settingsWindow = settingsWindow {
             if settingsWindow.isVisible {
+				switch tabIndex {
+				case 1:
+					settingsWindow.contentView = NSHostingView(rootView: AddCustomPhraseView())
+				default:
+					settingsWindow.contentView = NSHostingView(rootView: GeneralSettingsView())
+				}
                 settingsWindow.makeKeyAndOrderFront(self)
                 settingsWindow.orderFrontRegardless()
                 NSApp.activate(ignoringOtherApps: true)
@@ -77,8 +83,13 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
         settingsWindow?.toolbarStyle = NSWindow.ToolbarStyle.preference
         NSToolbar.settingsViewToolBar.delegate = self
         settingsWindow?.toolbar = NSToolbar.settingsViewToolBar
-        let settingsView = SettingsView()
-        settingsWindow?.contentView = NSHostingView(rootView: settingsView)
+		switch tabIndex {
+		case 1:
+			settingsWindow?.contentView = NSHostingView(rootView: AddCustomPhraseView())
+		default:
+			settingsWindow?.contentView = NSHostingView(rootView: GeneralSettingsView())
+		}
+		settingsWindow?.center()
         settingsWindow?.makeKeyAndOrderFront(self)
         settingsWindow?.orderFrontRegardless()
         settingsWindow?.isReleasedWhenClosed = false
