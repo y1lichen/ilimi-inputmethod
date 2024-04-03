@@ -251,18 +251,20 @@ extension IlimiInputController {
         return false
     }
 
+	// 處理使用數字鍵選字
     func handleSelectCandidatesByNum(_ keyValue: Int, client sender: Any!) -> Bool {
+		let selectCandidateBy1to8 = UserDefaults.standard.bool(forKey: "selectCandidateBy1to8")
         if keyValue > InputContext.shared.candidatesCount {
             return true
         }
         if InputContext.shared.candidatesPageId == 0 {
-            return selectCandidatesByNumAndCommit(client: sender, id: keyValue - 1)
+			return selectCandidatesByNumAndCommit(client: sender, id: selectCandidateBy1to8 ? keyValue - 1 : keyValue)
         } else {
             // 選字窗展開時只有5個候選字
             if keyValue > 5 {
                 return false
             }
-            let selectedId = ((InputContext.shared.candidatesPageId - 1) * 5) + keyValue - 1
+			let selectedId = selectCandidateBy1to8 ? ((InputContext.shared.candidatesPageId - 1) * 5) + keyValue - 1 : ((InputContext.shared.candidatesPageId - 1) * 5) + keyValue
             return selectCandidatesByNumAndCommit(client: sender, id: selectedId)
         }
     }

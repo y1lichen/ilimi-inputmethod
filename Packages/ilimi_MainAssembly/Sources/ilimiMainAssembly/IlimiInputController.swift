@@ -27,6 +27,14 @@ public class IlimiInputController: IMKInputController {
 		attributes?[NSAttributedString.Key.font] = font
 		// 若只設attributes無法調整字體大小，setFontSize方法使用bridging header暴露出來
 		candidates.setFontSize(font.pointSize)
+		let selectCandidateBy1to8 = UserDefaults.standard.bool(forKey: "selectCandidateBy1to8")
+		// https://github.com/pkamb/NumberInput_IMKit_Sample/issues/3
+		// 走到現在setSelectionKey api仍不可用，此api並沒有真的改變選字窗的提示選字碼，只有變成不顯示選字碼
+		if !selectCandidateBy1to8 {
+			candidates.setSelectionKeys([NSNumber(value: 29), NSNumber(value: 18), NSNumber(value: 19),
+										 NSNumber(value: 20), NSNumber(value: 21), NSNumber(value: 23),
+										 NSNumber(value: 22), NSNumber(value: 26), NSNumber(value: 28)])
+		}
 		super.init(server: server, delegate: delegate, client: inputClient)
 		activateServer(inputClient ?? client())
 	}

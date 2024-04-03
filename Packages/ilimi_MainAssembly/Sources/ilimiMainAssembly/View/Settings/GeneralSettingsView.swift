@@ -18,6 +18,9 @@ struct GeneralSettingsView: View {
 	// 預設使用注音輸入後提示拆碼
 	@AppStorage("showLiuKeyAfterZhuyin")
 	private var showLiuKeyAfterZhuyin = true
+	// 預設使用1-9選字
+	@AppStorage("selectCandidateBy1to8")
+	private var selectCandidateBy1to8 = true
 	// 靜音模式
 	@AppStorage("silentMode")
 	private var silentMode = false
@@ -39,7 +42,8 @@ struct GeneralSettingsView: View {
 				Picker("選字窗排列", selection: $isHorizontalCandidatesPanel) {
 					Text("橫式").tag(true)
 					Text("直式").tag(false)
-				}.onChange(of: isHorizontalCandidatesPanel) { _ in
+				}
+				.onChange(of: isHorizontalCandidatesPanel) { _ in
 					killApplicationToReload()
 				}
 				.pickerStyle(RadioGroupPickerStyle())
@@ -52,6 +56,15 @@ struct GeneralSettingsView: View {
 				Picker("使用注音輸入後提示拆碼", selection: $showLiuKeyAfterZhuyin) {
 					Text("是").tag(true)
 					Text("否").tag(false)
+				}
+				.pickerStyle(RadioGroupPickerStyle())
+				.horizontalRadioGroupLayout()
+				Picker("選字碼", selection: $selectCandidateBy1to8) {
+					Text("1到9").tag(true)
+					Text("0到8").tag(false)
+				}
+				.onChange(of: selectCandidateBy1to8) { _ in
+					killApplicationToReload()
 				}
 				.pickerStyle(RadioGroupPickerStyle())
 				.horizontalRadioGroupLayout()

@@ -49,6 +49,7 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
         UserDefaults.standard.register(defaults: ["limitInputWhenNoCandidate": false])
         UserDefaults.standard.register(defaults: ["showLiuKeyAfterZhuyin": true])
         UserDefaults.standard.register(defaults: ["silentMode": false])
+		UserDefaults.standard.register(defaults: ["selectCandidateBy1to8": true])
     }
 
     // request the authorization for pushing local notification
