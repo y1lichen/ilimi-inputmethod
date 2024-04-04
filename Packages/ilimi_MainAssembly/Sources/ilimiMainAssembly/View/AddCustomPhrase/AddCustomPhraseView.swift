@@ -6,9 +6,15 @@ import Foundation
 import SwiftUI
 
 struct AddCustomPhraseView: View {
+	@State var chars = ["test0", "test1", "test2"]
+	
 	var body: some View {
 		VStack {
-			Text("add phrase")
+			List {
+				ForEach($chars, id: \.self) { entry in
+					EditableText(text: entry)
+				}
+			}
 		}
 		.frame(width: 450, height: 250)
 	}
