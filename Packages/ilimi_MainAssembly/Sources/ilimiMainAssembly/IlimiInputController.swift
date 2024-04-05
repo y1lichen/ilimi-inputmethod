@@ -13,10 +13,6 @@ import InputMethodKit
 public class IlimiInputController: IMKInputController {
     // MARK: Lifecycle
 
-    static var tisInstance: TISInputSource? = TISInputSource.match(
-        identifiers: [LatinKeyboardMappings.qwertyIlimi.rawValue]
-    ).first
-
     override init!(server: IMKServer!, delegate: Any!, client inputClient: Any!) {
         // 候選字窗
         let isHorizontalCandidates = UserDefaults.standard.bool(forKey: "isHorizontalCandidatesPanel")
@@ -36,7 +32,7 @@ public class IlimiInputController: IMKInputController {
         // 走到現在setSelectionKey api仍不可用，此api並沒有真的改變選字窗的提示選字碼，只有變成不顯示選字碼
         if !selectCandidateBy1to8 {
             let keyCodes = [29, 18, 19, 20, 21, 23, 22, 26, 28].map { NSNumber(value: $0) }
-            if let tisInstance = Self.tisInstance {
+            if let tisInstance = tisInstance {
                 candidates.setSelectionKeysKeylayout(tisInstance)
             }
             candidates.setSelectionKeys(keyCodes)
@@ -123,6 +119,10 @@ public class IlimiInputController: IMKInputController {
     // MARK: Internal
 
     static var prefixHasCandidates = true
+
+    let tisInstance: TISInputSource? = TISInputSource.match(
+        identifiers: [LatinKeyboardMappings.qwertyIlimi.rawValue]
+    ).first
 
     let candidates: IMKCandidates
     let notFoundRange = NSRange(location: NSNotFound, length: NSNotFound)
