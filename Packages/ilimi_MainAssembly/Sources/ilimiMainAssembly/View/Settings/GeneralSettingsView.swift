@@ -6,83 +6,83 @@ import Foundation
 import SwiftUI
 
 struct GeneralSettingsView: View {
-	// 預設字體大小 22
-	@AppStorage("fontSize")
-	private var fontSize = 22
-	// 預設橫排選字窗
-	@AppStorage("isHorizontalCandidatesPanel")
-	private var isHorizontalCandidatesPanel = true
-	// 預設不在沒有候選字時限制輸入
-	@AppStorage("limitInputWhenNoCandidate")
-	private var limitInputWhenNoCandidate = false
-	// 預設使用注音輸入後提示拆碼
-	@AppStorage("showLiuKeyAfterZhuyin")
-	private var showLiuKeyAfterZhuyin = true
-	// 預設使用1-9選字
-	@AppStorage("selectCandidateBy1to8")
-	private var selectCandidateBy1to8 = true
-	// 靜音模式
-	@AppStorage("silentMode")
-	private var silentMode = false
-	
-	let fontSizeValues = [14, 16, 18, 20, 22, 24, 28, 32]
-	
-	func killApplicationToReload() {
-		NSApp.terminate(self)
-	}
-	
-	var body: some View {
-		VStack {
-			VStack(alignment: .leading, spacing: 20) {
-				Picker("字體大小", selection: $fontSize) {
-					fontPickerContent()
-				}.onChange(of: fontSize) { _ in
-					killApplicationToReload()
-				}
-				Picker("選字窗排列", selection: $isHorizontalCandidatesPanel) {
-					Text("橫式").tag(true)
-					Text("直式").tag(false)
-				}
-				.onChange(of: isHorizontalCandidatesPanel) { _ in
-					killApplicationToReload()
-				}
-				.pickerStyle(RadioGroupPickerStyle())
-				Picker("在沒有候選字時限制輸入", selection: $limitInputWhenNoCandidate) {
-					Text("是").tag(true)
-					Text("否").tag(false)
-				}
-				.pickerStyle(RadioGroupPickerStyle())
-				.horizontalRadioGroupLayout()
-				Picker("使用注音輸入後提示拆碼", selection: $showLiuKeyAfterZhuyin) {
-					Text("是").tag(true)
-					Text("否").tag(false)
-				}
-				.pickerStyle(RadioGroupPickerStyle())
-				.horizontalRadioGroupLayout()
-				Picker("選字碼", selection: $selectCandidateBy1to8) {
-					Text("1到9").tag(true)
-					Text("0到8").tag(false)
-				}
-				.onChange(of: selectCandidateBy1to8) { _ in
-					killApplicationToReload()
-				}
-				.pickerStyle(RadioGroupPickerStyle())
-				.horizontalRadioGroupLayout()
-				Picker("靜音模式", selection: $silentMode) {
-					Text("是").tag(true)
-					Text("否").tag(false)
-				}
-				.pickerStyle(RadioGroupPickerStyle())
-				.horizontalRadioGroupLayout()
-			}.frame(width: 200)
-		}
-		.frame(width: 450, height: 250)
-	}
-	
-	@ViewBuilder
-	func fontPickerContent() -> some View {
-		ForEach(fontSizeValues, id: \.self) {
-			Text("\($0)")
-		}
-	}
+    // 預設字體大小 22
+    @AppStorage("fontSize")
+    private var fontSize = 22
+    // 預設橫排選字窗
+    @AppStorage("isHorizontalCandidatesPanel")
+    private var isHorizontalCandidatesPanel = true
+    // 預設不在沒有候選字時限制輸入
+    @AppStorage("limitInputWhenNoCandidate")
+    private var limitInputWhenNoCandidate = false
+    // 預設使用注音輸入後提示拆碼
+    @AppStorage("showLiuKeyAfterZhuyin")
+    private var showLiuKeyAfterZhuyin = true
+    // 預設使用1-9選字
+    @AppStorage("selectCandidateBy1to8")
+    private var selectCandidateBy1to8 = true
+    // 靜音模式
+    @AppStorage("silentMode")
+    private var silentMode = false
+
+    let fontSizeValues = [14, 16, 18, 20, 22, 24, 28, 32]
+
+    func killApplicationToReload() {
+        NSApp.terminate(self)
+    }
+
+    var body: some View {
+        VStack {
+            VStack(alignment: .leading, spacing: 20) {
+                Picker("字體大小", selection: $fontSize) {
+                    fontPickerContent()
+                }.onChange(of: fontSize) { _ in
+                    killApplicationToReload()
+                }
+                Picker("選字窗排列", selection: $isHorizontalCandidatesPanel) {
+                    Text("橫式").tag(true)
+                    Text("直式").tag(false)
+                }
+                .onChange(of: isHorizontalCandidatesPanel) { _ in
+                    killApplicationToReload()
+                }
+                .pickerStyle(RadioGroupPickerStyle())
+                Picker("在沒有候選字時限制輸入", selection: $limitInputWhenNoCandidate) {
+                    Text("是").tag(true)
+                    Text("否").tag(false)
+                }
+                .pickerStyle(RadioGroupPickerStyle())
+                .horizontalRadioGroupLayout()
+                Picker("使用注音輸入後提示拆碼", selection: $showLiuKeyAfterZhuyin) {
+                    Text("是").tag(true)
+                    Text("否").tag(false)
+                }
+                .pickerStyle(RadioGroupPickerStyle())
+                .horizontalRadioGroupLayout()
+                Picker("選字碼", selection: $selectCandidateBy1to8) {
+                    Text("1到9").tag(true)
+                    Text("0到8").tag(false)
+                }
+                .onChange(of: selectCandidateBy1to8) { _ in
+                    killApplicationToReload()
+                }
+                .pickerStyle(RadioGroupPickerStyle())
+                .horizontalRadioGroupLayout()
+                Picker("靜音模式", selection: $silentMode) {
+                    Text("是").tag(true)
+                    Text("否").tag(false)
+                }
+                .pickerStyle(RadioGroupPickerStyle())
+                .horizontalRadioGroupLayout()
+            }.frame(width: 200)
+        }
+        .frame(width: 450, height: 250)
+    }
+
+    @ViewBuilder
+    func fontPickerContent() -> some View {
+        ForEach(fontSizeValues, id: \.self) {
+            Text("\($0)")
+        }
+    }
 }

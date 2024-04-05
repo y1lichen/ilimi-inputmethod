@@ -6,11 +6,10 @@ import Foundation
 import SwiftUI
 
 struct AddCustomPhraseView: View {
-	var body: some View {
-		VStack {
-			Text("add phrase")
-		}
-		.frame(width: 450, height: 250)
-	}
+    var body: some View {
+        VStack {
+            Text("add phrase")
+        }
+        .frame(width: 450, height: 250)
+    }
 }
-
