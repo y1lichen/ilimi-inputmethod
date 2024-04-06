@@ -74,7 +74,7 @@ struct GeneralSettingsView: View {
                 }
                 .pickerStyle(RadioGroupPickerStyle())
                 .horizontalRadioGroupLayout()
-            }.frame(width: 200)
+            }.frame(width: 250)
         }
         .frame(width: 450, height: 250)
     }
