@@ -43,6 +43,15 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
     var queryWindow: NSWindow?
     var settingsWindow: NSWindow?
     let userNotificationCenter = UNUserNotificationCenter.current()
+	
+	// 只在啟動第一次時執行
+	func doOnFirstRun() {
+		let firstRun = UserDefaults.standard.bool(forKey: "firstRun") as Bool
+		if !firstRun {
+			CustomPhraseHelper.shared.setDefaultCoreData()
+			UserDefaults.standard.setValue(true, forKey: "firstRun")
+		}
+	}
 
     func registUserDefaultsSetting() {
         UserDefaults.standard.register(defaults: ["isHorizontalCandidatesPanel": true])
