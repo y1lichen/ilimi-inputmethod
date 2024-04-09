@@ -56,9 +56,9 @@ extension IlimiInputController {
             keyEquivalent: ""
         )
         let reloadJsonItem = NSMenuItem(
-            title: "匯入字檔",
+            title: "匯入字檔（,,q）",
             action: #selector(reloadJson),
-            keyEquivalent: ",,q"
+            keyEquivalent: ""
         )
         let getZhuyinItem = NSMenuItem(
             title: "反查注音/查碼",
