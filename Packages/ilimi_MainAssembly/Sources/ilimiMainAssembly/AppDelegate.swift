@@ -29,8 +29,8 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
         // notification
         userNotificationCenter.delegate = self
         requestNotificationAuthorization()
-		// 用程式碼方法補上MainMenu.xib
-		NSApplication.shared.mainMenu = MainMenu()
+        // 用程式碼方法補上MainMenu.xib
+        NSApplication.shared.mainMenu = MainMenu()
 //        NSLog("connection tried")
     }
 
@@ -49,7 +49,7 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
         UserDefaults.standard.register(defaults: ["limitInputWhenNoCandidate": false])
         UserDefaults.standard.register(defaults: ["showLiuKeyAfterZhuyin": true])
         UserDefaults.standard.register(defaults: ["silentMode": false])
-		UserDefaults.standard.register(defaults: ["selectCandidateBy1to8": true])
+        UserDefaults.standard.register(defaults: ["selectCandidateBy1to8": true])
     }
 
     // request the authorization for pushing local notification
@@ -60,15 +60,16 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     // 設定視窗
-	func showSettingsWindow(_ tabIndex: Int = 0) {
+    func showSettingsWindow(_ tabIndex: Int = 0) {
         if let settingsWindow = settingsWindow {
             if settingsWindow.isVisible {
-				switch tabIndex {
-				case 1:
-					settingsWindow.contentView = NSHostingView(rootView: AddCustomPhraseView())
-				default:
-					settingsWindow.contentView = NSHostingView(rootView: GeneralSettingsView())
-				}
+                switch tabIndex {
+                case 1:
+                    settingsWindow.contentView = NSHostingView(rootView: AddCustomPhraseView())
+
+                default:
+                    settingsWindow.contentView = NSHostingView(rootView: GeneralSettingsView())
+                }
                 settingsWindow.makeKeyAndOrderFront(self)
                 settingsWindow.orderFrontRegardless()
                 NSApp.activate(ignoringOtherApps: true)
@@ -84,13 +85,14 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
         settingsWindow?.toolbarStyle = NSWindow.ToolbarStyle.preference
         NSToolbar.settingsViewToolBar.delegate = self
         settingsWindow?.toolbar = NSToolbar.settingsViewToolBar
-		switch tabIndex {
-		case 1:
-			settingsWindow?.contentView = NSHostingView(rootView: AddCustomPhraseView())
-		default:
-			settingsWindow?.contentView = NSHostingView(rootView: GeneralSettingsView())
-		}
-		settingsWindow?.center()
+        switch tabIndex {
+        case 1:
+            settingsWindow?.contentView = NSHostingView(rootView: AddCustomPhraseView())
+
+        default:
+            settingsWindow?.contentView = NSHostingView(rootView: GeneralSettingsView())
+        }
+        settingsWindow?.center()
         settingsWindow?.makeKeyAndOrderFront(self)
         settingsWindow?.orderFrontRegardless()
         settingsWindow?.isReleasedWhenClosed = false

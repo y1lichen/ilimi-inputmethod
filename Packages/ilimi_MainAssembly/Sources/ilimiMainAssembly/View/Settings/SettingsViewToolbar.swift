@@ -7,7 +7,7 @@ import SwiftUI
 
 extension NSToolbarItem.Identifier {
     static let general = NSToolbarItem.Identifier(rawValue: "general")
-	static let addCustomPhrase = NSToolbarItem.Identifier(rawValue: "addCustomPhrase")
+    static let addCustomPhrase = NSToolbarItem.Identifier(rawValue: "addCustomPhrase")
 }
 
 extension NSToolbar {
@@ -21,22 +21,22 @@ extension NSToolbar {
 // MARK: - AppDelegate + NSToolbarDelegate
 
 extension AppDelegate: NSToolbarDelegate {
-	
-	@objc func openSettingView() {
-		(NSApp.delegate as? AppDelegate)?.showSettingsWindow()
-	}
-	
-	@objc func openAddCustomPhraseView() {
-		(NSApp.delegate as? AppDelegate)?.showSettingsWindow(1)
-	}
-	
+    @objc
+    func openSettingView() {
+        (NSApp.delegate as? AppDelegate)?.showSettingsWindow()
+    }
+
+    @objc
+    func openAddCustomPhraseView() {
+        (NSApp.delegate as? AppDelegate)?.showSettingsWindow(1)
+    }
 
     public func toolbarDefaultItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
-		[.general, .addCustomPhrase]
+        [.general, .addCustomPhrase]
     }
 
     public func toolbarAllowedItemIdentifiers(_ toolbar: NSToolbar) -> [NSToolbarItem.Identifier] {
-		[.general, .addCustomPhrase]
+        [.general, .addCustomPhrase]
     }
 
     public func toolbar(
@@ -57,18 +57,18 @@ extension AppDelegate: NSToolbarDelegate {
             button.bezelStyle = .recessed
             item.view = button
             return item
-			
-		case .addCustomPhrase:
-			let item = NSToolbarItem(itemIdentifier: itemIdentifier)
-			item.label = "自定義加詞"
-			let button = NSButton(
-				image: NSImage(systemSymbolName: "pencil", accessibilityDescription: nil)!,
-				target: nil,
-				action: #selector(openAddCustomPhraseView)
-			)
-			button.bezelStyle = .recessed
-			item.view = button
-			return item
+
+        case .addCustomPhrase:
+            let item = NSToolbarItem(itemIdentifier: itemIdentifier)
+            item.label = "自定義加詞"
+            let button = NSButton(
+                image: NSImage(systemSymbolName: "pencil", accessibilityDescription: nil)!,
+                target: nil,
+                action: #selector(openAddCustomPhraseView)
+            )
+            button.bezelStyle = .recessed
+            item.view = button
+            return item
 
         default:
             return nil
