@@ -8,18 +8,9 @@ import SwiftUI
 import UserNotifications
 
 public class AppDelegate: NSObject, NSApplicationDelegate {
-    // MARK: Lifecycle
-
-    public convenience init(server: IMKServer?) {
-        self.init()
-        self.server = server
-    }
-
     // MARK: Public
 
     public static var shared = AppDelegate()
-
-    public var server: IMKServer?
 
     public func applicationDidFinishLaunching(_ notification: Notification) {
         // Insert code here to initialize your application

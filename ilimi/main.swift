@@ -33,7 +33,5 @@ guard let server = IMKServer(name: Bundle.main.infoDictionary?["InputMethodConne
 
 public let theServer = server
 
-AppDelegate.shared.server = theServer
-
 NSApplication.shared.delegate = AppDelegate.shared
 _ = NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
