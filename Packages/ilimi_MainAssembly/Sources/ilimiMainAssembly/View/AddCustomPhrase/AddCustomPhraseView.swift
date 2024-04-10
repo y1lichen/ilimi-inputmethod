@@ -7,16 +7,16 @@ import SwiftUI
 
 struct AddCustomPhraseView: View {
 	@State var chars = ["test0", "test1", "test2"]
-	
+	@FetchRequest(sortDescriptors: []) var customPhrases: FetchedResults<CustomPhrase>
 	var body: some View {
 		VStack {
 			List {
-				ForEach($chars, id: \.self) { entry in
-					EditableText(text: entry)
+				Text("\(customPhrases.endIndex)")
+				ForEach(customPhrases) { entry in
+					ListRowView(customPhrase: entry)
 				}
-			}
+			}.frame(width: 300)
 		}
 		.frame(width: 450, height: 250)
 	}
 }
-
