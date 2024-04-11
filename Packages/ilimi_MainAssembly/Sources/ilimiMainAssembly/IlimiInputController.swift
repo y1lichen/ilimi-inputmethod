@@ -49,8 +49,7 @@ public class IlimiInputController: IMKInputController {
         //        }
         super.activateServer(sender)
         DispatchQueue.main.async { [self] in
-            InputContext.shared.cleanUp()
-            candidates.hide()
+			cleanComposition()
         }
         // 同步ascii模式狀態
         DispatchQueue.main.async { [self] in
@@ -65,9 +64,9 @@ public class IlimiInputController: IMKInputController {
         //        guard sender is IMKTextInput else {
         //            return
         //        }
-        DispatchQueue.main.async { [self] in
-            cancelComposition()
-        }
+//        DispatchQueue.main.async { [self] in
+//            cancelComposition()
+//        }
         super.deactivateServer(sender)
     }
 
@@ -98,21 +97,25 @@ public class IlimiInputController: IMKInputController {
     // 依照威注音註解，此函式可能因IMK的bug而不會被執行
     // https://github.com/vChewing/vChewing-macOS/blob/main/Source/Modules/ControllerModules/ctlInputMethod_Core.swift
     override public func inputControllerWillClose() {
-        cancelComposition()
+        cleanComposition()
         super.inputControllerWillClose()
     }
+	
+	// 清掉尚未提交的markedText，和關閉candidates
+	func cleanComposition() {
+		setMarkedText("", selectionRange: NSRange(location: 0, length: 0))
+		InputContext.shared.cleanUp()
+		candidates.update()
+		candidates.hide()
+		Self.prefixHasCandidates = true
+		// 如果是注音模式則關閉注音模式
+		isZhuyinMode = false
+		// 如果是同音輸入模式則關閉同音輸入模式
+		turnOffIsInputByPronunciationMode()
+		clearAssistSelectChar()
+	}
 
     override public func cancelComposition() {
-        setMarkedText("", selectionRange: NSRange(location: 0, length: 0))
-        InputContext.shared.cleanUp()
-        candidates.update()
-        candidates.hide()
-        Self.prefixHasCandidates = true
-        // 如果是注音模式則關閉注音模式
-        isZhuyinMode = false
-        // 如果是同音輸入模式則關閉同音輸入模式
-        turnOffIsInputByPronunciationMode()
-        clearAssistSelectChar()
         super.cancelComposition()
     }
 
@@ -191,7 +194,7 @@ extension IlimiInputController {
         setMarkedText(input)
         // 加一點延遲，否則新輸入字元加到markedText後馬上就被清空了
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) { [self] in
-            cancelComposition()
+            cleanComposition()
         }
         return true
     }
@@ -242,7 +245,7 @@ extension IlimiInputController {
     func commitText(client sender: Any!, text: String) {
         //        client().insertText(text, replacementRange: NSMakeRange(0, text.count))
         client().insertText(text, replacementRange: notFoundRange)
-        cancelComposition()
+        cleanComposition()
     }
 
     func commitCandidate(client sender: Any!) {

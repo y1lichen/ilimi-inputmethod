@@ -15,7 +15,7 @@ extension IlimiInputController {
 
     override public func handle(_ event: NSEvent!, client sender: Any!) -> Bool {
         guard var event = event, sender is IMKTextInput else {
-            cancelComposition()
+            cleanComposition()
             NSLog("Unable to handle NSEvent")
             return false
         }
@@ -84,7 +84,7 @@ extension IlimiInputController {
                 return deleteHandler()
             } else if event.keyCode == kVK_Return && !InputContext.shared.getCurrentInput().isEmpty {
                 commitText(client: sender, text: InputContext.shared.getCurrentInput())
-                cancelComposition()
+                cleanComposition()
                 return true
             }
             if key.isLetter || puntuationSet
@@ -232,7 +232,7 @@ extension IlimiInputController {
                 clearAssistSelectChar()
             }
             if InputContext.shared.getCurrentInput().isEmpty {
-                cancelComposition()
+                cleanComposition()
                 return true
             }
             setMarkedText(InputContext.shared.getCurrentInput())
@@ -245,7 +245,7 @@ extension IlimiInputController {
     // 如果currentInput為空就直接pass esc事件，讓系統處理
     func escHandler() -> Bool {
         if !InputContext.shared.getCurrentInput().isEmpty || isZhuyinMode || isTypeByPronunciationMode {
-            cancelComposition()
+            cleanComposition()
             return true
         }
         return false
