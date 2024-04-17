@@ -18,24 +18,14 @@ public class CustomPhraseContainerController {
 
     // MARK: - Define Constants / Variables
 
+	static var persistenceController = PersistenceController.shared
     public static var context: NSManagedObjectContext {
-        PersistenceController.shared.container.viewContext
+        persistenceController.container.viewContext
     }
 
     // MARK: - Core Data stack
 
     // MARK: - Core Data Saving support
-
-    public static func saveContext() {
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch {
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
-        }
-    }
 
     // MARK: Internal
 
@@ -51,6 +41,6 @@ public class CustomPhraseContainerController {
             model.key = key
             model.value = value
         }
-        saveContext()
+		persistenceController.saveContext()
     }
 }
