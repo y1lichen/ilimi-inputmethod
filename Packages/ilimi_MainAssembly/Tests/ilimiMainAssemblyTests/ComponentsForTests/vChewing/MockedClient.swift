@@ -78,7 +78,8 @@ class FakeClient: NSObject, IMKTextInput {
     func attributes(
         forCharacterIndex _: Int,
         lineHeightRectangle _: UnsafeMutablePointer<NSRect>!
-    ) -> [AnyHashable: Any]! {
+    )
+        -> [AnyHashable: Any]! {
         [:]
     }
 

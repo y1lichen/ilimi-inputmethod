@@ -31,7 +31,7 @@ struct ilimiInstallerApp: App {
             }.frame(width: 1000, height: 630)
                 .onAppear {
                     NSWindow.allowsAutomaticWindowTabbing = false
-                    NSApp.windows.forEach { window in
+                    for window in NSApp.windows {
                         window.titlebarAppearsTransparent = true
                         window.setContentSize(.init(width: 1000, height: 630))
                         window.standardWindowButton(.closeButton)?.isHidden = true

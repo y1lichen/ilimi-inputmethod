@@ -49,7 +49,7 @@ public class IlimiInputController: IMKInputController {
         //        }
         super.activateServer(sender)
         DispatchQueue.main.async { [self] in
-			cleanComposition()
+            cleanComposition()
         }
         // 同步ascii模式狀態
         DispatchQueue.main.async { [self] in
@@ -100,20 +100,6 @@ public class IlimiInputController: IMKInputController {
         cleanComposition()
         super.inputControllerWillClose()
     }
-	
-	// 清掉尚未提交的markedText，和關閉candidates
-	func cleanComposition() {
-		setMarkedText("", selectionRange: NSRange(location: 0, length: 0))
-		InputContext.shared.cleanUp()
-		candidates.update()
-		candidates.hide()
-		Self.prefixHasCandidates = true
-		// 如果是注音模式則關閉注音模式
-		isZhuyinMode = false
-		// 如果是同音輸入模式則關閉同音輸入模式
-		turnOffIsInputByPronunciationMode()
-		clearAssistSelectChar()
-	}
 
     override public func cancelComposition() {
         super.cancelComposition()
@@ -144,6 +130,20 @@ public class IlimiInputController: IMKInputController {
     var isASCIIMode = false
     // 輔助選字的字元和位置
     var assistSelectChar = (chr: "", pos: -1)
+
+    // 清掉尚未提交的markedText，和關閉candidates
+    func cleanComposition() {
+        setMarkedText("", selectionRange: NSRange(location: 0, length: 0))
+        InputContext.shared.cleanUp()
+        candidates.update()
+        candidates.hide()
+        Self.prefixHasCandidates = true
+        // 如果是注音模式則關閉注音模式
+        isZhuyinMode = false
+        // 如果是同音輸入模式則關閉同音輸入模式
+        turnOffIsInputByPronunciationMode()
+        clearAssistSelectChar()
+    }
 
     func findCandidateIndex(_ candidateString: NSAttributedString!) -> Int {
         InputContext.shared.candidates.firstIndex(of: candidateString.string) ?? -1

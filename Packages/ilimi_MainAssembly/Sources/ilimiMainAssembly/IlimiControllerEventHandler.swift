@@ -180,11 +180,11 @@ extension IlimiInputController {
         if event.type == .flagsChanged, event.keyCode == 57 {
             DispatchQueue.main.async { [self] in
                 let shouldNotifyCpLkState = CapsLockToggler.isOn
-                self.isASCIIMode = event.modifierFlags.intersection(.deviceIndependentFlagsMask).contains(.capsLock)
+                isASCIIMode = event.modifierFlags.intersection(.deviceIndependentFlagsMask).contains(.capsLock)
                 // 在isASCIIMode改變時推播通知
                 NotifierController.notify(message: shouldNotifyCpLkState ? "英數模式" : "中文模式")
                 setKeyLayout()
-                if self.isASCIIMode {
+                if isASCIIMode {
                     if !InputContext.shared.getCurrentInput().isEmpty {
                         commitText(client: client(), text: InputContext.shared.getCurrentInput())
                         InputContext.shared.cleanUp()

@@ -45,7 +45,7 @@ public enum IMKHelper {
         let matchedGroupBasic = (arrWhitelistedKeyLayoutsASCII + arrDynamicBasicKeyLayouts).compactMap {
             allTISKeyboardLayouts[$0]
         }
-        matchedGroupBasic.forEach { neta in
+        for neta in matchedGroupBasic {
             if filterSet.contains(neta.id) {
                 containerC.append(neta)
             } else if neta.id.hasPrefix("com.apple") {

@@ -41,10 +41,10 @@ public extension TISInputSource {
             }
         }
         var succeeded = true
-        instances.forEach {
-            NSLog("Enabling input source: \($0.identifier)")
-            if !$0.activate() {
-                NSLog("Failed from enabling input source: \($0.identifier)")
+        for instance in instances {
+            NSLog("Enabling input source: \(instance.identifier)")
+            if !instance.activate() {
+                NSLog("Failed from enabling input source: \(instance.identifier)")
                 succeeded = false
             }
         }
@@ -131,7 +131,7 @@ public extension TISInputSource {
         var resultStack: [TISInputSource] = []
         let unionedIDs = NSOrderedSet(array: modeIDs + identifiers).compactMap { $0 as? String }
         let retrieved = (TISCreateInputSourceList(cfDict, true)?.takeRetainedValue() as? [TISInputSource]) ?? []
-        retrieved.forEach { tis in
+        for tis in retrieved {
             unionedIDs.forEach { id in
                 guard tis.identifier == id || tis.inputModeID == id else { return }
                 if onlyASCII {
@@ -168,11 +168,11 @@ public extension TISInputSource {
         // 返回鍵盤配列清單。
         let result = TISCreateInputSourceList(dicConditions as CFDictionary, true)?.takeRetainedValue() as? [TISInputSource] ?? .init()
         var resultDictionary: [String: TISInputSource.KeyboardLayout] = [:]
-        result.forEach {
-            let newNeta1 = TISInputSource.KeyboardLayout(id: $0.inputModeID, titleLocalized: $0.localizedNameTitle)
-            let newNeta2 = TISInputSource.KeyboardLayout(id: $0.identifier, titleLocalized: $0.localizedNameTitle)
-            resultDictionary[$0.inputModeID] = newNeta1
-            resultDictionary[$0.identifier] = newNeta2
+        for item in result {
+            let newNeta1 = TISInputSource.KeyboardLayout(id: item.inputModeID, titleLocalized: item.localizedNameTitle)
+            let newNeta2 = TISInputSource.KeyboardLayout(id: item.identifier, titleLocalized: item.localizedNameTitle)
+            resultDictionary[item.inputModeID] = newNeta1
+            resultDictionary[item.identifier] = newNeta2
         }
         return resultDictionary
     }
