@@ -16,9 +16,6 @@ public class CustomPhraseContainerController {
 
     // MARK: Public
 
-    // MARK: - Define Constants / Variables
-
-	static var persistenceController = PersistenceController.shared
     public static var context: NSManagedObjectContext {
         persistenceController.container.viewContext
     }
@@ -29,9 +26,13 @@ public class CustomPhraseContainerController {
 
     // MARK: Internal
 
+    // MARK: - Define Constants / Variables
+
+    static var persistenceController = PersistenceController.shared
     static let defaultPhraseDict = ["oaooo": "哈哈哈", "ilimi": "一粒米輸入法"]
 
     static func setDefaultCustomPhrase() {
+        cleanAllData()
         for (key, value) in defaultPhraseDict {
             let model = NSEntityDescription.insertNewObject(
                 forEntityName: "CustomPhrase",
@@ -41,6 +42,17 @@ public class CustomPhraseContainerController {
             model.key = key
             model.value = value
         }
-		persistenceController.saveContext()
+        persistenceController.saveContext()
+    }
+
+    static func cleanAllData() {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "CustomPhrase")
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        do {
+            try context.execute(batchDeleteRequest)
+        } catch {
+            NSLog(String(describing: error))
+        }
+        NSLog("Core Data cleaned")
     }
 }

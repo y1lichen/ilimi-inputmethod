@@ -6,13 +6,16 @@ import Foundation
 import SwiftUI
 
 struct AddCustomPhraseView: View {
+    @Environment(\.managedObjectContext)
+    private var context
+    @FetchRequest(entity: CustomPhrase.entity(), sortDescriptors: [])
+    var customPhrases: FetchedResults<CustomPhrase>
+
     var body: some View {
-        @FetchRequest(entity: CustomPhrase.entity(), sortDescriptors: [])
-        var customPhrases: FetchedResults<CustomPhrase>
         VStack {
             List {
                 Text("\(customPhrases.endIndex)")
-                ForEach(customPhrases) { entry in
+                ForEach(customPhrases, id: \.id) { entry in
                     ListRowView(customPhrase: entry)
                 }
             }.frame(width: 300)

@@ -44,7 +44,7 @@ class DataInitializer {
                 sound: true
             )
         }
-        NSLog("Core Data cleaned")
+//        NSLog("Core Data cleaned")
     }
 
     func loadLiuData() {

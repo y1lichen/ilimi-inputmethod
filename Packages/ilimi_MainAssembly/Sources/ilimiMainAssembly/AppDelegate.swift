@@ -23,7 +23,7 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
         requestNotificationAuthorization()
         // 用程式碼方法補上MainMenu.xib
         NSApplication.shared.mainMenu = MainMenu()
-        //        NSLog("connection tried")
+        // NSLog("connection tried")
     }
 
     public func applicationWillTerminate(_ notification: Notification) {
