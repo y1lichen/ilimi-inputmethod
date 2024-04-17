@@ -10,15 +10,35 @@ struct AddCustomPhraseView: View {
     private var context
     @FetchRequest(entity: CustomPhrase.entity(), sortDescriptors: [])
     var customPhrases: FetchedResults<CustomPhrase>
-
+	func delete(_ customPhrase: CustomPhrase) {
+	}
     var body: some View {
         VStack {
-            List {
-                Text("\(customPhrases.endIndex)")
-                ForEach(customPhrases, id: \.id) { entry in
-                    ListRowView(customPhrase: entry)
+			Table(of: CustomPhrase.self) {
+                TableColumn("字碼") {
+                    Text($0.key ?? "")
                 }
-            }.frame(width: 300)
+                TableColumn("字詞") {
+                    Text($0.value ?? "")
+                }
+            }
+		rows: {
+                ForEach(customPhrases) { phrase in
+                    TableRow(phrase)
+                        .contextMenu {
+                            Button("Edit") {
+                                // TODO: open editor in inspector
+                            }
+                            Button("See Details") {
+                                // TODO: open detai view
+                            }
+                            Divider()
+                            Button("Delete", role: .destructive) {
+								delete(phrase)
+                            }
+                        }
+                }
+            }
         }
         .frame(width: 450, height: 250)
     }
