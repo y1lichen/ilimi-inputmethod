@@ -1,6 +1,19 @@
 // (c) 2022 and onwards The ilimi-IME Project (3-Clause BSD license).
 // ====================
 // This code is released under the 3-Clause BSD license (SPDX-License-Identifier: BSD-3-Clause)
+// # -*- coding: utf-8 -*-
+//###########################################
+//#  Auther:FeatherMountain(http://3wa.tw)  #
+//#  Version: 0.1                           #
+//#  Date: 2021-08-08                       #
+//#  License: MIT                           #
+//###########################################
+//# # how to :
+//# import stts
+//# mystts = stts.kit()
+//# mystts.trad2simple("對不對") -> 对不对
+//# mystts.simple2trad("对不对") -> 對不對
+//# 2022-02-26 From: https://github.com/berniey/hanziconv/blob/master/hanziconv/charmap.py
 
 import Foundation
 
