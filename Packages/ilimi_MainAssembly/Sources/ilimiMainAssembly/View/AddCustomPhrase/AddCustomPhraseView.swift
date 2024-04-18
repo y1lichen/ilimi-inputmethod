@@ -10,11 +10,12 @@ struct AddCustomPhraseView: View {
     private var context
     @FetchRequest(entity: CustomPhrase.entity(), sortDescriptors: [])
     var customPhrases: FetchedResults<CustomPhrase>
-	func delete(_ customPhrase: CustomPhrase) {
-	}
+    func delete(_ customPhrase: CustomPhrase) {
+    }
+
     var body: some View {
         VStack {
-			Table(of: CustomPhrase.self) {
+            Table(of: CustomPhrase.self) {
                 TableColumn("字碼") {
                     Text($0.key ?? "")
                 }
@@ -34,10 +35,18 @@ struct AddCustomPhraseView: View {
                             }
                             Divider()
                             Button("Delete", role: .destructive) {
-								delete(phrase)
+                                delete(phrase)
                             }
                         }
                 }
+            }
+			HStack() {
+				Spacer().frame(width: 5)
+                Button("-") {
+                }
+                Button("+") {
+                }
+				Spacer()
             }
         }
         .frame(width: 450, height: 250)
