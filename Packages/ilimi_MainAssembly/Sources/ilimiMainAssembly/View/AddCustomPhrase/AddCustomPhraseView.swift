@@ -5,17 +5,25 @@
 import Foundation
 import SwiftUI
 
+
+
 struct AddCustomPhraseView: View {
-    @Environment(\.managedObjectContext)
-    private var context
-    @FetchRequest(entity: CustomPhrase.entity(), sortDescriptors: [])
+    @Environment(\.managedObjectContext) private var context
+	@FetchRequest(entity: CustomPhrase.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CustomPhrase.timestp, ascending: true)])
     var customPhrases: FetchedResults<CustomPhrase>
+
+    @State var showEditSheet = false
+	
+	@State var showSheet = false
+    @State private var selected = Set<CustomPhrase.ID>()
+
     func delete(_ customPhrase: CustomPhrase) {
+        CustomPhraseContainerController.deleteCustomPhrase(customPhrase)
     }
 
     var body: some View {
         VStack {
-            Table(of: CustomPhrase.self) {
+            Table(of: CustomPhrase.self, selection: $selected) {
                 TableColumn("字碼") {
                     Text($0.key ?? "")
                 }
@@ -27,28 +35,37 @@ struct AddCustomPhraseView: View {
                 ForEach(customPhrases) { phrase in
                     TableRow(phrase)
                         .contextMenu {
-                            Button("Edit") {
-                                // TODO: open editor in inspector
-                            }
-                            Button("See Details") {
-                                // TODO: open detai view
-                            }
-                            Divider()
+//                            Button("Edit") {
+//								phraseToBeEdited  = phrase
+//                                showEditSheet = true
+//                            }
+//                            Divider()
                             Button("Delete", role: .destructive) {
                                 delete(phrase)
                             }
                         }
                 }
             }
-			HStack() {
-				Spacer().frame(width: 5)
+            HStack {
+                Spacer().frame(width: 5)
                 Button("-") {
+                    for id in _selected.wrappedValue {
+                        if let phrase = customPhrases.first(where: {
+                            $0.id == id
+                        }) {
+                            delete(phrase)
+                        }
+                    }
                 }
                 Button("+") {
+                    showSheet = true
                 }
-				Spacer()
-            }
+                Spacer()
+			}.padding()
         }
         .frame(width: 450, height: 250)
+        .sheet(isPresented: $showSheet) {
+            SheetView(isShow: $showSheet)
+        }
     }
 }
