@@ -13,8 +13,12 @@ struct InputEngine {
     func getCadidatesByZhuyin(_ text: String) {
         InputContext.shared.candidates = CoreDataHelper.getCharByZhuyin(text)
     }
+	
+	// 取得自訂義的字詞
+	func getCustomPhrase(_ text: String) {
+	}
 
-    // 取的以嘸蝦米輸入的候選字
+    // 取得以嘸蝦米輸入的候選字
     func getCandidates(_ text: String) {
         // 輸入碼太長的話就不用查詢，節省資源
         if text.count >= 6 {
@@ -40,6 +44,14 @@ struct InputEngine {
                 candidatesSet.insert(value)
                 candidates.append(value)
             }
+			// 自定義的字詞
+			let customPhrases = CustomPhraseManager.getCustomPhraseByKey(text)
+			for c in customPhrases {
+				guard let phraseValue = c.value else { return }
+				candidates.append(phraseValue)
+				candidatesSet.insert(phraseValue)
+				inputStrSet.insert(String(phraseValue.prefix(text.count + 1)))
+			}
             InputContext.shared.preInputPrefixSet = inputStrSet
             InputContext.shared.candidates = candidates
         } catch {

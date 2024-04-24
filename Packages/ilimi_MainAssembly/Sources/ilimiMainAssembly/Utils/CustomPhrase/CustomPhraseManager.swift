@@ -7,7 +7,7 @@
 
 import CoreData
 
-public class CustomPhraseContainerController {
+public class CustomPhraseManager {
     // MARK: Lifecycle
 
     // MARK: - Initializer
@@ -34,6 +34,19 @@ public class CustomPhraseContainerController {
     static func getAllCustomPhrase() -> [CustomPhrase] {
         let request = NSFetchRequest<CustomPhrase>(entityName: "CustomPhrase")
         request.sortDescriptors = [NSSortDescriptor(keyPath: \CustomPhrase.timestp, ascending: true)]
+        do {
+            let response = try PersistenceController.shared.container.viewContext.fetch(request)
+            return response
+        } catch {
+            NSLog(error.localizedDescription)
+        }
+        return []
+    }
+
+    static func getCustomPhraseByKey(_ key: String) -> [CustomPhrase] {
+        let request = NSFetchRequest<CustomPhrase>(entityName: "CustomPhrase")
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \CustomPhrase.timestp, ascending: true)]
+        request.predicate = NSPredicate(format: "key BEGINSWITH %@", key)
         do {
             let response = try PersistenceController.shared.container.viewContext.fetch(request)
             return response

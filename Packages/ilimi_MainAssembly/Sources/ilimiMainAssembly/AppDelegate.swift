@@ -39,7 +39,7 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
     func doOnFirstRun() {
         let firstRun = UserDefaults.standard.bool(forKey: "firstRun") as Bool
         if !firstRun {
-            CustomPhraseContainerController.setDefaultCustomPhrase()
+            CustomPhraseManager.setDefaultCustomPhrase()
             UserDefaults.standard.setValue(true, forKey: "firstRun")
         }
     }
@@ -61,7 +61,7 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
 
     // 設定視窗
     func showSettingsWindow(_ tabIndex: Int = 0) {
-        let context = CustomPhraseContainerController.context
+        let context = CustomPhraseManager.context
         if let settingsWindow = settingsWindow {
             if settingsWindow.isVisible {
                 switch tabIndex {
