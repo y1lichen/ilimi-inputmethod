@@ -67,7 +67,7 @@ chmod +x ./build.sh
 輸入shift+空白鍵可以進入全形模式
  
 9.  自訂加詞
-![自訂加詞](https://github.com/y1lichen/ilimi-inputmethod/blob/main/media/custom_phrase_demo.png) 
+![自訂加詞](https://github.com/y1lichen/ilimi-inputmethod/blob/main/media/custom_phrase_demo.png)
 
 ## 可自定義項目
 
