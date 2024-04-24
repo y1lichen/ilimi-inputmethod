@@ -5,16 +5,12 @@
 import Foundation
 import SwiftUI
 
-
-
 struct AddCustomPhraseView: View {
-
-	@StateObject var viewModel = CustomPhraseViewModel()
-	
+    @StateObject var viewModel = CustomPhraseViewModel()
 
     var body: some View {
         VStack {
-			Table(of: CustomPhrase.self, selection: $viewModel.selected) {
+            Table(of: CustomPhrase.self, selection: $viewModel.selected) {
                 TableColumn("字碼") {
                     Text($0.key ?? "")
                 }
@@ -23,15 +19,15 @@ struct AddCustomPhraseView: View {
                 }
             }
 		rows: {
-			ForEach(viewModel.customPhrases) { phrase in
+                ForEach(viewModel.customPhrases) { phrase in
                     TableRow(phrase)
                         .contextMenu {
                             Button("Edit") {
-								viewModel.openEditView(phrase)
+                                viewModel.openEditView(phrase)
                             }
                             Divider()
                             Button("Delete", role: .destructive) {
-								viewModel.delete(phrase)
+                                viewModel.delete(phrase)
                             }
                         }
                 }
@@ -39,26 +35,26 @@ struct AddCustomPhraseView: View {
             HStack {
                 Spacer().frame(width: 5)
                 Button("-") {
-					for id in viewModel.selected {
-						if let phrase = viewModel.customPhrases.first(where: {
+                    for id in viewModel.selected {
+                        if let phrase = viewModel.customPhrases.first(where: {
                             $0.id == id
                         }) {
-							viewModel.delete(phrase)
+                            viewModel.delete(phrase)
                         }
                     }
                 }
                 Button("+") {
-					viewModel.showAddSheet = true
+                    viewModel.showAddSheet = true
                 }
                 Spacer()
-			}.padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 0))
+            }.padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 0))
         }
         .frame(width: 450, height: 250)
-		.sheet(isPresented: $viewModel.showAddSheet) {
-			SheetView(viewModel: viewModel)
+        .sheet(isPresented: $viewModel.showAddSheet) {
+            SheetView(viewModel: viewModel)
         }
-		.sheet(isPresented: $viewModel.showEditSheet) {
-			SheetView(viewModel: viewModel)
-		}
+        .sheet(isPresented: $viewModel.showEditSheet) {
+            SheetView(viewModel: viewModel)
+        }
     }
 }
