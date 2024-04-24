@@ -37,6 +37,7 @@ struct PersistenceController {
             do {
                 try context.save()
             } catch {
+				context.rollback()
                 let nserror = error as NSError
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }

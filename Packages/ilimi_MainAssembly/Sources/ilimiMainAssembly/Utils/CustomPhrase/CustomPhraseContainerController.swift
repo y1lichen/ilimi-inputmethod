@@ -36,11 +36,11 @@ public class CustomPhraseContainerController {
         request.sortDescriptors = [NSSortDescriptor(keyPath: \CustomPhrase.timestp, ascending: true)]
         do {
             let response = try PersistenceController.shared.container.viewContext.fetch(request)
-			return response
+            return response
         } catch {
             NSLog(error.localizedDescription)
         }
-		return []
+        return []
     }
 
     static func setDefaultCustomPhrase() {
@@ -63,22 +63,18 @@ public class CustomPhraseContainerController {
         model.key = key
         model.value = value
         model.timestp = Date.now
-        do {
-            try context.save()
-            context.refreshAllObjects()
-        } catch {
-            NSLog(String(describing: error))
-        }
+        persistenceController.saveContext()
     }
 
     static func deleteCustomPhrase(_ phrase: CustomPhrase) {
-        do {
-            context.delete(phrase)
-            try context.save()
-            context.refreshAllObjects()
-        } catch {
-            NSLog(String(describing: error))
-        }
+        context.delete(phrase)
+        persistenceController.saveContext()
+    }
+
+    static func editCustomPhrase(_ phrase: CustomPhrase, key: String, value: String) {
+        phrase.key = key
+        phrase.value = value
+        persistenceController.saveContext()
     }
 
     static func cleanAllData() {

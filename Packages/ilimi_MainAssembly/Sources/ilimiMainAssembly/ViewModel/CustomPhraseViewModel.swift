@@ -16,7 +16,9 @@ class CustomPhraseViewModel: ObservableObject {
 	@Published var showAddSheet = false
 	var selected = Set<CustomPhrase.ID>()
 	
-	static var shared = CustomPhraseViewModel()
+	var customPhraseToBeEdited: CustomPhrase? = nil
+	
+//	static var shared = CustomPhraseViewModel()
 	
 	@Published var customPhrases: [CustomPhrase] = []
 	
@@ -36,6 +38,33 @@ class CustomPhraseViewModel: ObservableObject {
 	func addCustomPhrase() {
 		CustomPhraseContainerController.addCustomPhrase(key: key, value: value)
 		fetchData()
+		clearKeyValue()
 	}
 
+	private func clearKeyValue() {
+		key = ""
+		value = ""
+		customPhraseToBeEdited = nil
+	}
+	
+	func openEditView(_ customPhrase: CustomPhrase) {
+		showEditSheet = true
+		customPhraseToBeEdited = customPhrase
+	}
+	
+	func syncKeyValueWithCustomPhraseToBeEdited() {
+		if showEditSheet {
+			if let customPhraseToBeEdited = customPhraseToBeEdited {
+				key = customPhraseToBeEdited.key ?? ""
+				value = customPhraseToBeEdited.value ?? ""
+			}
+		}
+	}
+	
+	func editCustomPhrase() {
+		if let customPhraseToBeEdited = customPhraseToBeEdited {
+			CustomPhraseContainerController.editCustomPhrase(customPhraseToBeEdited, key: key, value: value)
+			clearKeyValue()
+		}
+	}
 }

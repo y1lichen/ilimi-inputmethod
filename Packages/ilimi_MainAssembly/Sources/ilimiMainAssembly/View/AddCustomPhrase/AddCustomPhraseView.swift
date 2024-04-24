@@ -8,9 +8,8 @@ import SwiftUI
 
 
 struct AddCustomPhraseView: View {
-    @Environment(\.managedObjectContext) private var context
-	
-	@StateObject var viewModel = CustomPhraseViewModel.shared
+
+	@StateObject var viewModel = CustomPhraseViewModel()
 	
 
     var body: some View {
@@ -27,11 +26,10 @@ struct AddCustomPhraseView: View {
 			ForEach(viewModel.customPhrases) { phrase in
                     TableRow(phrase)
                         .contextMenu {
-//                            Button("Edit") {
-//								phraseToBeEdited  = phrase
-//                                showEditSheet = true
-//                            }
-//                            Divider()
+                            Button("Edit") {
+								viewModel.openEditView(phrase)
+                            }
+                            Divider()
                             Button("Delete", role: .destructive) {
 								viewModel.delete(phrase)
                             }
@@ -57,7 +55,10 @@ struct AddCustomPhraseView: View {
         }
         .frame(width: 450, height: 250)
 		.sheet(isPresented: $viewModel.showAddSheet) {
-			SheetView()
+			SheetView(viewModel: viewModel)
         }
+		.sheet(isPresented: $viewModel.showEditSheet) {
+			SheetView(viewModel: viewModel)
+		}
     }
 }
