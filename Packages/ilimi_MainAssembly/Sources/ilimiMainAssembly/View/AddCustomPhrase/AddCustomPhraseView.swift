@@ -9,21 +9,13 @@ import SwiftUI
 
 struct AddCustomPhraseView: View {
     @Environment(\.managedObjectContext) private var context
-	@FetchRequest(entity: CustomPhrase.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \CustomPhrase.timestp, ascending: true)])
-    var customPhrases: FetchedResults<CustomPhrase>
-
-    @State var showEditSheet = false
 	
-	@State var showSheet = false
-    @State private var selected = Set<CustomPhrase.ID>()
-
-    func delete(_ customPhrase: CustomPhrase) {
-        CustomPhraseContainerController.deleteCustomPhrase(customPhrase)
-    }
+	@StateObject var viewModel = CustomPhraseViewModel.shared
+	
 
     var body: some View {
         VStack {
-            Table(of: CustomPhrase.self, selection: $selected) {
+			Table(of: CustomPhrase.self, selection: $viewModel.selected) {
                 TableColumn("字碼") {
                     Text($0.key ?? "")
                 }
@@ -32,7 +24,7 @@ struct AddCustomPhraseView: View {
                 }
             }
 		rows: {
-                ForEach(customPhrases) { phrase in
+			ForEach(viewModel.customPhrases) { phrase in
                     TableRow(phrase)
                         .contextMenu {
 //                            Button("Edit") {
@@ -41,7 +33,7 @@ struct AddCustomPhraseView: View {
 //                            }
 //                            Divider()
                             Button("Delete", role: .destructive) {
-                                delete(phrase)
+								viewModel.delete(phrase)
                             }
                         }
                 }
@@ -49,23 +41,23 @@ struct AddCustomPhraseView: View {
             HStack {
                 Spacer().frame(width: 5)
                 Button("-") {
-                    for id in _selected.wrappedValue {
-                        if let phrase = customPhrases.first(where: {
+					for id in viewModel.selected {
+						if let phrase = viewModel.customPhrases.first(where: {
                             $0.id == id
                         }) {
-                            delete(phrase)
+							viewModel.delete(phrase)
                         }
                     }
                 }
                 Button("+") {
-                    showSheet = true
+					viewModel.showAddSheet = true
                 }
                 Spacer()
-			}.padding()
+			}.padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 0))
         }
         .frame(width: 450, height: 250)
-        .sheet(isPresented: $showSheet) {
-            SheetView(isShow: $showSheet)
+		.sheet(isPresented: $viewModel.showAddSheet) {
+			SheetView()
         }
     }
 }

@@ -31,6 +31,18 @@ public class CustomPhraseContainerController {
     static var persistenceController = PersistenceController.shared
     static let defaultPhraseDict = ["oaooo": "哈哈哈", "ilimi": "一粒米輸入法"]
 
+    static func getAllCustomPhrase() -> [CustomPhrase] {
+        let request = NSFetchRequest<CustomPhrase>(entityName: "CustomPhrase")
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \CustomPhrase.timestp, ascending: true)]
+        do {
+            let response = try PersistenceController.shared.container.viewContext.fetch(request)
+			return response
+        } catch {
+            NSLog(error.localizedDescription)
+        }
+		return []
+    }
+
     static func setDefaultCustomPhrase() {
         cleanAllData()
         for (key, value) in defaultPhraseDict {
@@ -41,32 +53,32 @@ public class CustomPhraseContainerController {
             guard let model = model as? CustomPhrase else { return }
             model.key = key
             model.value = value
-			model.timestp = Date.now
+            model.timestp = Date.now
         }
         persistenceController.saveContext()
     }
 
-	static func addCustomPhrase(key: String, value: String) {
-		let model = CustomPhrase(context: context)
-		model.key = key
-		model.value = value
-		model.timestp = Date.now
-		do {
-			try context.save()
-			context.refreshAllObjects()
-		} catch {
-			NSLog(String(describing: error))
-		}
+    static func addCustomPhrase(key: String, value: String) {
+        let model = CustomPhrase(context: context)
+        model.key = key
+        model.value = value
+        model.timestp = Date.now
+        do {
+            try context.save()
+            context.refreshAllObjects()
+        } catch {
+            NSLog(String(describing: error))
+        }
     }
 
     static func deleteCustomPhrase(_ phrase: CustomPhrase) {
-		do {
-			context.delete(phrase)
-			try context.save()
-			context.refreshAllObjects()
-		} catch {
-			NSLog(String(describing: error))
-		}
+        do {
+            context.delete(phrase)
+            try context.save()
+            context.refreshAllObjects()
+        } catch {
+            NSLog(String(describing: error))
+        }
     }
 
     static func cleanAllData() {
