@@ -193,7 +193,7 @@ extension IlimiInputController {
         }
         setMarkedText(input)
         // 加一點延遲，否則新輸入字元加到markedText後馬上就被清空了
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) { [self] in
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [self] in
             cleanComposition()
         }
         return true
