@@ -8,7 +8,7 @@ import Foundation
 class CinReader {
     static let shared = CinReader()
 
-    let liuCinPath = NSHomeDirectory() + "/liu.cin"
+	let liuCinPath = DataInitializer.appSupportDir + "/liu.cin"
 
     let persistenceContainer = PersistenceController.shared
     let userDefaults = UserDefaults.standard

@@ -22,4 +22,9 @@ final class ilimiMainAssemblyTests: XCTestCase {
         XCTAssertNotEqual(0, res.count)
         print("Found \(res.count) candidates.")
     }
+	
+	func testReadLiu2Tab() throws {
+		let converter = LiuUniConverter()
+		converter.convertLiuUniTab()
+	}
 }
