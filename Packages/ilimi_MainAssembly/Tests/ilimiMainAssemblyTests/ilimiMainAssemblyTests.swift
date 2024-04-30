@@ -8,9 +8,14 @@ final class ilimiMainAssemblyTests: XCTestCase {
         DataInitializer.shared.loadPinyinJson()
         let sharedEngine = InputEngine.shared
         let sharedInputContext = InputContext.shared
-        sharedEngine.getCandidates(",]]")
+//        sharedEngine.getCandidates(",]]")
+		sharedEngine.getCandidates("ix")
         XCTAssertNotEqual(0, sharedInputContext.candidates.count)
-        print("Found \(sharedInputContext.candidates.count) candidates.")
+		print(sharedInputContext.candidates)
+//        print("Found \(sharedInputContext.candidates.count) candidates.")
+		sharedEngine.getCandidates("dez")
+		XCTAssertNotEqual(0, sharedInputContext.candidates.count)
+		print(sharedInputContext.candidates)
     }
 
     // 測試同音輸入
@@ -24,7 +29,7 @@ final class ilimiMainAssemblyTests: XCTestCase {
     }
 	
 	func testReadLiu2Tab() throws {
-		let converter = LiuUniConverter()
+		let converter = LiuUniTabConverter()
 		converter.convertLiuUniTab()
 	}
 }
