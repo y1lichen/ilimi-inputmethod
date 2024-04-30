@@ -130,7 +130,9 @@ class DataInitializer {
     }
 
     func reloadAllData() {
-        if checkFileExist(liuJsonPath) {
+		if checkFileExist(liuUniTab) {
+			LiuUniTabConverter().convertLiuUniTab()
+		} else if checkFileExist(liuJsonPath) {
             loadLiuJson()
         } else if checkFileExist(liuCinPath) {
             CinReader().readCin()
