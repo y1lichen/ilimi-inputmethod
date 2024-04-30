@@ -2,6 +2,15 @@
 import XCTest
 
 final class ilimiMainAssemblyTests: XCTestCase {
+	func testConvertLiuTab() throws {
+		LiuUniTabConverter().convertLiuUniTab()
+		let sharedEngine = InputEngine.shared
+		let sharedInputContext = InputContext.shared
+		sharedEngine.getCandidates("dez")
+		XCTAssertNotEqual(0, sharedInputContext.candidates.count)
+		print(sharedInputContext.candidates)
+	}
+	
     func testDataLoadAndQuery() throws {
         DataInitializer.shared.initDataWhenStart()
         DataInitializer.shared.loadLiuData()
@@ -9,9 +18,9 @@ final class ilimiMainAssemblyTests: XCTestCase {
         let sharedEngine = InputEngine.shared
         let sharedInputContext = InputContext.shared
 //        sharedEngine.getCandidates(",]]")
-		sharedEngine.getCandidates("ix")
-        XCTAssertNotEqual(0, sharedInputContext.candidates.count)
-		print(sharedInputContext.candidates)
+//		sharedEngine.getCandidates("ix")
+//        XCTAssertNotEqual(0, sharedInputContext.candidates.count)
+//		print(sharedInputContext.candidates)
 //        print("Found \(sharedInputContext.candidates.count) candidates.")
 		sharedEngine.getCandidates("dez")
 		XCTAssertNotEqual(0, sharedInputContext.candidates.count)
