@@ -6,7 +6,6 @@ import CoreData
 import Foundation
 
 class CinReader {
-    static let shared = CinReader()
 
 	let liuCinPath = DataInitializer.appSupportDir + "/liu.cin"
 
@@ -69,6 +68,7 @@ class CinReader {
         model.key_priority = priority
         model.key = key
         model.value = value
+		model.sp = false
     }
 
     func getDocumentsDirectory() -> URL {

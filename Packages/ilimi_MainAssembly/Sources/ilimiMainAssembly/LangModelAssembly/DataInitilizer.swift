@@ -15,6 +15,7 @@ class DataInitializer {
     static let appSupportDir = appSupportURL.path
 
     let persistenceContainer = PersistenceController.shared
+	let liuUniTab = appSupportDir + "/liu-uni.tab"
     let liuJsonPath = appSupportDir + "/liu.json"
     let liuCinPath = appSupportDir + "/liu.cin"
     let pinyinPath = appSupportDir + "/pinyin.json"
@@ -48,11 +49,15 @@ class DataInitializer {
     }
 
     func loadLiuData() {
+		// 最優先用liu-uni.tab
+		if checkFileExist(liuUniTab) {
+			LiuUniTabConverter().convertLiuUniTab()
+		}
         // 暫時優先使用json字檔，未來仍可優先使用cin字檔
-        if checkFileExist(liuJsonPath) {
+        else if checkFileExist(liuJsonPath) {
             loadLiuJson()
         } else if checkFileExist(liuCinPath) {
-            CinReader.shared.readCin()
+            CinReader().readCin()
         } else {
             NotifierController.notify(message: "字檔並不存在！", stay: true)
         }
@@ -104,6 +109,7 @@ class DataInitializer {
                             model.key_priority = count
                             model.key = key
                             model.value = v
+							model.sp = false
                             count += 1
                         }
                     }
@@ -127,7 +133,7 @@ class DataInitializer {
         if checkFileExist(liuJsonPath) {
             loadLiuJson()
         } else if checkFileExist(liuCinPath) {
-            CinReader.shared.readCin()
+            CinReader().readCin()
         } else {
             NotifierController.notify(message: "字檔並不存在！", stay: true)
         }
