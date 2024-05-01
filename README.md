@@ -5,10 +5,14 @@
 
 ---
 
-一粒米輸入法的字根檔使用的是[肥米輸入法](https://github.com/shadowjohn/UCL_LIU)的字根檔
-⚠️ 因尚未釐清嘸蝦米版權問題，如同肥米輸入法，一粒米輸入法暫不直接發布字根檔。 
-一粒米輸入法支援**使用liu.cin字檔**，或是肥米輸入法的liu.json。
-可使用各版本之liu.cin，也可發信至  *y1lichen@icloud.com*  或是依照[肥米輸入法](https://github.com/shadowjohn/UCL_LIU)的說明生成liu.json檔案。
+⚠️ 因尚未釐清嘸蝦米版權問題，如同[肥米輸入法](https://github.com/shadowjohn/UCL_LIU)，一粒米輸入法暫不直接發布字根檔。 
+
+目前一粒米支援：
+1. 各版liu.cin
+2. 肥米輸入法的liu.json
+3. liu-uni.tab
+
+歡迎發信至  *y1lichen@icloud.com*  或是依照[肥米輸入法](https://github.com/shadowjohn/UCL_LIU)的說明生成liu.json檔案。
 
 ## 安裝說明 
 
