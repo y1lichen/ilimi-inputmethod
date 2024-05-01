@@ -37,8 +37,13 @@ final class ilimiMainAssemblyTests: XCTestCase {
         print("Found \(res.count) candidates.")
     }
 	
-	func testReadLiu2Tab() throws {
-		let converter = LiuUniTabConverter()
-		converter.convertLiuUniTab()
+	func testReadCin() throws {
+		let sharedEngine = InputEngine.shared
+		let sharedInputContext = InputContext.shared
+		let reader = CinReader()
+		reader.readCin()
+		sharedEngine.getCandidates("dez")
+		XCTAssertNotEqual(0, sharedInputContext.candidates.count)
+		print(sharedInputContext.candidates)
 	}
 }

@@ -52,11 +52,11 @@ class CinReader {
             persistenceContainer.saveContext()
             // hadReadLiuJson就先不改名成hadReadLiu了...
             userDefaults.set(true, forKey: "hadReadLiuJson")
-        } catch {
-            NSLog(error.localizedDescription)
-            NotifierController.notify(message: "讀取cin字檔錯誤")
-        }
-        NotifierController.notify(message: "成功匯入liu.cin", stay: true)
+			NotifierController.notify(message: "自liu.cin讀取\(priority)個字元", stay: true)
+		} catch {
+			NSLog(error.localizedDescription)
+			NotifierController.notify(message: "讀取cin字檔錯誤")
+		}
     }
 
     func writeData(_ key: String, _ value: String, _ priority: Int64) {
