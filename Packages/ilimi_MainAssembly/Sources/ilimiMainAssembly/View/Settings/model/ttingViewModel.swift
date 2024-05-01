@@ -24,9 +24,23 @@ class SettingViewModel: ObservableObject {
 	// 預設使用1-9選字
 	@AppStorage("selectCandidateBy1to8")
 	var selectCandidateBy1to8 = true
+	// 候選字數
+	@AppStorage("candidatesNum")
+	var candidatesNum = 8
 	// 靜音模式
 	@AppStorage("silentMode")
 	var silentMode = false
+	
+	var candidatesNumForBind: Int {
+		get {
+			candidatesNum
+		}
+		set {
+			if newValue >= 1 && newValue <= 9 {
+				candidatesNum = newValue
+			}
+		}
+	}
 
 	let fontSizeValues = [14, 16, 18, 20, 22, 24, 28, 32]
 

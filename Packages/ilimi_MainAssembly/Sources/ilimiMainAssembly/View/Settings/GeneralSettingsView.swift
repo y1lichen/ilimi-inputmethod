@@ -6,59 +6,75 @@ import Foundation
 import SwiftUI
 
 struct GeneralSettingsView: View {
-	@StateObject var settingViewModel = SettingViewModel()
+    @StateObject var settingViewModel = SettingViewModel()
+
+    let formatter: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        return formatter
+    }()
 
     var body: some View {
-        VStack {
+        ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 20) {
-				Picker("字體大小", selection: $settingViewModel.fontSize) {
+                Picker("字體大小", selection: $settingViewModel.fontSize) {
                     fontPickerContent()
-				}.onChange(of: settingViewModel.fontSize) { _ in
-					settingViewModel.killApplicationToReload()
+                }.onChange(of: settingViewModel.fontSize) { _ in
+                    settingViewModel.killApplicationToReload()
                 }
-				Picker("選字窗排列", selection: $settingViewModel.isHorizontalCandidatesPanel) {
+
+                Picker("選字窗排列", selection: $settingViewModel.isHorizontalCandidatesPanel) {
                     Text("橫式").tag(true)
                     Text("直式").tag(false)
                 }
-				.onChange(of: settingViewModel.isHorizontalCandidatesPanel) { _ in
-					settingViewModel.killApplicationToReload()
+                .onChange(of: settingViewModel.isHorizontalCandidatesPanel) { _ in
+                    settingViewModel.killApplicationToReload()
                 }
                 .pickerStyle(RadioGroupPickerStyle())
-				Picker("在沒有候選字時限制輸入", selection: $settingViewModel.limitInputWhenNoCandidate) {
+
+                Picker("在沒有候選字時限制輸入", selection: $settingViewModel.limitInputWhenNoCandidate) {
                     Text("是").tag(true)
                     Text("否").tag(false)
                 }
                 .pickerStyle(RadioGroupPickerStyle())
                 .horizontalRadioGroupLayout()
-				Picker("使用注音輸入後提示拆碼", selection: $settingViewModel.showLiuKeyAfterZhuyin) {
+
+                Picker("使用注音輸入後提示拆碼", selection: $settingViewModel.showLiuKeyAfterZhuyin) {
                     Text("是").tag(true)
                     Text("否").tag(false)
                 }
                 .pickerStyle(RadioGroupPickerStyle())
                 .horizontalRadioGroupLayout()
-				Picker("選字碼", selection: $settingViewModel.selectCandidateBy1to8) {
-                    Text("1到9").tag(true)
-                    Text("0到8").tag(false)
+
+                HStack {
+                    Text("候選字數")
+                    TextField("1-9", value: $settingViewModel.candidatesNumForBind, formatter: formatter)
                 }
-				.onChange(of: settingViewModel.selectCandidateBy1to8) { _ in
-					settingViewModel.killApplicationToReload()
+
+                Picker("選字碼", selection: $settingViewModel.selectCandidateBy1to8) {
+                    Text("由1開始").tag(true)
+                    Text("由0開始").tag(false)
+                }
+                .onChange(of: settingViewModel.selectCandidateBy1to8) { _ in
+                    settingViewModel.killApplicationToReload()
                 }
                 .pickerStyle(RadioGroupPickerStyle())
                 .horizontalRadioGroupLayout()
-				Picker("靜音模式", selection: $settingViewModel.silentMode) {
+                Picker("靜音模式", selection: $settingViewModel.silentMode) {
                     Text("是").tag(true)
                     Text("否").tag(false)
                 }
                 .pickerStyle(RadioGroupPickerStyle())
                 .horizontalRadioGroupLayout()
-            }.frame(width: 250)
+            }.frame(width: 300)
+                .padding()
         }
         .frame(width: 450, height: 250)
     }
 
     @ViewBuilder
     func fontPickerContent() -> some View {
-		ForEach(settingViewModel.fontSizeValues, id: \.self) {
+        ForEach(settingViewModel.fontSizeValues, id: \.self) {
             Text("\($0)")
         }
     }
