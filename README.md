@@ -5,6 +5,8 @@
 
 ---
 
+## 字檔說明
+
 ⚠️ 因尚未釐清嘸蝦米版權問題，如同[肥米輸入法](https://github.com/shadowjohn/UCL_LIU)，一粒米輸入法暫不直接發布字根檔。 
 
 目前一粒米支援：
@@ -12,7 +14,7 @@
 2. 肥米輸入法的liu.json
 3. liu-uni.tab
 
-歡迎發信至  *y1lichen@icloud.com*  或是依照[肥米輸入法](https://github.com/shadowjohn/UCL_LIU)的說明生成liu.json檔案。
+歡迎發信至  *y1lichen@icloud.com*  或是依照肥米輸入法的說明生成liu.json檔案。
 
 ## 安裝說明 
 
