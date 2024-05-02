@@ -16,7 +16,7 @@ public class IlimiInputController: IMKInputController {
     override init!(server: IMKServer!, delegate: Any!, client inputClient: Any!) {
         // 候選字窗
         let isHorizontalCandidates = UserDefaults.standard.bool(forKey: "isHorizontalCandidatesPanel")
-        self.candidates = IMKCandidates(
+        candidates = IMKCandidates(
             server: server,
             panelType: isHorizontalCandidates
                 ? kIMKScrollingGridCandidatePanel : kIMKSingleColumnScrollingCandidatePanel
@@ -184,10 +184,12 @@ extension IlimiInputController {
         // 輸入,,ct開啟/關閉打繁出簡
         case ",,ct":
             InputContext.shared.isTradToSim.toggle()
+        // 輸入,,sp開啟/關閉快打模式
+        case ",,sp":
+            InputContext.shared.isSpMode.toggle()
         // 輸入,,q開啟查碼視窗
         case ",,q":
             (NSApp.delegate as? AppDelegate)?.showQueryWindow()
-
         default:
             return false
         }
