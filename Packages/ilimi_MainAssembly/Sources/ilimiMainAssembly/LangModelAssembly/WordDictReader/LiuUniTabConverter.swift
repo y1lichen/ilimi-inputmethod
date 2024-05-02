@@ -83,7 +83,7 @@ class LiuUniTabConverter {
 				let chr = utf8_chr(ord: hi << 14 | lo)
 
 				let flag_sp = getbits(i3, 1, ci)
-                writeData(keyString, chr, Int64(count), flag_sp == 1 ? true : false)
+                writeData(keyString, chr, Int64(count), flag_sp == 0 ? true : false)
 //                let flag_unknown = getbits(start: Int(i2), nbit: 1, i: Int(ci))
                 count += 1
             }
