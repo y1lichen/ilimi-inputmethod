@@ -22,6 +22,7 @@ struct InputEngine {
         request.sortDescriptors = [NSSortDescriptor(key: "key_priority", ascending: true)]
         do {
             let response = try PersistenceController.shared.container.viewContext.fetch(request)
+			return response
         } catch {
             NSLog(error.localizedDescription)
         }
