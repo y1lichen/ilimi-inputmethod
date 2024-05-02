@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 class SettingViewModel: ObservableObject {
+	static let shared = SettingViewModel()
 	// 預設字體大小 22
 	@AppStorage("fontSize")
 	var fontSize = 22
@@ -21,12 +22,12 @@ class SettingViewModel: ObservableObject {
 	// 預設使用注音輸入後提示拆碼
 	@AppStorage("showLiuKeyAfterZhuyin")
 	var showLiuKeyAfterZhuyin = true
-	// 預設使用1-9選字
-	@AppStorage("selectCandidateBy1to8")
-	var selectCandidateBy1to8 = true
+	// 預設使用0-8選字
+	@AppStorage("candidatesStartFrom0")
+	var candidatesStartFrom0 = true
 	// 候選字數
 	@AppStorage("candidatesNum")
-	var candidatesNum = 8
+	var candidatesNum = 9
 	// 靜音模式
 	@AppStorage("silentMode")
 	var silentMode = false

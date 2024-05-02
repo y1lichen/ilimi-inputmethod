@@ -6,7 +6,7 @@ import Foundation
 import SwiftUI
 
 struct GeneralSettingsView: View {
-    @StateObject var settingViewModel = SettingViewModel()
+	@StateObject var settingViewModel = SettingViewModel.shared
 
     let formatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -49,13 +49,16 @@ struct GeneralSettingsView: View {
                 HStack {
                     Text("候選字數")
                     TextField("1-9", value: $settingViewModel.candidatesNumForBind, formatter: formatter)
+						.onChange(of: settingViewModel.candidatesNumForBind) { _ in
+							settingViewModel.killApplicationToReload()
+						}
                 }
 
-                Picker("選字碼", selection: $settingViewModel.selectCandidateBy1to8) {
-                    Text("由1開始").tag(true)
-                    Text("由0開始").tag(false)
+				Picker("選字碼", selection: $settingViewModel.candidatesStartFrom0) {
+                    Text("由0開始").tag(true)
+                    Text("由1開始").tag(false)
                 }
-                .onChange(of: settingViewModel.selectCandidateBy1to8) { _ in
+                .onChange(of: settingViewModel.candidatesStartFrom0) { _ in
                     settingViewModel.killApplicationToReload()
                 }
                 .pickerStyle(RadioGroupPickerStyle())

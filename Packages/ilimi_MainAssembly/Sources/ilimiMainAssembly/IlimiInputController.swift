@@ -12,31 +12,32 @@ import InputMethodKit
 @objc(IlimiInputController)
 public class IlimiInputController: IMKInputController {
     // MARK: Lifecycle
-
     override init!(server: IMKServer!, delegate: Any!, client inputClient: Any!) {
         // 候選字窗
         let isHorizontalCandidates = UserDefaults.standard.bool(forKey: "isHorizontalCandidatesPanel")
-        self.candidates = IMKCandidates(
+        candidates = IMKCandidates(
             server: server,
             panelType: isHorizontalCandidates
                 ? kIMKScrollingGridCandidatePanel : kIMKSingleColumnScrollingCandidatePanel
         )
+		
         var attributes = candidates.attributes()
         let fontSize = UserDefaults.standard.integer(forKey: "fontSize")
         let font = NSFont.systemFont(ofSize: CGFloat(fontSize))
         attributes?[NSAttributedString.Key.font] = font
         // 若只設attributes無法調整字體大小，setFontSize方法使用bridging header暴露出來
         candidates.setFontSize(font.pointSize)
-        let selectCandidateBy1to8 = UserDefaults.standard.bool(forKey: "selectCandidateBy1to8")
-        // https://github.com/pkamb/NumberInput_IMKit_Sample/issues/3
-        // 走到現在setSelectionKey api仍不可用，此api並沒有真的改變選字窗的提示選字碼，只有變成不顯示選字碼
-        if !selectCandidateBy1to8 {
-            let keyCodes = [29, 18, 19, 20, 21, 23, 22, 26, 28].map { NSNumber(value: $0) }
-            if let tisInstance = tisInstance {
-                candidates.setSelectionKeysKeylayout(tisInstance)
-            }
-            candidates.setSelectionKeys(keyCodes)
+        let settingModel = SettingViewModel.shared
+        
+        // 0-9的key
+        let keyCodes = [29, 18, 19, 20, 21, 23, 22, 26, 28, 25]
+        let candidatesNum = settingModel.candidatesNum
+        let candidatesKeyCodes = settingModel.candidatesStartFrom0 ? keyCodes[0 ... candidatesNum - 1].map { NSNumber(value: $0) } : keyCodes[1 ... candidatesNum].map { NSNumber(value: $0) }
+        if let tisInstance = tisInstance {
+            candidates.setSelectionKeysKeylayout(tisInstance)
         }
+        candidates.setSelectionKeys(candidatesKeyCodes)
+
         super.init(server: server, delegate: delegate, client: inputClient)
         activateServer(inputClient ?? client())
     }
