@@ -31,6 +31,12 @@ class InputContext {
             NotifierController.notify(message: isTradToSim ? "開啟打繁出簡" : "關閉打繁出簡")
         }
     }
+	
+	var isSpMode = false {
+		didSet {
+			NotifierController.notify(message: isSpMode ? "開啟快打模式" : "關閉快打模式")
+		}
+	}
 
     var candidates: [String] {
         get { _candidates }

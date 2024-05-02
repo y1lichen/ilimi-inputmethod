@@ -13,10 +13,20 @@ struct InputEngine {
     func getCadidatesByZhuyin(_ text: String) {
         InputContext.shared.candidates = CoreDataHelper.getCharByZhuyin(text)
     }
-	
-	// 取得自訂義的字詞
-	func getCustomPhrase(_ text: String) {
-	}
+
+    func getSpPhrase(_ text: String) -> [Phrase] {
+        let request = NSFetchRequest<Phrase>(entityName: "Phrase")
+        let keyPredicate = NSPredicate(format: "key BEGINSWITH %@", text)
+        let spPredicate = NSPredicate(format: "sp == %@", NSNumber(value: true))
+        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [keyPredicate, spPredicate])
+        request.sortDescriptors = [NSSortDescriptor(key: "key_priority", ascending: true)]
+        do {
+            let response = try PersistenceController.shared.container.viewContext.fetch(request)
+        } catch {
+            NSLog(error.localizedDescription)
+        }
+        return []
+    }
 
     // 取得以嘸蝦米輸入的候選字
     func getCandidates(_ text: String) {
@@ -44,14 +54,14 @@ struct InputEngine {
                 candidatesSet.insert(value)
                 candidates.append(value)
             }
-			// 自定義的字詞
-			let customPhrases = CustomPhraseManager.getCustomPhraseByKey(text)
-			for c in customPhrases {
-				guard let phraseValue = c.value else { return }
-				candidates.append(phraseValue)
-				candidatesSet.insert(phraseValue)
-				inputStrSet.insert(String(phraseValue.prefix(text.count + 1)))
-			}
+            // 自定義的字詞
+            let customPhrases = CustomPhraseManager.getCustomPhraseByKey(text)
+            for c in customPhrases {
+                guard let phraseValue = c.value else { return }
+                candidates.append(phraseValue)
+                candidatesSet.insert(phraseValue)
+                inputStrSet.insert(String(phraseValue.prefix(text.count + 1)))
+            }
             InputContext.shared.preInputPrefixSet = inputStrSet
             InputContext.shared.candidates = candidates
         } catch {

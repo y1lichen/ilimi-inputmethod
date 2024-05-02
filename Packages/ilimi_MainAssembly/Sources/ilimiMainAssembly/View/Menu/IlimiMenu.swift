@@ -21,6 +21,11 @@ extension IlimiInputController {
     func toggleTradToSim() {
         InputContext.shared.isTradToSim.toggle()
     }
+	
+	@objc
+	func toggleSpMode() {
+		InputContext.shared.isSpMode.toggle()
+	}
 
     @objc
     func openDataFolder() {
@@ -66,10 +71,15 @@ extension IlimiInputController {
             keyEquivalent: ""
         )
         let toggleTradToSimItem = NSMenuItem(
-            title: "打繁出簡模式",
+            title: "打繁出簡模式（,,ct)",
             action: #selector(toggleTradToSim),
             keyEquivalent: ""
         )
+		let toggleSpModelItem = NSMenuItem(
+			title: "快打模式（,,sp)",
+			action: #selector(toggleSpMode),
+			keyEquivalent: ""
+		)
         let openSettingItem = NSMenuItem(
             title: "設定",
             action: #selector(toggleSettingView),
@@ -87,9 +97,11 @@ extension IlimiInputController {
         )
         // 開啟打繁出簡模式後，在MenuItem上顯示勾符號
         toggleTradToSimItem.state = InputContext.shared.isTradToSim.state
+		toggleSpModelItem.state = InputContext.shared.isSpMode.state
         menu.items = [
             getZhuyinItem,
             toggleTradToSimItem,
+			toggleSpModelItem,
             NSMenuItem.separator(),
             openSettingItem,
             addCustomPhraseItem,
