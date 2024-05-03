@@ -244,7 +244,14 @@ extension IlimiInputController {
         }
     }
 
-    func commitText(client sender: Any!, text: String) {
+	func commitText(client sender: Any!, text: String) {
+		// 在快打模式下如果不是最簡碼不會輸出，並且會要求使用重新最簡碼重打
+		if InputContext.shared.isSpMode && !SpModeManager.checkInputIsSp(text) {
+			cleanComposition()
+			let res = SpModeManager.getSpKeyOfChar(text).joined(separator: "、")
+			NotifierController.notify(message: "\(text)的簡碼為\(res)", stay: true)
+			return
+		}
         //        client().insertText(text, replacementRange: NSMakeRange(0, text.count))
         client().insertText(text, replacementRange: notFoundRange)
         cleanComposition()
@@ -280,7 +287,8 @@ extension IlimiInputController {
             getNewCandidatesOfSamePronunciation(text: candidate, client: sender)
             return
         } else {
-            client().insertText(candidate, replacementRange: NSRange(location: 0, length: comp.count))
+			commitText(client: sender, text: candidate)
+//            client().insertText(candidate, replacementRange: NSRange(location: 0, length: comp.count))
             // 如果輸出的字元是括弧的左部，則添加到closureStack
             if InputContext.shared.isClosure(input: candidate) {
                 InputContext.shared.closureStack.append(candidate)

@@ -7,6 +7,7 @@ final class ilimiMainAssemblyTests: XCTestCase {
 		print(SpModeManager.getSpOfCharWithoutLiuTab("嘸") as Any)
 		print(SpModeManager.getSpOfCharWithoutLiuTab("蝦") as Any)
 	}
+	
 	func testConvertLiuTab() throws {
 		LiuUniTabConverter().convertLiuUniTab()
 		let sharedEngine = InputEngine.shared
