@@ -2,6 +2,11 @@
 import XCTest
 
 final class ilimiMainAssemblyTests: XCTestCase {
+	func testGetSpOfCharWithoutLiuTab() throws {
+		DataInitializer.shared.initDataWhenStart()
+		print(SpModeManager.getSpOfCharWithoutLiuTab("嘸") as Any)
+		print(SpModeManager.getSpOfCharWithoutLiuTab("蝦") as Any)
+	}
 	func testConvertLiuTab() throws {
 		LiuUniTabConverter().convertLiuUniTab()
 		let sharedEngine = InputEngine.shared
