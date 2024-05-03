@@ -14,15 +14,13 @@ struct InputEngine {
         InputContext.shared.candidates = CoreDataHelper.getCharByZhuyin(text)
     }
 
-    func getSpPhrase(_ text: String) -> [Phrase] {
+    func getNormalModePhrase(_ text: String) -> [Phrase] {
         let request = NSFetchRequest<Phrase>(entityName: "Phrase")
-        let keyPredicate = NSPredicate(format: "key BEGINSWITH %@", text)
-        let spPredicate = NSPredicate(format: "sp == %@", NSNumber(value: true))
-        request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [keyPredicate, spPredicate])
+        request.predicate = NSPredicate(format: "key BEGINSWITH %@", text)
         request.sortDescriptors = [NSSortDescriptor(key: "key_priority", ascending: true)]
         do {
             let response = try PersistenceController.shared.container.viewContext.fetch(request)
-			return response
+            return response
         } catch {
             NSLog(error.localizedDescription)
         }
@@ -36,38 +34,33 @@ struct InputEngine {
             InputContext.shared.preInputPrefixSet = []
             InputContext.shared.candidates = []
         }
-        let request = NSFetchRequest<Phrase>(entityName: "Phrase")
-        request.predicate = NSPredicate(format: "key BEGINSWITH %@", text)
-        request.sortDescriptors = [NSSortDescriptor(key: "key_priority", ascending: true)]
-        do {
-            let response = try PersistenceController.shared.container.viewContext.fetch(request)
-            var candidates: [String] = []
-            var candidatesSet: Set<String> = []
-            var inputStrSet: Set<String> = []
-            for r in response {
-                let value: String = r.value(forKey: "value") as! String
-                if let rKey = r.key, rKey.count > text.count {
-                    inputStrSet.insert(String(rKey.prefix(text.count + 1)))
-                }
-                if candidatesSet.contains(value) {
-                    continue
-                }
-                candidatesSet.insert(value)
-                candidates.append(value)
+
+        var candidates: [String] = []
+        var candidatesSet: Set<String> = []
+        var inputStrSet: Set<String> = []
+
+        let response: [Phrase] = getNormalModePhrase(text)
+        for r in response {
+            let value: String = r.value(forKey: "value") as! String
+            if let rKey = r.key, rKey.count > text.count {
+                inputStrSet.insert(String(rKey.prefix(text.count + 1)))
             }
-            // 自定義的字詞
-            let customPhrases = CustomPhraseManager.getCustomPhraseByKey(text)
-            for c in customPhrases {
-                guard let phraseValue = c.value else { return }
-                candidates.append(phraseValue)
-                candidatesSet.insert(phraseValue)
-                inputStrSet.insert(String(phraseValue.prefix(text.count + 1)))
+            if candidatesSet.contains(value) {
+                continue
             }
-            InputContext.shared.preInputPrefixSet = inputStrSet
-            InputContext.shared.candidates = candidates
-        } catch {
-            NSLog(error.localizedDescription)
+            candidatesSet.insert(value)
+            candidates.append(value)
         }
+        // 自定義的字詞
+        let customPhrases = CustomPhraseManager.getCustomPhraseByKey(text)
+        for c in customPhrases {
+            guard let phraseValue = c.value else { return }
+            candidates.append(phraseValue)
+            candidatesSet.insert(phraseValue)
+            inputStrSet.insert(String(phraseValue.prefix(text.count + 1)))
+        }
+        InputContext.shared.preInputPrefixSet = inputStrSet
+        InputContext.shared.candidates = candidates
     }
 
     // 取得相同讀音的候選字
