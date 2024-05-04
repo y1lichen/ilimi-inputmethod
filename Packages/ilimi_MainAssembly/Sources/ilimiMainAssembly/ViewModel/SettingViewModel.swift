@@ -9,7 +9,8 @@ import Foundation
 import SwiftUI
 
 class SettingViewModel: ObservableObject {
-	static let shared = SettingViewModel()
+    static let shared = SettingViewModel()
+
     // 預設字體大小 22
     @AppStorage("fontSize")
     var fontSize = 22

@@ -12,11 +12,10 @@ import InputMethodKit
 @objc(IlimiInputController)
 public class IlimiInputController: IMKInputController {
     // MARK: Lifecycle
-	let settingModel = SettingViewModel.shared
 
     override init!(server: IMKServer!, delegate: Any!, client inputClient: Any!) {
         // 候選字窗
-		let isHorizontalCandidates = settingModel.isHorizontalCandidatesPanel
+        let isHorizontalCandidates = settingModel.isHorizontalCandidatesPanel
         self.candidates = IMKCandidates(
             server: server,
             panelType: isHorizontalCandidates
@@ -95,6 +94,8 @@ public class IlimiInputController: IMKInputController {
     // MARK: Internal
 
     static var prefixHasCandidates = true
+
+    let settingModel = SettingViewModel.shared
 
     let tisInstance: TISInputSource? = TISInputSource.match(
         identifiers: [LatinKeyboardMappings.qwertyIlimi.rawValue]

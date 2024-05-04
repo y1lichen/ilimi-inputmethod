@@ -99,7 +99,11 @@ extension IlimiInputController {
                 let limitInputWhenNoCandidate = UserDefaults.standard.bool(forKey: "limitInputWhenNoCandidate")
                 if limitInputWhenNoCandidate,
                    (settingModel.showOnlyExactlyMatch && InputContext.shared.getCurrentInput().count >= 5)
-                   || (!settingModel.showOnlyExactlyMatch && InputContext.shared.getCurrentInput().count >= 5 || !IlimiInputController.prefixHasCandidates),
+                   ||
+                   (
+                       !settingModel.showOnlyExactlyMatch && InputContext.shared.getCurrentInput()
+                           .count >= 5 || !IlimiInputController.prefixHasCandidates
+                   ),
                    InputContext.shared.getCurrentInput().prefix(2) != ",,",
                    InputContext.shared.getCurrentInput().prefix(2) != "';" {
                     beep()
