@@ -6,8 +6,7 @@ import CoreData
 import Foundation
 
 class CinReader {
-
-	let liuCinPath = DataInitializer.appSupportDir + "/liu.cin"
+    let liuCinPath = DataInitializer.appSupportDir + "/liu.cin"
 
     let persistenceContainer = PersistenceController.shared
     let userDefaults = UserDefaults.standard
@@ -52,11 +51,11 @@ class CinReader {
             persistenceContainer.saveContext()
             // hadReadLiuJson就先不改名成hadReadLiu了...
             userDefaults.set(true, forKey: "hadReadLiuJson")
-			NotifierController.notify(message: "自liu.cin讀取\(priority)個字元", stay: true)
-		} catch {
-			NSLog(error.localizedDescription)
-			NotifierController.notify(message: "讀取cin字檔錯誤")
-		}
+            NotifierController.notify(message: "自liu.cin讀取\(priority)個字元", stay: true)
+        } catch {
+            NSLog(error.localizedDescription)
+            NotifierController.notify(message: "讀取cin字檔錯誤")
+        }
     }
 
     func writeData(_ key: String, _ value: String, _ priority: Int64) {
@@ -68,7 +67,7 @@ class CinReader {
         model.key_priority = priority
         model.key = key
         model.value = value
-		model.sp = false
+        model.sp = false
     }
 
     func getDocumentsDirectory() -> URL {

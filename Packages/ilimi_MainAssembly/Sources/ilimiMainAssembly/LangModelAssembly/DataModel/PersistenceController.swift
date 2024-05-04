@@ -5,8 +5,6 @@
 import CoreData
 import Foundation
 
-import CoreData
-
 struct PersistenceController {
     // MARK: Lifecycle
 
@@ -37,7 +35,7 @@ struct PersistenceController {
             do {
                 try context.save()
             } catch {
-				context.rollback()
+                context.rollback()
                 let nserror = error as NSError
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }

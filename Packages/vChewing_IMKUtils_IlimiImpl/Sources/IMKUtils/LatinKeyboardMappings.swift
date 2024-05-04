@@ -23,9 +23,11 @@ public enum LatinKeyboardMappings: String, CaseIterable {
     case dvorakLeft = "com.apple.keylayout.Dvorak-Left"
     case dvorakRight = "com.apple.keylayout.Dvorak-Right"
 
+    // MARK: Public
+
     public var mapTable: [UInt16: (String, String)] {
         switch self {
-        case .qwerty, .qwertyIlimi, .qwertyUS, .qwertyBritish: return Self.dictQwerty
+        case .qwerty, .qwertyBritish, .qwertyIlimi, .qwertyUS: return Self.dictQwerty
         case .azerty, .azertyFrench: return Self.dictAzerty
         case .qwertz, .qwertzGerman: return Self.dictQwertz
         case .colemak: return Self.dictColemak
@@ -34,6 +36,8 @@ public enum LatinKeyboardMappings: String, CaseIterable {
         case .dvorakRight: return Self.dictDvorakRight
         }
     }
+
+    // MARK: Private
 
     private static let dictQwerty: [UInt16: (String, String)] = [
         0: ("a", "A"), 1: ("s", "S"), 2: ("d", "D"), 3: ("f", "F"), 4: ("h", "H"), 5: ("g", "G"),

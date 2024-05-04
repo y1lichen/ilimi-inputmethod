@@ -20,10 +20,10 @@ class SpModeManager {
     static func checkInputIsSp(_ text: String) -> Bool {
         let isLoadByLiu = UserDefaults.standard.bool(forKey: "isLoadByLiuUniTab")
         let input = InputContext.shared.getCurrentInput()
-        if isLoadByLiu && !getSpOfCharWithLiuTab(text).contains(input) {
+        if isLoadByLiu, !getSpOfCharWithLiuTab(text).contains(input) {
             return false
         }
-        if !isLoadByLiu && !getSpOfCharWithoutLiuTab(text).contains(input) {
+        if !isLoadByLiu, !getSpOfCharWithoutLiuTab(text).contains(input) {
             return false
         }
         return true

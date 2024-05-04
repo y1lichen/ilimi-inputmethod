@@ -16,7 +16,7 @@ public class IlimiInputController: IMKInputController {
     override init!(server: IMKServer!, delegate: Any!, client inputClient: Any!) {
         // 候選字窗
         let isHorizontalCandidates = UserDefaults.standard.bool(forKey: "isHorizontalCandidatesPanel")
-        candidates = IMKCandidates(
+        self.candidates = IMKCandidates(
             server: server,
             panelType: isHorizontalCandidates
                 ? kIMKScrollingGridCandidatePanel : kIMKSingleColumnScrollingCandidatePanel
@@ -60,16 +60,6 @@ public class IlimiInputController: IMKInputController {
         }
     }
 
-    override public func deactivateServer(_ sender: Any!) {
-        //        guard sender is IMKTextInput else {
-        //            return
-        //        }
-//        DispatchQueue.main.async { [self] in
-//            cancelComposition()
-//        }
-        super.deactivateServer(sender)
-    }
-
     override public func selectionRange() -> NSRange {
         notFoundRange
     }
@@ -99,10 +89,6 @@ public class IlimiInputController: IMKInputController {
     override public func inputControllerWillClose() {
         cleanComposition()
         super.inputControllerWillClose()
-    }
-
-    override public func cancelComposition() {
-        super.cancelComposition()
     }
 
     // MARK: Internal
@@ -244,14 +230,14 @@ extension IlimiInputController {
         }
     }
 
-	func commitText(client sender: Any!, text: String) {
-		// 在快打模式下如果不是最簡碼不會輸出，並且會要求使用重新最簡碼重打
-		if InputContext.shared.isSpMode && !SpModeManager.checkInputIsSp(text) {
-			cleanComposition()
-			let res = SpModeManager.getSpKeyOfChar(text).joined(separator: "、")
-			NotifierController.notify(message: "\(text)的簡碼為\(res)", stay: true)
-			return
-		}
+    func commitText(client sender: Any!, text: String) {
+        // 在快打模式下如果不是最簡碼不會輸出，並且會要求使用重新最簡碼重打
+        if InputContext.shared.isSpMode, !SpModeManager.checkInputIsSp(text) {
+            cleanComposition()
+            let res = SpModeManager.getSpKeyOfChar(text).joined(separator: "、")
+            NotifierController.notify(message: "\(text)的簡碼為\(res)", stay: true)
+            return
+        }
         //        client().insertText(text, replacementRange: NSMakeRange(0, text.count))
         client().insertText(text, replacementRange: notFoundRange)
         cleanComposition()
@@ -287,7 +273,7 @@ extension IlimiInputController {
             getNewCandidatesOfSamePronunciation(text: candidate, client: sender)
             return
         } else {
-			commitText(client: sender, text: candidate)
+            commitText(client: sender, text: candidate)
 //            client().insertText(candidate, replacementRange: NSRange(location: 0, length: comp.count))
             // 如果輸出的字元是括弧的左部，則添加到closureStack
             if InputContext.shared.isClosure(input: candidate) {
