@@ -8,23 +8,32 @@
 import Foundation
 
 class CustomPhraseViewModel: ObservableObject {
-    @Published var key: String = ""
-    @Published var value: String = ""
+    // MARK: Lifecycle
 
-    @Published var showEditSheet = false
+    init() {
+        fetchData()
+    }
 
-    @Published var showAddSheet = false
+    // MARK: Internal
+
+    @Published
+    var key: String = ""
+    @Published
+    var value: String = ""
+
+    @Published
+    var showEditSheet = false
+
+    @Published
+    var showAddSheet = false
     var selected = Set<CustomPhrase.ID>()
 
     var customPhraseToBeEdited: CustomPhrase?
 
     //	static var shared = CustomPhraseViewModel()
 
-    @Published var customPhrases: [CustomPhrase] = []
-
-    init() {
-        fetchData()
-    }
+    @Published
+    var customPhrases: [CustomPhrase] = []
 
     func fetchData() {
         customPhrases = CustomPhraseManager.getAllCustomPhrase()
@@ -39,12 +48,6 @@ class CustomPhraseViewModel: ObservableObject {
         CustomPhraseManager.addCustomPhrase(key: key, value: value)
         fetchData()
         clearKeyValue()
-    }
-
-    private func clearKeyValue() {
-        key = ""
-        value = ""
-        customPhraseToBeEdited = nil
     }
 
     func openEditView(_ customPhrase: CustomPhrase) {
@@ -70,9 +73,17 @@ class CustomPhraseViewModel: ObservableObject {
 
     func checkIsValid() -> Bool {
         if key.count > 5 {
-			NotifierController.notify(message: "自訂字詞的字碼以5碼為上限")
+            NotifierController.notify(message: "自訂字詞的字碼以5碼為上限")
             return false
         }
         return true
+    }
+
+    // MARK: Private
+
+    private func clearKeyValue() {
+        key = ""
+        value = ""
+        customPhraseToBeEdited = nil
     }
 }
