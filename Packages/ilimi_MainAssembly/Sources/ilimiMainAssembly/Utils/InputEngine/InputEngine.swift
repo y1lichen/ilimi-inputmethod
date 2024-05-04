@@ -17,7 +17,7 @@ struct InputEngine {
     func getNormalModePhrase(_ text: String) -> [Phrase] {
         let request = NSFetchRequest<Phrase>(entityName: "Phrase")
 //        request.predicate = NSPredicate(format: "key BEGINSWITH %@", text)
-		request.predicate = NSPredicate(format: "key == %@", text)
+        request.predicate = NSPredicate(format: "key == %@", text)
         request.sortDescriptors = [NSSortDescriptor(key: "key_priority", ascending: true)]
         do {
             let response = try PersistenceController.shared.container.viewContext.fetch(request)

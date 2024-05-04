@@ -12,22 +12,23 @@ import InputMethodKit
 @objc(IlimiInputController)
 public class IlimiInputController: IMKInputController {
     // MARK: Lifecycle
+	let settingModel = SettingViewModel.shared
 
     override init!(server: IMKServer!, delegate: Any!, client inputClient: Any!) {
         // 候選字窗
-        let isHorizontalCandidates = UserDefaults.standard.bool(forKey: "isHorizontalCandidatesPanel")
+		let isHorizontalCandidates = settingModel.isHorizontalCandidatesPanel
         self.candidates = IMKCandidates(
             server: server,
             panelType: isHorizontalCandidates
                 ? kIMKScrollingGridCandidatePanel : kIMKSingleColumnScrollingCandidatePanel
         )
         var attributes = candidates.attributes()
-        let fontSize = UserDefaults.standard.integer(forKey: "fontSize")
+        let fontSize = settingModel.fontSize
         let font = NSFont.systemFont(ofSize: CGFloat(fontSize))
         attributes?[NSAttributedString.Key.font] = font
         // 若只設attributes無法調整字體大小，setFontSize方法使用bridging header暴露出來
         candidates.setFontSize(font.pointSize)
-        let selectCandidateBy1to8 = UserDefaults.standard.bool(forKey: "selectCandidateBy1to8")
+        let selectCandidateBy1to8 = settingModel.selectCandidateBy1to8
         // https://github.com/pkamb/NumberInput_IMKit_Sample/issues/3
         // 走到現在setSelectionKey api仍不可用，此api並沒有真的改變選字窗的提示選字碼，只有變成不顯示選字碼
         if !selectCandidateBy1to8 {

@@ -6,7 +6,7 @@ import AppKit
 
 extension IlimiInputController {
     func beep() {
-        let isSilentMode = UserDefaults.standard.bool(forKey: "silentMode")
+		let isSilentMode = settingModel.silentMode
         if isSilentMode {
             return
         }

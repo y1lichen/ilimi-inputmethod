@@ -98,7 +98,8 @@ extension IlimiInputController {
                 // 使用者可設定在沒有候選字時限制輸入
                 let limitInputWhenNoCandidate = UserDefaults.standard.bool(forKey: "limitInputWhenNoCandidate")
                 if limitInputWhenNoCandidate,
-                   InputContext.shared.getCurrentInput().count >= 5 || !IlimiInputController.prefixHasCandidates,
+                   (settingModel.showOnlyExactlyMatch && InputContext.shared.getCurrentInput().count >= 5)
+                   || (!settingModel.showOnlyExactlyMatch && InputContext.shared.getCurrentInput().count >= 5 || !IlimiInputController.prefixHasCandidates),
                    InputContext.shared.getCurrentInput().prefix(2) != ",,",
                    InputContext.shared.getCurrentInput().prefix(2) != "';" {
                     beep()
