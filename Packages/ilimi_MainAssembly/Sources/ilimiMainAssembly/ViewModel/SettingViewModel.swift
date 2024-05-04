@@ -18,6 +18,9 @@ class SettingViewModel: ObservableObject {
     // 預設不在沒有候選字時限制輸入
     @AppStorage("limitInputWhenNoCandidate")
     var limitInputWhenNoCandidate = false
+	// 預設只顯示完全匹配字碼的字元
+	@AppStorage("showOnlyExactlyMatch")
+	var showOnlyExactlyMatch = true
     // 預設使用注音輸入後提示拆碼
     @AppStorage("showLiuKeyAfterZhuyin")
     var showLiuKeyAfterZhuyin = true
