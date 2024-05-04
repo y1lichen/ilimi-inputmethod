@@ -98,10 +98,10 @@ extension IlimiInputController {
                 // 使用者可設定在沒有候選字時限制輸入
                 let limitInputWhenNoCandidate = UserDefaults.standard.bool(forKey: "limitInputWhenNoCandidate")
                 if limitInputWhenNoCandidate,
-                   (settingModel.showOnlyExactlyMatch && InputContext.shared.getCurrentInput().count >= 5)
+                   (SettingViewModel.shared.showOnlyExactlyMatch && InputContext.shared.getCurrentInput().count >= 5)
                    ||
                    (
-                       !settingModel.showOnlyExactlyMatch && (
+                       !SettingViewModel.shared.showOnlyExactlyMatch && (
                            InputContext.shared.getCurrentInput()
                                .count >= 5 || !IlimiInputController.prefixHasCandidates
                        )
@@ -149,14 +149,22 @@ extension IlimiInputController {
     // 參考https://liuzmd1.pixnet.net/blog/3
     // 如果加輔助字根有候選字，輔助字根無效
     func handleAssistChar(_ inputStr: String, _ sender: Any!) -> Bool {
-        if !isZhuyinMode,
-           assistSelectChar.chr.isEmpty,
+        if isZhuyinMode {
+            return false
+        }
+        if assistSelectChar.chr.isEmpty,
            !(InputContext.shared.preInputPrefixSet.contains(InputContext.shared.getCurrentInput() + inputStr)),
-           InputContext.shared.candidatesCount > 1 {
+           InputContext.shared.candidatesCount > 0 {
             if let idx = assistantDict[inputStr] {
                 assistSelectChar = (chr: inputStr, pos: InputContext.shared.getCurrentInput().count)
                 if idx >= InputContext.shared.candidatesCount {
-                    beep()
+                    if !SettingViewModel.shared.showOnlyExactlyMatch {
+                        beep()
+                    } else {
+                        // 如果是完全匹配模式，而idx超過候選字代表這個字不是輔助字根
+                        InputContext.shared.appendCurrentInput(inputStr)
+                        setMarkedText(InputContext.shared.getCurrentInput())
+                    }
                     return true
                 }
                 let prevIdx = InputContext.shared.currentIndex
@@ -173,10 +181,6 @@ extension IlimiInputController {
                 InputContext.shared.appendCurrentInput(inputStr)
                 setMarkedText(InputContext.shared.getCurrentInput())
                 return true
-                // 不直接輸出候選字
-//              if selectCandidatesByNumAndCommit(client: sender, id: id) {
-//                  return true
-//              }
             }
         }
         return false
