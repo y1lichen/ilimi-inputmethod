@@ -24,6 +24,12 @@ struct GeneralSettingsView: View {
 					settingViewModel.killApplicationToReload()
                 }
                 .pickerStyle(RadioGroupPickerStyle())
+				Picker("只顯示完全匹配字碼的候選字", selection: $settingViewModel.showOnlyExactlyMatch) {
+					Text("是").tag(true)
+					Text("否").tag(false)
+				}
+				.pickerStyle(RadioGroupPickerStyle())
+				.horizontalRadioGroupLayout()
 				Picker("在沒有候選字時限制輸入", selection: $settingViewModel.limitInputWhenNoCandidate) {
                     Text("是").tag(true)
                     Text("否").tag(false)

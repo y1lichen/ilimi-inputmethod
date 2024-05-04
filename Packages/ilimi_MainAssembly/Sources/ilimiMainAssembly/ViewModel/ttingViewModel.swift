@@ -27,6 +27,9 @@ class SettingViewModel: ObservableObject {
 	// 靜音模式
 	@AppStorage("silentMode")
 	var silentMode = false
+	// 預設只顯示完全匹配字碼的候選字
+	@AppStorage("showOnlyExactlyMatch")
+	var showOnlyExactlyMatch = true
 
 	let fontSizeValues = [14, 16, 18, 20, 22, 24, 28, 32]
 
