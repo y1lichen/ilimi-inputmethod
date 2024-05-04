@@ -6,6 +6,7 @@ import Cocoa
 import IMKCandidatesImpl
 import IMKUtils
 import InputMethodKit
+import SwiftUI
 
 // MARK: - IlimiInputController
 
@@ -96,7 +97,6 @@ public class IlimiInputController: IMKInputController {
     static var prefixHasCandidates = true
 
     let settingModel = SettingViewModel.shared
-
     let tisInstance: TISInputSource? = TISInputSource.match(
         identifiers: [LatinKeyboardMappings.qwertyIlimi.rawValue]
     ).first

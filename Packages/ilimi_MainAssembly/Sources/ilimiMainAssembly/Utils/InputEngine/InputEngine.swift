@@ -5,9 +5,13 @@
 import AppKit
 import CoreData
 import Foundation
+import SwiftUI
 
 struct InputEngine {
     static let shared = InputEngine()
+
+    @StateObject
+    var settingsModel = SettingViewModel.shared
 
     // 取得以注音輸入的候選字
     func getCadidatesByZhuyin(_ text: String) {
@@ -16,8 +20,9 @@ struct InputEngine {
 
     func getNormalModePhrase(_ text: String) -> [Phrase] {
         let request = NSFetchRequest<Phrase>(entityName: "Phrase")
-//        request.predicate = NSPredicate(format: "key BEGINSWITH %@", text)
-        request.predicate = NSPredicate(format: "key == %@", text)
+        request.predicate = settingsModel
+            .showOnlyExactlyMatch ? NSPredicate(format: "key == %@", text) :
+            NSPredicate(format: "key BEGINSWITH %@", text)
         request.sortDescriptors = [NSSortDescriptor(key: "key_priority", ascending: true)]
         do {
             let response = try PersistenceController.shared.container.viewContext.fetch(request)

@@ -10,7 +10,7 @@ struct GeneralSettingsView: View {
     var settingViewModel = SettingViewModel()
 
     var body: some View {
-        VStack {
+        ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 20) {
                 Picker("字體大小", selection: $settingViewModel.fontSize) {
                     fontPickerContent()
@@ -58,7 +58,9 @@ struct GeneralSettingsView: View {
                 }
                 .pickerStyle(RadioGroupPickerStyle())
                 .horizontalRadioGroupLayout()
-            }.frame(width: 250)
+            }
+            .frame(width: 250)
+            .padding()
         }
         .frame(width: 450, height: 250)
     }

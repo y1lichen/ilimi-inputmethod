@@ -101,8 +101,10 @@ extension IlimiInputController {
                    (settingModel.showOnlyExactlyMatch && InputContext.shared.getCurrentInput().count >= 5)
                    ||
                    (
-                       !settingModel.showOnlyExactlyMatch && InputContext.shared.getCurrentInput()
-                           .count >= 5 || !IlimiInputController.prefixHasCandidates
+                       !settingModel.showOnlyExactlyMatch && (
+                           InputContext.shared.getCurrentInput()
+                               .count >= 5 || !IlimiInputController.prefixHasCandidates
+                       )
                    ),
                    InputContext.shared.getCurrentInput().prefix(2) != ",,",
                    InputContext.shared.getCurrentInput().prefix(2) != "';" {
@@ -150,7 +152,7 @@ extension IlimiInputController {
         if !isZhuyinMode,
            assistSelectChar.chr.isEmpty,
            !(InputContext.shared.preInputPrefixSet.contains(InputContext.shared.getCurrentInput() + inputStr)),
-           InputContext.shared.candidatesCount > 0 {
+           InputContext.shared.candidatesCount > 1 {
             if let idx = assistantDict[inputStr] {
                 assistSelectChar = (chr: inputStr, pos: InputContext.shared.getCurrentInput().count)
                 if idx >= InputContext.shared.candidatesCount {
