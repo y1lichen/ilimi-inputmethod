@@ -24,7 +24,10 @@ case 1:
 default: exit(0)
 }
 
-guard let server = IMKServer(name: Bundle.main.infoDictionary?["InputMethodConnectionName"] as? String, bundleIdentifier: Bundle.main.bundleIdentifier) else {
+guard let server = IMKServer(
+    name: Bundle.main.infoDictionary?["InputMethodConnectionName"] as? String,
+    bundleIdentifier: Bundle.main.bundleIdentifier
+) else {
     NSLog(
         "ilimiDebug: Fatal error: Cannot initialize input method server with connection name retrieved from the plist, nor there's no connection name in the plist."
     )

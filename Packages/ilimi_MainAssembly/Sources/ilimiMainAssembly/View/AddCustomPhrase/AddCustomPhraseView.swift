@@ -6,7 +6,8 @@ import Foundation
 import SwiftUI
 
 struct AddCustomPhraseView: View {
-    @StateObject var viewModel = CustomPhraseViewModel()
+    @StateObject
+    var viewModel = CustomPhraseViewModel()
 
     var body: some View {
         VStack {
@@ -18,7 +19,7 @@ struct AddCustomPhraseView: View {
                     Text($0.value ?? "")
                 }
             }
-		rows: {
+            rows: {
                 ForEach(viewModel.customPhrases) { phrase in
                     TableRow(phrase)
                         .contextMenu {

@@ -6,23 +6,7 @@ import AppKit
 import SwiftUI
 
 public struct MainView: View {
-    static let strCopyrightLabel = Bundle.main.localizedInfoDictionary?["NSHumanReadableCopyright"] as? String ?? "BAD_COPYRIGHT_LABEL"
-
-    @State var pendingSheetPresenting = false
-    @State var isShowingAlertForFailedInstallation = false
-    @State var isShowingAlertForMissingPostInstall = false
-    @State var isShowingPostInstallNotification = false
-    @State var currentAlertContent: AlertType = .nothing
-    @State var isCancelButtonEnabled = true
-    @State var isAgreeButtonEnabled = true
-    @State var isPreviousVersionNotFullyDeactivated = false
-    @State var isTranslocationFinished: Bool?
-    @State var isUpgrading = false
-
-    var translocationRemovalStartTime: Date?
-
-    @State var timeRemaining = 60
-    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    // MARK: Lifecycle
 
     public init() {
         if FileManager.default.fileExists(atPath: kTargetPartialPath) {
@@ -30,12 +14,13 @@ public struct MainView: View {
             let shortVersion = currentBundle?.infoDictionary?["CFBundleShortVersionString"] as? String
             let currentVersion = currentBundle?.infoDictionary?[kCFBundleVersionKey as String] as? String
             if shortVersion != nil, let currentVersion = currentVersion,
-               currentVersion.compare(installingVersion, options: .numeric) == .orderedAscending
-            {
-                isUpgrading = true
+               currentVersion.compare(installingVersion, options: .numeric) == .orderedAscending {
+                self.isUpgrading = true
             }
         }
     }
+
+    // MARK: Public
 
     public var body: some View {
         GroupBox {
@@ -143,10 +128,37 @@ public struct MainView: View {
         .foregroundStyle(Color(nsColor: NSColor.textColor))
         .background(Color(nsColor: NSColor.windowBackgroundColor))
         .clipShape(RoundedRectangle(cornerRadius: 16))
-        .frame(minWidth: 533, idealWidth: 533, maxWidth: 533,
-               minHeight: 386, idealHeight: 386, maxHeight: 386,
-               alignment: .top)
+        .frame(
+            minWidth: 533,
+            idealWidth: 533,
+            maxWidth: 533,
+            minHeight: 386,
+            idealHeight: 386,
+            maxHeight: 386,
+            alignment: .top
+        )
     }
+
+    // MARK: Internal
+
+    static let strCopyrightLabel = Bundle.main
+        .localizedInfoDictionary?["NSHumanReadableCopyright"] as? String ?? "BAD_COPYRIGHT_LABEL"
+
+    @State var pendingSheetPresenting = false
+    @State var isShowingAlertForFailedInstallation = false
+    @State var isShowingAlertForMissingPostInstall = false
+    @State var isShowingPostInstallNotification = false
+    @State var currentAlertContent: AlertType = .nothing
+    @State var isCancelButtonEnabled = true
+    @State var isAgreeButtonEnabled = true
+    @State var isPreviousVersionNotFullyDeactivated = false
+    @State var isTranslocationFinished: Bool?
+    @State var isUpgrading = false
+
+    var translocationRemovalStartTime: Date?
+
+    @State var timeRemaining = 60
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     func installationButtonClicked() {
         isCancelButtonEnabled = false
