@@ -46,7 +46,7 @@ public class CustomPhraseManager {
     static func getCustomPhraseByKey(_ key: String) -> [CustomPhrase] {
         let request = NSFetchRequest<CustomPhrase>(entityName: "CustomPhrase")
         request.sortDescriptors = [NSSortDescriptor(keyPath: \CustomPhrase.timestp, ascending: true)]
-        request.predicate = NSPredicate(format: "key BEGINSWITH %@", key)
+        request.predicate = SettingViewModel.shared.showOnlyExactlyMatch ? NSPredicate(format: "key == %@", key) : NSPredicate(format: "key BEGINSWITH %@", key)
         do {
             let response = try PersistenceController.shared.container.viewContext.fetch(request)
             return response
