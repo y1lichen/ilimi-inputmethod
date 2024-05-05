@@ -35,6 +35,7 @@ struct SheetView: View {
             HStack {
                 Button("取消") {
                     viewModel.showAddSheet = false
+                    viewModel.showEditSheet = false
                 }
                 Spacer()
                 Button("完成") {
