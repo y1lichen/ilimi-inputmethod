@@ -152,6 +152,15 @@ extension IlimiInputController {
         if isZhuyinMode {
             return false
         }
+        // 在完全匹配模式下先檢查加上這個字碼後有沒有對應字元，若有就不進入輔助字根機制
+        if SettingViewModel.shared.showOnlyExactlyMatch {
+            let newPhrases = InputEngine.shared.getNormalModePhrase(InputContext.shared.getCurrentInput() + inputStr)
+            if !newPhrases.isEmpty {
+                InputContext.shared.appendCurrentInput(inputStr)
+                updateCandidatesWindow()
+                return true
+            }
+        }
         if assistSelectChar.chr.isEmpty,
            !(InputContext.shared.preInputPrefixSet.contains(InputContext.shared.getCurrentInput() + inputStr)),
            InputContext.shared.candidatesCount > 0 {
