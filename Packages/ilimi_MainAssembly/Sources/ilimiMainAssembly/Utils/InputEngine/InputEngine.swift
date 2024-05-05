@@ -33,6 +33,34 @@ struct InputEngine {
         return []
     }
 
+    func setCandidates(_ phrases: [Phrase], _ text: String) {
+        var candidates: [String] = []
+        var candidatesSet: Set<String> = []
+        var inputStrSet: Set<String> = []
+
+        for r in phrases {
+            let value: String = r.value(forKey: "value") as! String
+            if let rKey = r.key, rKey.count > text.count {
+                inputStrSet.insert(String(rKey.prefix(text.count + 1)))
+            }
+            if candidatesSet.contains(value) {
+                continue
+            }
+            candidatesSet.insert(value)
+            candidates.append(value)
+        }
+        // 自定義的字詞
+        let customPhrases = CustomPhraseManager.getCustomPhraseByKey(text)
+        for c in customPhrases {
+            guard let phraseValue = c.value else { return }
+            candidates.append(phraseValue)
+            candidatesSet.insert(phraseValue)
+            inputStrSet.insert(String(phraseValue.prefix(text.count + 1)))
+        }
+        InputContext.shared.preInputPrefixSet = inputStrSet
+        InputContext.shared.candidates = candidates
+    }
+
     // 取得以嘸蝦米輸入的候選字
     func getCandidates(_ text: String) {
         // 輸入碼太長的話就不用查詢，節省資源

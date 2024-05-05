@@ -156,8 +156,11 @@ extension IlimiInputController {
         if SettingViewModel.shared.showOnlyExactlyMatch {
             let newPhrases = InputEngine.shared.getNormalModePhrase(InputContext.shared.getCurrentInput() + inputStr)
             if !newPhrases.isEmpty {
+				// 直接在這輸入字元，以免要多查找一次coredata
                 InputContext.shared.appendCurrentInput(inputStr)
-                updateCandidatesWindow()
+                setMarkedText(InputContext.shared.getCurrentInput())
+                InputEngine.shared.setCandidates(newPhrases, inputStr)
+                showCandidatesWindow(client: sender)
                 return true
             }
         }

@@ -200,6 +200,12 @@ extension IlimiInputController {
         candidates.setWindowLevel(UInt64(CGShieldingWindowLevel() + 2))
     }
 
+    func showCandidatesWindow(client sender: Any!) {
+        candidates.update()
+        candidates.show()
+        ensureWindowLevel(client: sender)
+    }
+
     func getNewCandidates(comp: String, client sender: Any!) {
         if !comp.isEmpty {
             InputEngine.shared.getCandidates(comp)
@@ -207,9 +213,7 @@ extension IlimiInputController {
                 candidates.hide()
                 return
             }
-            candidates.update()
-            candidates.show()
-            ensureWindowLevel(client: sender)
+            showCandidatesWindow(client: sender)
         } else {
             candidates.hide()
         }
