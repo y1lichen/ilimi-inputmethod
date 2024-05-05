@@ -163,6 +163,7 @@ extension IlimiInputController {
                         return true
                     }
                     // 如果是完全匹配模式，而idx超過候選字代表這個字不是輔助字根
+                    clearAssistSelectChar()
                     return false
                 }
                 let prevIdx = InputContext.shared.currentIndex
