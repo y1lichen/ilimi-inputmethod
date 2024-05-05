@@ -52,33 +52,42 @@ chmod +x ./build.sh
 
 輸入';即可使用注音輸入
 
-5. 英數模式
+5.  SP快打模式
+
+輸入,,sp可進入快打模式。若輸入字碼不是最簡碼會顯示該字最簡碼，並要求使用者重輸。
+
+最簡碼機制如下：
+- 使用liu-uni.tab字根檔：直接使用字根檔中之標注
+- 使用liu.cin、liu.json等字檔：尋找輸入文字之最簡字碼。若最簡字碼不只一者，則利用輸入這些最簡字碼時該文字的順位決定是否為最簡碼。 
+
+6. 英數模式
 
 使用CapsLock即可切換英數模式
 
 ![英數模式](https://github.com/y1lichen/ilimi-inputmethod/blob/main/media/ascii_demo.gif)
  
-6. 反查注音、輸入碼
+7. 反查注音、輸入碼
 
 輸入 **,,q** 可快速開啟反查注音/查碼畫面
 
 ![反查](https://github.com/y1lichen/ilimi-inputmethod/blob/main/media/demo03.gif)
 
-7. 同音輸入
+8. 同音輸入
 
 ![同音輸入](https://github.com/y1lichen/ilimi-inputmethod/blob/main/media/demo04.gif)
 
-8. 全形模式
+9. 全形模式
 
 輸入shift+空白鍵可以進入全形模式
  
-9.  自訂加詞
+10.  自訂加詞
 ![自訂加詞](https://github.com/y1lichen/ilimi-inputmethod/blob/main/media/custom_phrase_demo.png)
 
 ## 可自定義項目
 
 - 選字窗字體大小
 - 選字窗樣式（直式、橫式）
+- 是否只顯示完全匹配輸入字碼之字元
 - 是否在沒有候選字時限制輸入（在沒候選字時按下enter可以直接輸入英文字母）
 - 是否在使用注音輸入後提示拆碼
 - 靜音模式（在輸入錯誤時發出beep）
