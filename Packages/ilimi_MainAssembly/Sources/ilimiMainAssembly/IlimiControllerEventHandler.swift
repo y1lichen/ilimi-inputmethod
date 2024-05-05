@@ -156,7 +156,7 @@ extension IlimiInputController {
         if SettingViewModel.shared.showOnlyExactlyMatch {
             let newPhrases = InputEngine.shared.getNormalModePhrase(InputContext.shared.getCurrentInput() + inputStr)
             if !newPhrases.isEmpty {
-				// 直接在這輸入字元，以免要多查找一次coredata
+                // 直接在這輸入字元，以免要多查找一次coredata
                 InputContext.shared.appendCurrentInput(inputStr)
                 setMarkedText(InputContext.shared.getCurrentInput())
                 InputEngine.shared.setCandidates(newPhrases, inputStr)
@@ -180,13 +180,22 @@ extension IlimiInputController {
                 }
                 let prevIdx = InputContext.shared.currentIndex
                 InputContext.shared.currentIndex = idx
+                let isHorizontalCandidatesPanel = SettingViewModel.shared.isHorizontalCandidatesPanel
                 if prevIdx < idx {
                     for _ in prevIdx ... idx - 1 {
-                        candidates.moveRight(sender)
+                        if isHorizontalCandidatesPanel {
+                            candidates.moveRight(sender)
+                        } else {
+                            candidates.moveDown(sender)
+                        }
                     }
                 } else if prevIdx > idx {
                     for _ in idx ... prevIdx - 1 {
-                        candidates.moveLeft(sender)
+                        if isHorizontalCandidatesPanel {
+                            candidates.moveLeft(sender)
+                        } else {
+                            candidates.moveUp(sender)
+                        }
                     }
                 }
                 InputContext.shared.appendCurrentInput(inputStr)
