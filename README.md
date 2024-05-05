@@ -74,6 +74,8 @@ chmod +x ./build.sh
 
 8. 同音輸入
 
+輸入\後再輸入文字，就會出現和輸入的字同音的字
+
 ![同音輸入](https://github.com/y1lichen/ilimi-inputmethod/blob/main/media/demo04.gif)
 
 9. 全形模式
