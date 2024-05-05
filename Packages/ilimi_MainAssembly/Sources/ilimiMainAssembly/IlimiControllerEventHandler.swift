@@ -160,12 +160,10 @@ extension IlimiInputController {
                 if idx >= InputContext.shared.candidatesCount {
                     if !SettingViewModel.shared.showOnlyExactlyMatch {
                         beep()
-                    } else {
-                        // 如果是完全匹配模式，而idx超過候選字代表這個字不是輔助字根
-                        InputContext.shared.appendCurrentInput(inputStr)
-                        setMarkedText(InputContext.shared.getCurrentInput())
+                        return true
                     }
-                    return true
+                    // 如果是完全匹配模式，而idx超過候選字代表這個字不是輔助字根
+                    return false
                 }
                 let prevIdx = InputContext.shared.currentIndex
                 InputContext.shared.currentIndex = idx
