@@ -52,4 +52,8 @@ final class ilimiMainAssemblyTests: XCTestCase {
         XCTAssertNotEqual(0, sharedInputContext.candidates.count)
         print(sharedInputContext.candidates)
     }
+
+    func testCheckUpdate() throws {
+        UpdateManager.checkUpdate()
+    }
 }
