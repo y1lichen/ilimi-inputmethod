@@ -314,45 +314,35 @@ extension IlimiInputController {
     // 看起來不用特別分別對直式或橫式候選字窗做處理
     func handleCandidatesWindowNavigation(_ event: NSEvent, client sender: Any!) -> Bool {
         if let key = event.characters?.first {
-            if key == "[" {
-                candidates.moveUp(sender)
+            if key == "<" {
+                if SettingViewModel.shared.isHorizontalCandidatesPanel {
+                    candidates.moveUp(sender)
+                } else {
+                    candidates.moveLeft(sender)
+                }
                 return true
-            } else if key == "]" {
-                candidates.moveDown(sender)
+            } else if key == ">" {
+                if SettingViewModel.shared.isHorizontalCandidatesPanel {
+                    candidates.moveDown(sender)
+                } else {
+                    candidates.moveRight(sender)
+                }
                 return true
             }
         }
         // 即使已經在最左或最右也要攔截左﹑右方向鍵事件。否則輸入法會在再次按下方向鍵時卡死
         var isArrow = false
         if event.keyCode == kVK_RightArrow {
-            if InputContext.shared.currentIndex < InputContext.shared.candidatesCount - 1 {
-//                InputContext.shared.currentIndex += 1
-                candidates.moveRight(sender)
-            }
+            candidates.moveRight(sender)
             isArrow = true
         } else if event.keyCode == kVK_LeftArrow {
-            if InputContext.shared.currentIndex > 0 {
-//                InputContext.shared.currentIndex -= 1
-                candidates.moveLeft(sender)
-            }
+            candidates.moveLeft(sender)
             isArrow = true
         } else if event.keyCode == kVK_UpArrow {
             candidates.moveUp(sender)
-            if InputContext.shared.candidatesPageId > 0 {
-//                if InputContext.shared.candidatesPageId > 1 {
-//                    InputContext.shared.currentIndex -= 5
-//                }
-                InputContext.shared.candidatesPageId -= 1
-            }
             isArrow = true
         } else if event.keyCode == kVK_DownArrow {
             candidates.moveDown(sender)
-            if InputContext.shared.candidatesPageId < InputContext.shared.candidatesPagesCount {
-//                if InputContext.shared.candidatesPageId > 0 {
-//                    InputContext.shared.currentIndex += 5
-//                }
-                InputContext.shared.candidatesPageId += 1
-            }
             isArrow = true
         }
         return isArrow

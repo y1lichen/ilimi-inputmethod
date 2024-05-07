@@ -71,7 +71,6 @@ public class IlimiInputController: IMKInputController {
 
     override public func candidateSelected(_ candidateString: NSAttributedString!) {
         let id = findCandidateIndex(candidateString)
-        NSLog("id: \(id), candidate: \(candidateString.string)")
         InputContext.shared.currentIndex = id
         commitCandidate(client: client())
     }
