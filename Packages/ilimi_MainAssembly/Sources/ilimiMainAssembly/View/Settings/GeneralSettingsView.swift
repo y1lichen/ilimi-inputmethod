@@ -58,6 +58,11 @@ struct GeneralSettingsView: View {
                 }
                 .pickerStyle(RadioGroupPickerStyle())
                 .horizontalRadioGroupLayout()
+                Button {
+                    UpdateManager.checkUpdate()
+                } label: {
+                    Text("檢查更新")
+                }
             }
             .frame(width: 250)
             .padding()
