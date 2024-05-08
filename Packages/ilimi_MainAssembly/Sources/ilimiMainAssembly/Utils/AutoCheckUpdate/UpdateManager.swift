@@ -5,12 +5,14 @@
 //  Created by 陳奕利 on 2024/5/7.
 //
 
+import AppKit
 import Foundation
 
 // MARK: - GitHubRelease
 
 struct GitHubRelease: Codable {
     let tagName: String
+    let htmlUrl: String
     let name: String
     let id: Int
 }
@@ -18,9 +20,11 @@ struct GitHubRelease: Codable {
 // MARK: - UpdateManager
 
 class UpdateManager {
+    // MARK: Internal
+
     static let url = URL(string: "https://api.github.com/repos/y1lichen/ilimi-inputmethod/releases/latest")
 
-    static func getURLData(completion: @escaping (Result<GitHubRelease, Error>) -> Void) {
+    static func getURLData(completion: @escaping (Result<GitHubRelease, Error>) -> ()) {
         let session = URLSession.shared
 
         // 創建 URLSessionDataTask
@@ -71,6 +75,30 @@ class UpdateManager {
         task.resume()
     }
 
+    static func checkUpdate(isManual: Bool = false) {
+        var appVer = ""
+        if let infoDict = Bundle.main.infoDictionary {
+            if !infoDict.isEmpty {
+                appVer = infoDict["CFBundleShortVersionString"] as! String? ?? "unkown"
+            }
+        }
+        getURLData { result in
+            switch result {
+            case let .success(data):
+                DispatchQueue.main.async {
+                    showPopUp(appVer, data.tagName, isManual, data.htmlUrl)
+                }
+
+            case let .failure(error):
+                DispatchQueue.main.async {
+                    NotifierController.notify(message: error.localizedDescription)
+                }
+            }
+        }
+    }
+
+    // MARK: Private
+
     // https://leetcode.com/problems/compare-version-numbers/description/
     // 參考leetcode吧
     private static func compareVersion(_ version1: String, _ version2: String) -> Int {
@@ -93,38 +121,29 @@ class UpdateManager {
         return 0
     }
 
-	private static func showPopUp(_ appVer: String, _ remoteVer: String, _ isManual: Bool) {
-        var res = compareVersion(appVer, remoteVer)
-		if !isManual && res == 0 {
-			return
-		}
-		var displayText = "你己經擁有最新版本\(appVer)"
-		if res == 1 {
-			displayText = "你擁有的是測試版本\(appVer)。目前發佈版本為\(remoteVer)。"
-		} else if res == -1 {
-			displayText = "最新版本為\(remoteVer)，你擁有的是測試版本\(appVer)。前往更新吧！"
-		}
-
-    }
-
-	static func checkUpdate(_ isManual: Bool = false) {
-        var appVer: String = ""
-        if let infoDict = Bundle.main.infoDictionary {
-            if !infoDict.isEmpty {
-                appVer = infoDict["CFBundleShortVersionString"] as! String? ?? "unkown"
-            }
+    private static func showPopUp(_ appVer: String, _ remoteVer: String, _ isManual: Bool, _ url: String) {
+        let res = compareVersion(appVer, remoteVer)
+        if !isManual, res == 0 {
+            return
         }
-        getURLData { result in
-            switch result {
-            case let .success(data):
-                DispatchQueue.main.async {
-                    showPopUp(appVer, data.tagName, isManual)
-                }
-
-            case let .failure(error):
-                DispatchQueue.main.async {
-                    NotifierController.notify(message: error.localizedDescription)
-                }
+        var message = "你己經擁有最新版本\(appVer)"
+        if res == 1 {
+            message = "你擁有的是測試版本\(appVer)。目前發佈版本為\(remoteVer)。"
+        } else if res == -1 {
+            message = "最新版本為\(remoteVer)，你擁有的是測試版本\(appVer)。前往更新吧！"
+        }
+        let alert = NSAlert()
+        alert.messageText = "最新版本為\(remoteVer)"
+        alert.informativeText = message
+        if res == 1 || res == -1 {
+            alert.addButton(withTitle: "前往下載")
+            alert.addButton(withTitle: "略過")
+        }
+        NSApp.activate(ignoringOtherApps: true)
+        let modalResult = alert.runModal()
+        if modalResult == .alertFirstButtonReturn {
+            if let url = URL(string: url) {
+                NSWorkspace.shared.open(url)
             }
         }
     }

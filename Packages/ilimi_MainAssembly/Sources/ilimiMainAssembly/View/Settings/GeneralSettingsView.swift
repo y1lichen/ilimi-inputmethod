@@ -59,7 +59,7 @@ struct GeneralSettingsView: View {
                 .pickerStyle(RadioGroupPickerStyle())
                 .horizontalRadioGroupLayout()
                 Button {
-                    UpdateManager.checkUpdate()
+                    UpdateManager.checkUpdate(isManual: true)
                 } label: {
                     Text("檢查更新")
                 }
