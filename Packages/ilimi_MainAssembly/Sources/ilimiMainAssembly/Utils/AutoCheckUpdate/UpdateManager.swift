@@ -94,7 +94,7 @@ class UpdateManager {
         UserDefaults.standard.setValue(now, forKey: "lastCheckUpdate")
     }
 
-    static func checkUpdate(isManual: Bool = false) {
+    static func checkUpdate(isManual: Bool) {
         var appVer = ""
         if let infoDict = Bundle.main.infoDictionary {
             if !infoDict.isEmpty {
@@ -149,14 +149,14 @@ class UpdateManager {
         if res == 1 {
             message = "你擁有的是測試版本\(appVer)。目前發佈版本為\(remoteVer)。"
         } else if res == -1 {
-            message = "最新版本為\(remoteVer)，你擁有的是測試版本\(appVer)。前往更新吧！"
+            message = "最新版本為\(remoteVer)，你擁有的是版本\(appVer)。前往更新吧！"
+        }
+        // 只有手動更新時才要通知使用的是測試版
+        if !isManual && res == 1 {
+            return
         }
         let alert = NSAlert()
         alert.messageText = "最新版本為\(remoteVer)"
-        // 只有手動更新時才要通知使用的是測試版
-        if !isManual && res == -1 {
-            return
-        }
         alert.informativeText = message
         if res == 1 || res == -1 {
             alert.addButton(withTitle: "前往下載")

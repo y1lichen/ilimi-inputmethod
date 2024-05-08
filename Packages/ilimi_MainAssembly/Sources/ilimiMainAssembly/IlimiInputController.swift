@@ -44,6 +44,13 @@ public class IlimiInputController: IMKInputController {
 
     // MARK: Public
 
+    public override func deactivateServer(_ sender: Any!) {
+        super.deactivateServer(sender)
+        DispatchQueue.main.async { [self] in
+            cleanComposition()
+        }
+    }
+
     override public func activateServer(_ sender: Any!) {
         super.activateServer(sender)
         DispatchQueue.main.async { [self] in
