@@ -70,6 +70,10 @@ extension IlimiInputController {
                 // 使用數字鍵選字
                 if (!isZhuyinMode && key.isNumber) ||
                     (isZhuyinMode && checkIsEndOfZhuyin(text: InputContext.shared.getCurrentInput()) && key.isNumber) {
+                    // 直式不處理
+                    if !SettingViewModel.shared.isHorizontalCandidatesPanel {
+                        return false
+                    }
                     let keyValue = Int(key.hexDigitValue!)
                     return handleSelectCandidatesByNum(keyValue, client: sender)
                 }
@@ -285,20 +289,12 @@ extension IlimiInputController {
     // 處理使用數字鍵選字
     func handleSelectCandidatesByNum(_ keyValue: Int, client sender: Any!) -> Bool {
         let selectCandidateBy1to8 = UserDefaults.standard.bool(forKey: "selectCandidateBy1to8")
-        if keyValue > InputContext.shared.candidatesCount {
+        var inputIndex: Int = selectCandidateBy1to8 ? (keyValue - 1) : keyValue
+        inputIndex += InputContext.shared.candidatesPageId * 9
+        if inputIndex > InputContext.shared.candidatesCount {
             return true
         }
-        if InputContext.shared.candidatesPageId == 0 {
-            return selectCandidatesByNumAndCommit(client: sender, id: selectCandidateBy1to8 ? keyValue - 1 : keyValue)
-        } else {
-            // 選字窗展開時只有5個候選字
-            if keyValue > 5 {
-                return false
-            }
-            let selectedId = selectCandidateBy1to8 ? ((InputContext.shared.candidatesPageId - 1) * 5) + keyValue - 1 :
-                ((InputContext.shared.candidatesPageId - 1) * 5) + keyValue
-            return selectCandidatesByNumAndCommit(client: sender, id: selectedId)
-        }
+        return selectCandidatesByNumAndCommit(client: sender, id: inputIndex)
     }
 
     // 全形模式開關 shift+空白鍵
@@ -311,7 +307,6 @@ extension IlimiInputController {
         return false
     }
 
-    // 看起來不用特別分別對直式或橫式候選字窗做處理
     func handleCandidatesWindowNavigation(_ event: NSEvent, client sender: Any!) -> Bool {
         if let key = event.characters?.first {
             if key == "<" {
@@ -320,6 +315,7 @@ extension IlimiInputController {
                 } else {
                     candidates.moveLeft(sender)
                 }
+                InputContext.shared.movePrevPage()
                 return true
             } else if key == ">" {
                 if SettingViewModel.shared.isHorizontalCandidatesPanel {
@@ -327,6 +323,7 @@ extension IlimiInputController {
                 } else {
                     candidates.moveRight(sender)
                 }
+                InputContext.shared.moveNextPage()
                 return true
             }
         }
@@ -334,15 +331,19 @@ extension IlimiInputController {
         var isArrow = false
         if event.keyCode == kVK_RightArrow {
             candidates.moveRight(sender)
+            InputContext.shared.handleRight()
             isArrow = true
         } else if event.keyCode == kVK_LeftArrow {
             candidates.moveLeft(sender)
+            InputContext.shared.handleLeft()
             isArrow = true
         } else if event.keyCode == kVK_UpArrow {
             candidates.moveUp(sender)
+            InputContext.shared.handleUp()
             isArrow = true
         } else if event.keyCode == kVK_DownArrow {
             candidates.moveDown(sender)
+            InputContext.shared.handleDown()
             isArrow = true
         }
         return isArrow

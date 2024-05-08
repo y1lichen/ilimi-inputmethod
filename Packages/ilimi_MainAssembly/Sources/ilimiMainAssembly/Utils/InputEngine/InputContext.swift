@@ -20,11 +20,11 @@ class InputContext {
     ]
     var currentIndex: Int = 0
     var candidatesCount = 0
-    
+
     var preInputPrefixSet: Set<String> = []
     // 當前候選字頁碼
     var candidatesPageId = 0
-	var candidatesPagesCount = 0
+    var candidatesPagesCount = 0
     var closureStack: [String] = []
 
     var isTradToSim = false {
@@ -49,12 +49,7 @@ class InputContext {
             for i in 0 ..< _candidates.count {
                 _numberedCandidates.append("\(i + 1) \(_candidates[i])")
             }
-			// 横式選字窗一行5個，直式選字窗一行9個
-			if SettingViewModel.shared.isHorizontalCandidatesPanel {
-				candidatesPagesCount = candidatesCount % 5 > 0 ? (candidatesCount / 5) + 1 : candidatesCount / 5
-			} else {
-				candidatesPagesCount = candidatesCount % 9 > 0 ? (candidatesCount / 9) + 1 : candidatesCount / 9
-			}
+            candidatesPagesCount = candidatesCount % 9 > 0 ? (candidatesCount / 9) + 1 : candidatesCount / 9
         }
     }
 
@@ -102,6 +97,61 @@ class InputContext {
 
     func deleteLastOfCurrentInput() {
         currentInput.removeLast()
+    }
+
+    func moveNext() {
+        if currentIndex < candidatesCount - 1 {
+            currentIndex += 1
+        }
+    }
+
+    func movePrev() {
+        if currentIndex > 0 {
+            currentIndex -= 1
+        }
+    }
+
+    func movePrevPage() {
+        if candidatesPageId > 0 {
+            candidatesPageId -= 1
+            currentIndex -= 9
+        }
+    }
+
+    func moveNextPage() {
+        if candidatesPageId < candidatesPagesCount - 1 {
+            candidatesPageId += 1
+        }
+        if 9 * candidatesPageId + currentIndex >= candidatesCount {
+            currentIndex = candidatesCount - 1
+        } else {
+            currentIndex = 9 * candidatesPageId + currentIndex
+        }
+    }
+
+    // 直式選字窗比較複雜，不處理
+    func handleRight() {
+        if SettingViewModel.shared.isHorizontalCandidatesPanel {
+            moveNext()
+        }
+    }
+
+    func handleLeft() {
+        if SettingViewModel.shared.isHorizontalCandidatesPanel {
+            movePrev()
+        }
+    }
+
+    func handleUp() {
+        if SettingViewModel.shared.isHorizontalCandidatesPanel {
+            movePrevPage()
+        }
+    }
+
+    func handleDown() {
+        if SettingViewModel.shared.isHorizontalCandidatesPanel {
+            moveNextPage()
+        }
     }
 
     // MARK: Private

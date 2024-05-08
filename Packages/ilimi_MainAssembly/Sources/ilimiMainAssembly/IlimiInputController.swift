@@ -20,7 +20,7 @@ public class IlimiInputController: IMKInputController {
         self.candidates = IMKCandidates(
             server: server,
             panelType: isHorizontalCandidates
-                ? kIMKScrollingGridCandidatePanel : kIMKSingleColumnScrollingCandidatePanel
+                ? kIMKSingleRowSteppingCandidatePanel : kIMKSingleColumnScrollingCandidatePanel
         )
         var attributes = candidates.attributes()
         let fontSize = SettingViewModel.shared.fontSize
@@ -88,8 +88,11 @@ public class IlimiInputController: IMKInputController {
     //
     // 現在看起來沒問題了，實作函式 2023/09/06 17:44:54
     override public func candidateSelectionChanged(_ candidateString: NSAttributedString!) {
-        let id = findCandidateIndex(candidateString)
-        InputContext.shared.currentIndex = id
+        // 橫式用InputContext自己維護的id來輸入
+        if !SettingViewModel.shared.isHorizontalCandidatesPanel {
+            let id = findCandidateIndex(candidateString)
+            InputContext.shared.currentIndex = id
+        }
     }
 
     // 依照威注音註解，此函式可能因IMK的bug而不會被執行
