@@ -8,15 +8,6 @@
 import AppKit
 import Foundation
 
-// MARK: - GitHubRelease
-
-struct GitHubRelease: Codable {
-    let tagName: String
-    let htmlUrl: String
-    let name: String
-    let id: Int
-}
-
 // MARK: - UpdateManager
 
 class UpdateManager {
