@@ -32,9 +32,9 @@ class SettingViewModel: ObservableObject {
     // 靜音模式
     @AppStorage("silentMode")
     var silentMode = false
-	// 自動檢查
-	@AppStorage("autoCheckUpdate")
-	var autoCheckUpdate = true
+    // 自動檢查
+    @AppStorage("autoCheckUpdate")
+    var autoCheckUpdate = true
 
     let fontSizeValues = [14, 16, 18, 20, 22, 24, 28, 32]
 

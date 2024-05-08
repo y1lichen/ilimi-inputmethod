@@ -75,6 +75,25 @@ class UpdateManager {
         task.resume()
     }
 
+    // 自動檢查更新
+    static func autoCheckUpdate() {
+        let autoCheckUpdate: Bool = UserDefaults.standard.bool(forKey: "autoCheckUpdate")
+        if !autoCheckUpdate {
+            return
+        }
+        let lastCheckUpdate = UserDefaults.standard.object(forKey: "lastCheckUpdate") as? Date
+        let now = Date()
+        if lastCheckUpdate != nil {
+            let interval = now.timeIntervalSince(lastCheckUpdate!)
+            let hour = interval / 3600
+            // 12小時檢查一次是否有新版
+            if hour >= 12 {
+                checkUpdate(isManual: false)
+            }
+        }
+        UserDefaults.standard.setValue(now, forKey: "lastCheckUpdate")
+    }
+
     static func checkUpdate(isManual: Bool = false) {
         var appVer = ""
         if let infoDict = Bundle.main.infoDictionary {
@@ -134,6 +153,10 @@ class UpdateManager {
         }
         let alert = NSAlert()
         alert.messageText = "最新版本為\(remoteVer)"
+        // 只有手動更新時才要通知使用的是測試版
+        if !isManual && res == -1 {
+            return
+        }
         alert.informativeText = message
         if res == 1 || res == -1 {
             alert.addButton(withTitle: "前往下載")

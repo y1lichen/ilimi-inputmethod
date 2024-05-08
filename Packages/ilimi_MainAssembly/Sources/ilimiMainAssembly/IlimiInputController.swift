@@ -45,9 +45,6 @@ public class IlimiInputController: IMKInputController {
     // MARK: Public
 
     override public func activateServer(_ sender: Any!) {
-        //        guard sender is IMKTextInput else {
-        //            return
-        //        }
         super.activateServer(sender)
         DispatchQueue.main.async { [self] in
             cleanComposition()
@@ -58,6 +55,10 @@ public class IlimiInputController: IMKInputController {
         }
         DispatchQueue.main.async { [self] in
             setKeyLayout()
+        }
+        // 自動檢查更新
+        DispatchQueue.main.async {
+            UpdateManager.autoCheckUpdate()
         }
     }
 

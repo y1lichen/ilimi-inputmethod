@@ -58,12 +58,12 @@ struct GeneralSettingsView: View {
                 }
                 .pickerStyle(RadioGroupPickerStyle())
                 .horizontalRadioGroupLayout()
-				Picker("自動檢查更新", selection: $settingViewModel.autoCheckUpdate) {
-					Text("是").tag(true)
-					Text("否").tag(false)
-				}
-				.pickerStyle(RadioGroupPickerStyle())
-				.horizontalRadioGroupLayout()
+                Picker("自動檢查更新", selection: $settingViewModel.autoCheckUpdate) {
+                    Text("是").tag(true)
+                    Text("否").tag(false)
+                }
+                .pickerStyle(RadioGroupPickerStyle())
+                .horizontalRadioGroupLayout()
                 Button {
                     UpdateManager.checkUpdate(isManual: true)
                 } label: {

@@ -50,7 +50,7 @@ public class AppDelegate: NSObject, NSApplicationDelegate {
         UserDefaults.standard.register(defaults: ["showLiuKeyAfterZhuyin": true])
         UserDefaults.standard.register(defaults: ["silentMode": false])
         UserDefaults.standard.register(defaults: ["selectCandidateBy1to8": true])
-		UserDefaults.standard.register(defaults: ["autoCheckUpdate": true])
+        UserDefaults.standard.register(defaults: ["autoCheckUpdate": true])
     }
 
     // request the authorization for pushing local notification
