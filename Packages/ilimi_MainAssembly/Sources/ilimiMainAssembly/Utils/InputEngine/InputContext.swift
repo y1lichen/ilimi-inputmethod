@@ -20,10 +20,11 @@ class InputContext {
     ]
     var currentIndex: Int = 0
     var candidatesCount = 0
-    var candidatesPagesCount = 0
+    
     var preInputPrefixSet: Set<String> = []
     // 當前候選字頁碼
     var candidatesPageId = 0
+	var candidatesPagesCount = 0
     var closureStack: [String] = []
 
     var isTradToSim = false {
@@ -48,7 +49,12 @@ class InputContext {
             for i in 0 ..< _candidates.count {
                 _numberedCandidates.append("\(i + 1) \(_candidates[i])")
             }
-            candidatesPagesCount = candidatesCount % 5 > 0 ? (candidatesCount / 5) + 1 : candidatesCount / 5
+			// 横式選字窗一行5個，直式選字窗一行9個
+			if SettingViewModel.shared.isHorizontalCandidatesPanel {
+				candidatesPagesCount = candidatesCount % 5 > 0 ? (candidatesCount / 5) + 1 : candidatesCount / 5
+			} else {
+				candidatesPagesCount = candidatesCount % 9 > 0 ? (candidatesCount / 9) + 1 : candidatesCount / 9
+			}
         }
     }
 
