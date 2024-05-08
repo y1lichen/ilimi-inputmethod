@@ -17,10 +17,8 @@ struct QueryResult: Identifiable {
 // MARK: - QueryView
 
 struct QueryView: View {
-    @State
-    var textFieldText: String = ""
-    @State
-    var results: [QueryResult] = []
+    @State var textFieldText: String = ""
+    @State var results: [QueryResult] = []
 
     var body: some View {
         VStack {

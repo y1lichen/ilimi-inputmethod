@@ -15,7 +15,7 @@ class UpdateManager {
 
     static let url = URL(string: "https://api.github.com/repos/y1lichen/ilimi-inputmethod/releases/latest")
 
-    static func getURLData(completion: @escaping (Result<GitHubRelease, Error>) -> ()) {
+    static func getURLData(completion: @escaping (Result<GitHubRelease, Error>) -> Void) {
         let session = URLSession.shared
 
         // 創建 URLSessionDataTask

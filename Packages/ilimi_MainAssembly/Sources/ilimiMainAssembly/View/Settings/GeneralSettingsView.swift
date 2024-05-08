@@ -6,8 +6,7 @@ import Foundation
 import SwiftUI
 
 struct GeneralSettingsView: View {
-    @StateObject
-    var settingViewModel = SettingViewModel()
+    @StateObject var settingViewModel = SettingViewModel()
 
     var body: some View {
         ScrollView(showsIndicators: false) {

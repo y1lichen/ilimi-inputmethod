@@ -6,8 +6,7 @@ import Foundation
 import SwiftUI
 
 struct AddCustomPhraseView: View {
-    @StateObject
-    var viewModel = CustomPhraseViewModel()
+    @StateObject var viewModel = CustomPhraseViewModel()
 
     var body: some View {
         VStack {

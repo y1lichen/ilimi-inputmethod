@@ -10,8 +10,7 @@ import SwiftUI
 struct InputEngine {
     static let shared = InputEngine()
 
-    @StateObject
-    var settingsModel = SettingViewModel.shared
+    @StateObject var settingsModel = SettingViewModel.shared
 
     // 取得以注音輸入的候選字
     func getCadidatesByZhuyin(_ text: String) {

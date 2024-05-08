@@ -17,8 +17,7 @@ struct SheetView: View {
 
     // MARK: Internal
 
-    @ObservedObject
-    var viewModel: CustomPhraseViewModel
+    @ObservedObject var viewModel: CustomPhraseViewModel
 
     var body: some View {
         VStack {

@@ -16,24 +16,19 @@ class CustomPhraseViewModel: ObservableObject {
 
     // MARK: Internal
 
-    @Published
-    var key: String = ""
-    @Published
-    var value: String = ""
+    @Published var key: String = ""
+    @Published var value: String = ""
 
-    @Published
-    var showEditSheet = false
+    @Published var showEditSheet = false
 
-    @Published
-    var showAddSheet = false
+    @Published var showAddSheet = false
     var selected = Set<CustomPhrase.ID>()
 
     var customPhraseToBeEdited: CustomPhrase?
 
     //	static var shared = CustomPhraseViewModel()
 
-    @Published
-    var customPhrases: [CustomPhrase] = []
+    @Published var customPhrases: [CustomPhrase] = []
 
     func fetchData() {
         customPhrases = CustomPhraseManager.getAllCustomPhrase()

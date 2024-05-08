@@ -36,7 +36,7 @@ public enum CapsLockToggler {
 
 // Refactored by Shiki Suen (MIT License)
 public enum IOKit {
-    public static func handleHIDSystemService(_ taskHandler: @escaping (io_connect_t) -> ()) throws {
+    public static func handleHIDSystemService(_ taskHandler: @escaping (io_connect_t) -> Void) throws {
         let ioService: io_service_t = IOServiceGetMatchingService(0, IOServiceMatching(kIOHIDSystemClass))
         var connect: io_connect_t = 0
         let x = IOServiceOpen(ioService, mach_task_self_, UInt32(kIOHIDParamConnectType), &connect)
