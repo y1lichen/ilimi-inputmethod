@@ -71,7 +71,7 @@ extension IlimiInputController {
                 if (!isZhuyinMode && key.isNumber) ||
                     (isZhuyinMode && checkIsEndOfZhuyin(text: InputContext.shared.getCurrentInput()) && key.isNumber) {
                     // 直式不處理
-                    if !SettingViewModel.shared.isHorizontalCandidatesPanel, InputContext.shared.currHentIndex > 9 {
+                    if !SettingViewModel.shared.isHorizontalCandidatesPanel, InputContext.shared.currentIndex > 9 {
                         return false
                     }
                     let keyValue = Int(key.hexDigitValue!)
