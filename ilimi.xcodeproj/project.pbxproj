@@ -25,6 +25,7 @@
 		5BD3C31C2BAAEB2000CF8AF5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5BD3C31A2BAAEB2000CF8AF5 /* Localizable.strings */; };
 		5BD3C3252BAAEE8600CF8AF5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5BD3C3232BAAEE8600CF8AF5 /* InfoPlist.strings */; };
 		5BD3C3352BAAF2F400CF8AF5 /* vChewing_IMKUtils_IlimiImpl in Frameworks */ = {isa = PBXBuildFile; productRef = 5BD3C3342BAAF2F400CF8AF5 /* vChewing_IMKUtils_IlimiImpl */; };
+		D43B0B412C13468400FB8E6C /* pinyin.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D43B0B402C13468400FB8E6C /* pinyin.bundle */; };
 		D4FC14D228C649F80081BCC0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4FC14D128C649F80081BCC0 /* Assets.xcassets */; };
 		D4FC14D528C649F80081BCC0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4FC14D428C649F80081BCC0 /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -62,6 +63,7 @@
 		5BD3C3242BAAEE8600CF8AF5 /* en */ = {isa = PBXFileReference; explicitFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5BD3C3262BAAEE8D00CF8AF5 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		5BD3C3322BAAF15500CF8AF5 /* Installer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Installer-Info.plist"; sourceTree = "<group>"; };
+		D43B0B402C13468400FB8E6C /* pinyin.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = pinyin.bundle; sourceTree = "<group>"; };
 		D4FC14CA28C649F70081BCC0 /* ilimi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ilimi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4FC14D128C649F80081BCC0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D4FC14D428C649F80081BCC0 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 		D4FC14C128C649F70081BCC0 = {
 			isa = PBXGroup;
 			children = (
+				D43B0B402C13468400FB8E6C /* pinyin.bundle */,
 				5B6F604F2BAAC9FB005E004E /* Packages */,
 				D4FC14CC28C649F70081BCC0 /* ilimi */,
 				5B0B216E2BAAE4B00032E5C8 /* ilimiInstaller */,
@@ -239,7 +242,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1530;
-				LastUpgradeCheck = 1530;
+				LastUpgradeCheck = 1540;
 				TargetAttributes = {
 					5B0B216C2BAAE4B00032E5C8 = {
 						CreatedOnToolsVersion = 15.3;
@@ -294,6 +297,7 @@
 				D4FC14D528C649F80081BCC0 /* Preview Assets.xcassets in Resources */,
 				5B9B073A2BAC411D005C0CDF /* InfoPlist.strings in Resources */,
 				5B00C7902BAC3C3900F28D71 /* MenuIcon-ILIMI.png in Resources */,
+				D43B0B412C13468400FB8E6C /* pinyin.bundle in Resources */,
 				5B00C78F2BAC3C3900F28D71 /* MenuIcon-ILIMI@2x.png in Resources */,
 				5BC0EDB12BAC2F5D00F810D4 /* IlimiKeyboard.keylayout in Resources */,
 				D4FC14D228C649F80081BCC0 /* Assets.xcassets in Resources */,
@@ -461,6 +465,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -524,6 +529,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";

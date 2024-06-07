@@ -18,7 +18,7 @@ class DataInitializer {
     let liuUniTab = appSupportDir + "/liu-uni.tab"
     let liuJsonPath = appSupportDir + "/liu.json"
     let liuCinPath = appSupportDir + "/liu.cin"
-    let pinyinPath = appSupportDir + "/pinyin.json"
+
     let userDefaults = UserDefaults.standard
 
     func initDataWhenStart() {
@@ -66,25 +66,28 @@ class DataInitializer {
     func loadPinyinJson() {
         cleanAllData("Zhuin")
         do {
-            let data = try Data(contentsOf: URL(fileURLWithPath: pinyinPath))
-            if let json = try JSONSerialization.jsonObject(with: data) as? [String: [String]] {
-                var count: Int64 = 0
-                for (key, value) in json {
-                    for v in value {
-                        let model = NSEntityDescription.insertNewObject(
-                            forEntityName: "Zhuin",
-                            into: persistenceContainer.container.viewContext
-                        )
-                        guard let model = model as? Zhuin else { continue }
-                        model.key = key
-                        model.value = v
-                        model.key_priority = count
-                        count += 1
+            if let url = Bundle.main.url(forResource: "pinyin", withExtension: "bundle"), let bundle = Bundle(url: url),
+               let path = bundle.path(forResource: "pinyin", ofType: "json") {
+                let data = try Data(contentsOf: URL(fileURLWithPath: path))
+                if let json = try JSONSerialization.jsonObject(with: data) as? [String: [String]] {
+                    var count: Int64 = 0
+                    for (key, value) in json {
+                        for v in value {
+                            let model = NSEntityDescription.insertNewObject(
+                                forEntityName: "Zhuin",
+                                into: persistenceContainer.container.viewContext
+                            )
+                            guard let model = model as? Zhuin else { continue }
+                            model.key = key
+                            model.value = v
+                            model.key_priority = count
+                            count += 1
+                        }
                     }
+                    persistenceContainer.saveContext()
+                    userDefaults.set(true, forKey: "hadReadPinyinJson")
+                    NSLog("pinyin.json laoded")
                 }
-                persistenceContainer.saveContext()
-                userDefaults.set(true, forKey: "hadReadPinyinJson")
-                NSLog("pinyin.json laoded")
             }
         } catch {
             NSLog("Error: " + String(describing: error))
