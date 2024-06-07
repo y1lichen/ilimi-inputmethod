@@ -247,7 +247,7 @@ extension IlimiInputController {
 
     func commitText(client sender: Any!, text: String) {
         // 在快打模式下如果不是最簡碼不會輸出，並且會要求使用重新最簡碼重打
-        if !isASCIIMode, InputContext.shared.isSpMode, !SpModeManager.checkInputIsSp(text) {
+        if !isASCIIMode, InputContext.shared.isSpMode, !SpModeManager.checkInputIsSp(text, assistSelectChar.chr) {
             cleanComposition()
             let res = SpModeManager.getSpKeyOfChar(text).joined(separator: "、")
             NotifierController.notify(message: "\(text)的簡碼為\(res)", stay: true)

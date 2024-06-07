@@ -17,9 +17,12 @@ class SpModeManager {
         return getSpOfCharWithoutLiuTab(chr)
     }
 
-    static func checkInputIsSp(_ text: String) -> Bool {
+    static func checkInputIsSp(_ text: String, _ assistChar: String) -> Bool {
         let isLoadByLiu = UserDefaults.standard.bool(forKey: "isLoadByLiuUniTab")
-        let input = InputContext.shared.getCurrentInput()
+        var input = InputContext.shared.getCurrentInput()
+        if !assistChar.isEmpty {
+            input.removeLast()
+        }
         if isLoadByLiu, !getSpOfCharWithLiuTab(text).contains(input) {
             return false
         }
