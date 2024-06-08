@@ -51,6 +51,7 @@ class CinReader {
             persistenceContainer.saveContext()
             // hadReadLiuJson就先不改名成hadReadLiu了...
             userDefaults.set(true, forKey: "hadReadLiuJson")
+			userDefaults.set(false, forKey: "isLoadByLiuUniTab")
             NotifierController.notify(message: "自liu.cin讀取\(priority)個字元", stay: true)
         } catch {
             NSLog(error.localizedDescription)

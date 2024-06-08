@@ -19,7 +19,7 @@ class SpModeManager {
 
     static func checkInputIsSp(_ text: String, _ assistChar: String) -> Bool {
         // 在快打模式下標點符號不一定要是最短碼
-        if InputContext.shared.isClosure(input: text) {
+        if InputContext.shared.getCurrentInput().first == "," {
             return true
         }
         let isLoadByLiu = UserDefaults.standard.bool(forKey: "isLoadByLiuUniTab")
@@ -71,7 +71,8 @@ class SpModeManager {
                     break
                 }
             }
-            // 如果最短字根只有一個就直接回傳
+
+            // 如果最短字根只有一個且是第一位就直接回傳
             if shortestKeySet.count == 1 {
                 return [shortestKeySet.first ?? ""]
             }
@@ -122,4 +123,6 @@ class SpModeManager {
         }
         return []
     }
+	
+	
 }
