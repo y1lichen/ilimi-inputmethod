@@ -9,6 +9,8 @@ import CoreData
 import Foundation
 
 class SpModeManager {
+    // MARK: Internal
+
     static func getSpKeyOfChar(_ chr: String) -> [String] {
         let isLoadByLiu = UserDefaults.standard.bool(forKey: "isLoadByLiuUniTab")
         if isLoadByLiu {
@@ -31,6 +33,9 @@ class SpModeManager {
             return false
         }
         if !isLoadByLiu, !getSpOfCharWithoutLiuTab(text).contains(input) {
+            if handleMultipleSp(text, isLoadByLiu) {
+                return true
+            }
             return false
         }
         return true
@@ -123,6 +128,20 @@ class SpModeManager {
         }
         return []
     }
-	
-	
+
+    // MARK: Private
+	// 快打模式下簡碼加選字碼可能和非簡碼有相同碼數
+	// 使用.tab時不用特別處理，因使用.tab時簡碼判斷是直接讀字根檔
+    // https://github.com/y1lichen/ilimi-inputmethod/issues/26
+    private static func handleMultipleSp(_ text: String, _ isLoadByLiu: Bool) -> Bool {
+        let sps: [String] = isLoadByLiu ? getSpOfCharWithLiuTab(text) : getSpOfCharWithoutLiuTab(text)
+        if !sps.isEmpty {
+            let minLen = sps.first!.count
+            if InputEngine.shared.getPhraseExactly(sps.first!).first?.value != text,
+               InputContext.shared.getCurrentInput().count == minLen + 1 {
+                return true
+            }
+        }
+        return false
+    }
 }

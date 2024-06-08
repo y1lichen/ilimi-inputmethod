@@ -118,7 +118,7 @@ class DataInitializer {
                     }
                     persistenceContainer.saveContext()
                     userDefaults.set(true, forKey: "hadReadLiuJson")
-					userDefaults.set(false, forKey: "isLoadByLiuUniTab")
+                    userDefaults.set(false, forKey: "isLoadByLiuUniTab")
                     NSLog("liu.json loaded")
                 }
             }

@@ -17,6 +17,19 @@ struct InputEngine {
         InputContext.shared.candidates = CoreDataHelper.getCharByZhuyin(text)
     }
 
+    func getPhraseExactly(_ text: String) -> [Phrase] {
+        let request = NSFetchRequest<Phrase>(entityName: "Phrase")
+        request.predicate = NSPredicate(format: "key == %@", text)
+        request.sortDescriptors = [NSSortDescriptor(key: "key_priority", ascending: true)]
+        do {
+            let response = try PersistenceController.shared.container.viewContext.fetch(request)
+            return response
+        } catch {
+            NSLog(error.localizedDescription)
+        }
+        return []
+    }
+
     func getNormalModePhrase(_ text: String) -> [Phrase] {
         let request = NSFetchRequest<Phrase>(entityName: "Phrase")
         request.predicate = settingsModel
