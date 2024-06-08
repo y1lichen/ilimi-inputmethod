@@ -18,6 +18,10 @@ class SpModeManager {
     }
 
     static func checkInputIsSp(_ text: String, _ assistChar: String) -> Bool {
+        // 在快打模式下標點符號不一定要是最短碼
+        if InputContext.shared.isClosure(input: text) {
+            return true
+        }
         let isLoadByLiu = UserDefaults.standard.bool(forKey: "isLoadByLiuUniTab")
         var input = InputContext.shared.getCurrentInput()
         if !assistChar.isEmpty {

@@ -398,7 +398,7 @@
 				CODE_SIGN_ENTITLEMENTS = ilimiInstaller/ilimiInstaller.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = "$(CURRENT_PROJECT_VERSION)";
+				CURRENT_PROJECT_VERSION = 1.4;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_ASSET_PATHS = "\"ilimiInstaller/Preview Content\"";
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -435,7 +435,7 @@
 				CODE_SIGN_ENTITLEMENTS = ilimiInstaller/ilimiInstaller.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = "$(CURRENT_PROJECT_VERSION)";
+				CURRENT_PROJECT_VERSION = 1.4;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"ilimiInstaller/Preview Content\"";
 				ENABLE_HARDENED_RUNTIME = YES;
