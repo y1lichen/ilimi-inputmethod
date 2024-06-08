@@ -47,9 +47,6 @@ chmod +x ./build.sh
 
 ![注音輸入](https://github.com/y1lichen/ilimi-inputmethod/blob/main/media/zhuyin_demo.gif)
 
-若要啟用注音輸入法，必須要將[pinyin.json](https://github.com/y1lichen/ilimi-inputmethod/blob/main/others/pinyin.json)
-檔案放在/Library/Containers/ilimi/Data，或是自選單欄選開啟使用者設定目錄並將pinyin.json放入其中。
-
 輸入';即可使用注音輸入
 
 5.  SP快打模式
