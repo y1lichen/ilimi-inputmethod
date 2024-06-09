@@ -158,7 +158,7 @@ extension IlimiInputController {
         }
         // 在完全匹配模式下先檢查加上這個字碼後有沒有對應字元，若有就不進入輔助字根機制
         if SettingViewModel.shared.showOnlyExactlyMatch {
-            let newPhrases = InputEngine.shared.getNormalModePhrase(InputContext.shared.getCurrentInput() + inputStr)
+            let newPhrases = LiuManager.shared.getNormalModePhrase(InputContext.shared.getCurrentInput() + inputStr)
             if !newPhrases.isEmpty {
                 // 直接在這輸入字元，以免要多查找一次coredata
                 InputContext.shared.appendCurrentInput(inputStr)

@@ -33,9 +33,9 @@ class SpModeManager {
             return false
         }
         if !isLoadByLiu, !getSpOfCharWithoutLiuTab(text).contains(input) {
-            if handleMultipleSp(text, isLoadByLiu) {
-                return true
-            }
+//            if handleMultipleSp(text, isLoadByLiu) {
+//                return true
+//            }
             return false
         }
         return true
@@ -79,7 +79,18 @@ class SpModeManager {
 
             // 如果最短字根只有一個且是第一位就直接回傳
             if shortestKeySet.count == 1 {
-                return [shortestKeySet.first ?? ""]
+                var res = [shortestKeySet.first ?? ""]
+				// 快打模式下簡碼加選字碼可能和非簡碼有相同碼數
+                if !LiuManager.shared.checkIsFirstCandidates(shortestKeySet.first ?? "", chr) {
+                    let keys = LiuManager.shared.getKeysOfChar(chr)
+                    for item in keys {
+                        let key = item.key ?? ""
+                        if key.count == shortestLen + 1, LiuManager.shared.checkIsFirstCandidates(key, chr) {
+                            res.append(item.key ?? "")
+                        }
+                    }
+                }
+                return res
             }
             // 如果最短字根不只一個就去比較這個字元在哪個字根priority比較早
             var curPriority = 100
@@ -130,14 +141,15 @@ class SpModeManager {
     }
 
     // MARK: Private
-	// 快打模式下簡碼加選字碼可能和非簡碼有相同碼數
-	// 使用.tab時不用特別處理，因使用.tab時簡碼判斷是直接讀字根檔
+
+    // 快打模式下簡碼加選字碼可能和非簡碼有相同碼數
+    // 使用.tab時不用特別處理，因使用.tab時簡碼判斷是直接讀字根檔
     // https://github.com/y1lichen/ilimi-inputmethod/issues/26
     private static func handleMultipleSp(_ text: String, _ isLoadByLiu: Bool) -> Bool {
         let sps: [String] = isLoadByLiu ? getSpOfCharWithLiuTab(text) : getSpOfCharWithoutLiuTab(text)
         if !sps.isEmpty {
             let minLen = sps.first!.count
-            if InputEngine.shared.getPhraseExactly(sps.first!).first?.value != text,
+            if LiuManager.shared.getPhraseExactly(sps.first!).first?.value != text,
                InputContext.shared.getCurrentInput().count == minLen + 1 {
                 return true
             }

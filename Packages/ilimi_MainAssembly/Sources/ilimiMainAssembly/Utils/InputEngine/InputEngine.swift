@@ -10,39 +10,9 @@ import SwiftUI
 struct InputEngine {
     static let shared = InputEngine()
 
-    @StateObject var settingsModel = SettingViewModel.shared
-
     // 取得以注音輸入的候選字
     func getCadidatesByZhuyin(_ text: String) {
         InputContext.shared.candidates = CoreDataHelper.getCharByZhuyin(text)
-    }
-
-    func getPhraseExactly(_ text: String) -> [Phrase] {
-        let request = NSFetchRequest<Phrase>(entityName: "Phrase")
-        request.predicate = NSPredicate(format: "key == %@", text)
-        request.sortDescriptors = [NSSortDescriptor(key: "key_priority", ascending: true)]
-        do {
-            let response = try PersistenceController.shared.container.viewContext.fetch(request)
-            return response
-        } catch {
-            NSLog(error.localizedDescription)
-        }
-        return []
-    }
-
-    func getNormalModePhrase(_ text: String) -> [Phrase] {
-        let request = NSFetchRequest<Phrase>(entityName: "Phrase")
-        request.predicate = settingsModel
-            .showOnlyExactlyMatch ? NSPredicate(format: "key == %@", text) :
-            NSPredicate(format: "key BEGINSWITH %@", text)
-        request.sortDescriptors = [NSSortDescriptor(key: "key_priority", ascending: true)]
-        do {
-            let response = try PersistenceController.shared.container.viewContext.fetch(request)
-            return response
-        } catch {
-            NSLog(error.localizedDescription)
-        }
-        return []
     }
 
     func setCandidates(_ phrases: [Phrase], _ text: String) {
@@ -85,7 +55,7 @@ struct InputEngine {
         var candidatesSet: Set<String> = []
         var inputStrSet: Set<String> = []
 
-        let response: [Phrase] = getNormalModePhrase(text)
+        let response: [Phrase] = LiuManager.shared.getNormalModePhrase(text)
         for r in response {
             let value: String = r.value(forKey: "value") as! String
             if let rKey = r.key, rKey.count > text.count {
