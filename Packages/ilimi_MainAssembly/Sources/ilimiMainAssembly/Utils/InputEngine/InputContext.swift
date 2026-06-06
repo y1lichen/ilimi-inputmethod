@@ -8,6 +8,7 @@ class InputContext {
     // MARK: Internal
 
     static let shared = InputContext()
+    private static let candidatesPerPage = 9
 
     let closureDict: [String: String] = [
         "「": "」",
@@ -49,12 +50,11 @@ class InputContext {
         set {
             _candidates = newValue
             candidatesCount = _candidates.count
-            IlimiInputController.prefixHasCandidates = (candidatesCount > 0) ? true : false
-            _numberedCandidates = []
-            for i in 0 ..< _candidates.count {
-                _numberedCandidates.append("\(i + 1) \(_candidates[i])")
+            IlimiInputController.prefixHasCandidates = candidatesCount > 0
+            _numberedCandidates = _candidates.enumerated().map { index, candidate in
+                "\(index + 1) \(candidate)"
             }
-            candidatesPagesCount = candidatesCount % 9 > 0 ? (candidatesCount / 9) + 1 : candidatesCount / 9
+            candidatesPagesCount = (candidatesCount + Self.candidatesPerPage - 1) / Self.candidatesPerPage
         }
     }
 
@@ -119,7 +119,7 @@ class InputContext {
     func movePrevPage() {
         if candidatesPageId > 0 {
             candidatesPageId -= 1
-            currentIndex -= 9
+            currentIndex -= Self.candidatesPerPage
         }
     }
 
@@ -127,10 +127,10 @@ class InputContext {
         if candidatesPageId < candidatesPagesCount - 1 {
             candidatesPageId += 1
         }
-        if 9 * candidatesPageId + currentIndex >= candidatesCount {
+        if Self.candidatesPerPage * candidatesPageId + currentIndex >= candidatesCount {
             currentIndex = candidatesCount - 1
         } else {
-            currentIndex = 9 * candidatesPageId + currentIndex
+            currentIndex = Self.candidatesPerPage * candidatesPageId + currentIndex
         }
     }
 
